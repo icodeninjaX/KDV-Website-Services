@@ -3,20 +3,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 disabled:pointer-events-none disabled:opacity-50 select-none",
   {
     variants: {
       variant: {
         primary:
-          "relative bg-gradient-brand text-white shadow-[0_0_30px_-10px_rgba(139,92,246,0.6)] hover:shadow-[0_0_40px_-8px_rgba(139,92,246,0.8)] hover:-translate-y-0.5",
+          "relative bg-gradient-brand text-white shadow-[0_0_28px_-8px_rgba(99,102,241,0.5)] hover:shadow-[0_0_36px_-6px_rgba(99,102,241,0.7)] hover:-translate-y-px active:translate-y-0",
         secondary:
-          "bg-white/5 text-white backdrop-blur hover:bg-white/10 border border-white/10",
-        ghost: "text-white/70 hover:text-white hover:bg-white/5",
+          "bg-white/[0.06] text-white backdrop-blur hover:bg-white/[0.1] border border-white/[0.1]",
+        ghost: "text-white/60 hover:text-white hover:bg-white/[0.05]",
         outline:
-          "border border-white/15 bg-transparent text-white hover:border-white/30 hover:bg-white/5",
+          "border border-white/[0.15] bg-transparent text-white/80 hover:border-white/30 hover:bg-white/[0.05] hover:text-white",
       },
       size: {
-        sm: "h-9 px-4 text-sm",
+        sm: "h-11 px-4 text-sm",   /* min 44px touch target */
         md: "h-11 px-6 text-sm",
         lg: "h-12 px-7 text-base",
       },

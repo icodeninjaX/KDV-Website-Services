@@ -41,19 +41,19 @@ export default function AboutPage() {
   return (
     <>
       <section className="container-page pt-20 pb-12">
-        <FadeIn>
-          <div className="text-sm font-medium text-gradient">About</div>
-          <h1 className="mt-3 max-w-3xl text-balance text-5xl font-semibold tracking-tight text-white sm:text-6xl">
-            Hi, I'm {site.founder}. I build the web for small businesses.
+        <FadeIn mount>
+          <div className="label-mono">About</div>
+          <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-5xl sm:text-6xl leading-tight">
+            Hi, I&rsquo;m {site.founder}. I build the web for small businesses.
           </h1>
         </FadeIn>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-3">
-          <FadeIn className="lg:col-span-2">
-            <div className="space-y-5 text-white/75 leading-relaxed">
+        <div className="mt-12 grid gap-10 lg:grid-cols-3">
+          <FadeIn mount className="lg:col-span-2">
+            <div className="space-y-5 text-white/60 leading-relaxed text-[15px]">
               <p>
                 I started {site.shortName} after watching too many small businesses get stuck with
-                bloated agencies, half-finished freelance projects, or templates that didn't fit.
+                bloated agencies, half-finished freelance projects, or templates that didn&rsquo;t fit.
                 You deserve better.
               </p>
               <p>
@@ -69,16 +69,17 @@ export default function AboutPage() {
             </div>
           </FadeIn>
 
-          <FadeIn delay={0.1}>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
-              <div className="text-[11px] uppercase tracking-wider text-white/40">Get in touch</div>
-              <a href={`mailto:${site.email}`} className="mt-2 block text-sm text-gradient hover:underline">
+          <FadeIn mount delay={0.08}>
+            <div className="rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6">
+              <div className="label-mono">Get in touch</div>
+              <a
+                href={`mailto:${site.email}`}
+                className="mt-3 block text-sm text-white/70 underline-offset-4 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded"
+              >
                 {site.email}
               </a>
-              <div className="mt-6 text-[11px] uppercase tracking-wider text-white/40">
-                Response time
-              </div>
-              <div className="mt-2 text-sm text-white/80">{site.responseWindow}</div>
+              <div className="mt-6 label-mono">Response time</div>
+              <div className="mt-2 text-sm text-white/70">{site.responseWindow}</div>
               <Link href="/contact" className="mt-6 block">
                 <Button className="w-full">
                   Start a project <ArrowRight size={16} />
@@ -91,14 +92,14 @@ export default function AboutPage() {
 
       <section className="container-page py-16">
         <FadeIn>
-          <h2 className="text-3xl font-semibold text-white">What I care about</h2>
+          <h2 className="font-display text-3xl font-bold text-white">What I care about</h2>
         </FadeIn>
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
           {values.map((v, i) => (
-            <FadeIn key={v.title} delay={i * 0.08}>
-              <div className="h-full rounded-2xl border border-white/10 bg-white/[0.02] p-6">
-                <h3 className="text-lg font-semibold text-white">{v.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/70">{v.body}</p>
+            <FadeIn key={v.title} delay={i * 0.07}>
+              <div className="h-full rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6">
+                <h3 className="font-display text-lg font-bold text-white">{v.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/55">{v.body}</p>
               </div>
             </FadeIn>
           ))}
@@ -107,17 +108,17 @@ export default function AboutPage() {
 
       <section className="container-page py-16">
         <FadeIn>
-          <h2 className="text-3xl font-semibold text-white">Tools I reach for</h2>
-          <p className="mt-3 max-w-xl text-white/60">
+          <h2 className="font-display text-3xl font-bold text-white">Tools I reach for</h2>
+          <p className="mt-3 max-w-xl text-white/55 text-[15px]">
             A modern, battle-tested stack. Boring in the best way.
           </p>
         </FadeIn>
-        <FadeIn delay={0.08}>
+        <FadeIn delay={0.07}>
           <div className="mt-8 flex flex-wrap gap-2">
             {stack.map((s) => (
               <span
                 key={s}
-                className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/80"
+                className="rounded-full border border-white/[0.1] bg-white/[0.03] px-4 py-2 text-sm text-white/70"
               >
                 {s}
               </span>

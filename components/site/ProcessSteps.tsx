@@ -25,26 +25,28 @@ const steps = [
 
 export function ProcessSteps() {
   return (
-    <section className="container-page py-20">
+    <section className="container-page py-24">
       <FadeIn>
         <div className="max-w-2xl">
-          <div className="text-sm font-medium text-gradient">How it works</div>
-          <h2 className="mt-3 text-balance text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+          <div className="label-mono">How it works</div>
+          <h2 className="mt-4 font-display text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl">
             A simple, transparent process.
           </h2>
-          <p className="mt-4 text-white/60">
+          <p className="mt-4 text-white/55 leading-relaxed">
             No bloated retainers. No surprise invoices. Just a predictable path from idea to live.
           </p>
         </div>
       </FadeIn>
 
-      <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         {steps.map((step, i) => (
           <FadeIn key={step.n} delay={i * 0.06}>
-            <div className="relative h-full rounded-2xl border border-white/10 bg-white/[0.02] p-6">
-              <div className="font-mono text-xs tracking-wider text-gradient">{step.n}</div>
-              <h3 className="mt-3 text-lg font-semibold text-white">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/60">{step.body}</p>
+            <div className="relative h-full rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6">
+              <div className="font-display text-4xl font-extrabold text-white/[0.07] tabular-nums leading-none">
+                {step.n}
+              </div>
+              <h3 className="mt-4 font-display text-lg font-bold text-white">{step.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-white/55">{step.body}</p>
             </div>
           </FadeIn>
         ))}

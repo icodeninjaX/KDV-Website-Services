@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Syne } from "next/font/google";
 import { Toaster } from "sonner";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -9,6 +9,11 @@ import "./globals.css";
 
 const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-syne",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -36,11 +41,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased min-h-dvh flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} font-sans antialiased min-h-dvh flex flex-col`}
       >
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <GradientBackground />
         <Header />
-        <main className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">{children}</main>
         <Footer />
         <Toaster theme="dark" richColors position="top-right" />
       </body>
