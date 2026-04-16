@@ -21,18 +21,19 @@ export default {
         "primary-foreground": "hsl(var(--primary-foreground))",
         accent: "hsl(var(--accent))",
         "accent-foreground": "hsl(var(--accent-foreground))",
-        violet: { 500: "#8b5cf6" },
-        cyan: { 500: "#06b6d4" },
+        indigo: { 500: "#6366f1", 400: "#818cf8" },
+        violet: { 500: "#a855f7", 400: "#c084fc" },
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui"],
         mono: ["var(--font-geist-mono)", "ui-monospace"],
+        display: ["var(--font-syne)", "var(--font-geist-sans)", "ui-sans-serif"],
       },
       backgroundImage: {
         "gradient-brand":
-          "linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%)",
+          "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
         "gradient-brand-soft":
-          "linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(6,182,212,0.15) 100%)",
+          "linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(168,85,247,0.15) 100%)",
       },
       keyframes: {
         "fade-up": {

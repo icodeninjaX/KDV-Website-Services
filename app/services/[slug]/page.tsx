@@ -35,22 +35,22 @@ export default async function ServicePage(
   return (
     <>
       <section className="container-page pt-20 pb-12">
-        <FadeIn>
+        <FadeIn mount>
           <Link
-            href="/"
-            className="text-xs uppercase tracking-wider text-white/50 hover:text-white"
+            href="/#services"
+            className="label-mono hover:text-white/70 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded"
           >
             &larr; All services
           </Link>
-          <div className="mt-6 flex items-start gap-4">
-            <div className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-brand-soft border border-white/10 text-violet-300">
-              <Icon size={26} />
+          <div className="mt-7 flex items-start gap-4">
+            <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-brand-soft border border-white/[0.08] text-indigo-400">
+              <Icon size={24} aria-hidden />
             </div>
             <div>
-              <h1 className="text-balance text-5xl font-semibold tracking-tight text-white sm:text-6xl">
+              <h1 className="font-display font-bold tracking-tight text-white text-balance text-5xl sm:text-6xl leading-tight">
                 {service.title}
               </h1>
-              <p className="mt-3 text-lg text-white/70">{service.tagline}</p>
+              <p className="mt-3 text-lg text-indigo-400/80 font-medium">{service.tagline}</p>
             </div>
           </div>
         </FadeIn>
@@ -58,14 +58,14 @@ export default async function ServicePage(
 
       <section className="container-page grid gap-10 pb-20 lg:grid-cols-3">
         <FadeIn as="article" className="lg:col-span-2">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8">
-            <h2 className="text-2xl font-semibold text-white">What you get</h2>
-            <p className="mt-3 text-white/70">{service.summary}</p>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-8">
+            <h2 className="font-display text-2xl font-bold text-white">What you get</h2>
+            <p className="mt-3 text-white/55 leading-relaxed text-[15px]">{service.summary}</p>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2" aria-label="Deliverables">
               {service.deliverables.map((d) => (
-                <li key={d} className="flex items-start gap-3 text-sm text-white/80">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gradient-brand text-white">
-                    <Check size={12} strokeWidth={3} />
+                <li key={d} className="flex items-start gap-3 text-sm text-white/70">
+                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gradient-brand" aria-hidden>
+                    <Check size={11} strokeWidth={3} className="text-white" />
                   </span>
                   {d}
                 </li>
@@ -73,41 +73,43 @@ export default async function ServicePage(
             </ul>
           </div>
 
-          <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-8">
-            <h2 className="text-2xl font-semibold text-white">FAQ</h2>
-            <div className="mt-4 divide-y divide-white/5">
+          <div className="mt-5 rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-8">
+            <h2 className="font-display text-2xl font-bold text-white">FAQ</h2>
+            <div className="mt-4 divide-y divide-white/[0.06]">
               {service.faq.map((item) => (
                 <details key={item.q} className="group py-4">
-                  <summary className="flex cursor-pointer items-center justify-between gap-4 text-white list-none">
-                    <span className="font-medium">{item.q}</span>
-                    <span className="text-white/40 transition-transform group-open:rotate-45">+</span>
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded">
+                    <span className="font-medium text-[15px]">{item.q}</span>
+                    <span className="shrink-0 text-white/30 transition-transform duration-200 group-open:rotate-45" aria-hidden>
+                      +
+                    </span>
                   </summary>
-                  <p className="mt-3 text-sm leading-relaxed text-white/70">{item.a}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-white/55">{item.a}</p>
                 </details>
               ))}
             </div>
           </div>
         </FadeIn>
 
-        <FadeIn as="article" delay={0.1}>
-          <aside className="sticky top-24 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+        <FadeIn as="article" delay={0.08}>
+          <aside className="sticky top-24 rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6">
             <div>
-              <div className="text-[11px] uppercase tracking-wider text-white/40">Starting at</div>
-              <div className="mt-1 text-3xl font-semibold text-white">{service.startingAt}</div>
+              <div className="label-mono">Starting at</div>
+              <div className="mt-2 font-display text-3xl font-bold text-white">{service.startingAt}</div>
             </div>
             <dl className="mt-6 space-y-4 text-sm">
               <div>
-                <dt className="text-white/40">Typical timeline</dt>
-                <dd className="mt-1 text-white">{service.timeline}</dd>
+                <dt className="text-white/35">Typical timeline</dt>
+                <dd className="mt-1 text-white/80">{service.timeline}</dd>
               </div>
               <div>
-                <dt className="text-white/40">Ideal for</dt>
-                <dd className="mt-1 text-white/80">{service.idealFor}</dd>
+                <dt className="text-white/35">Ideal for</dt>
+                <dd className="mt-1 text-white/70">{service.idealFor}</dd>
               </div>
             </dl>
             <Link href="/contact" className="mt-6 block">
               <Button className="w-full">
-                Start this project <ArrowRight size={16} />
+                Start this project <ArrowRight size={15} />
               </Button>
             </Link>
           </aside>

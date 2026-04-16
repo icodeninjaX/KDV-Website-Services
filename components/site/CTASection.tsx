@@ -8,31 +8,36 @@ export function CTASection() {
   return (
     <section className="container-page py-20">
       <FadeIn>
-        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-violet-500/10 via-white/[0.02] to-cyan-500/10 p-10 sm:p-14">
+        <div className="relative overflow-hidden rounded-3xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-10 sm:p-16">
+          {/* Single elegant indigo glow */}
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-violet-500/30 blur-3xl"
+            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-cyan-500/20 blur-3xl"
+            className="pointer-events-none absolute -top-32 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-indigo-500/15 blur-3xl"
           />
+
           <div className="relative">
-            <h2 className="max-w-2xl text-balance text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              Ready to build something <span className="text-gradient">that works</span>?
+            <div className="label-mono mb-6">Ready to build?</div>
+            <h2 className="max-w-2xl font-display text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl">
+              Let&rsquo;s build something{" "}
+              <span className="text-gradient">that works</span> for your business.
             </h2>
-            <p className="mt-4 max-w-xl text-white/70">
-              Tell me a bit about your business. I read every message and reply {site.responseWindow}.
+            <p className="mt-5 max-w-lg text-white/55 leading-relaxed">
+              Tell me a bit about your business. I read every message and reply{" "}
+              {site.responseWindow}.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link href="/contact">
                 <Button size="lg">
-                  Start a project <ArrowRight size={18} />
+                  Start a project <ArrowRight size={16} />
                 </Button>
               </Link>
               <a
                 href={`mailto:${site.email}`}
-                className="text-sm text-white/70 underline-offset-4 hover:text-white hover:underline"
+                className="text-sm text-white/50 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded"
               >
                 Or email me directly
               </a>
