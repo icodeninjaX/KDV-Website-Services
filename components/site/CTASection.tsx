@@ -25,7 +25,7 @@ export function CTASection() {
               Let&rsquo;s build something{" "}
               <span className="text-gradient">that works</span> for your business.
             </h2>
-            <p className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-base text-white/55 leading-relaxed">
+            <p className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-base text-white/55 leading-relaxed text-justify">
               Tell me a bit about your business. I read every message and reply{" "}
               {site.responseWindow}.
             </p>

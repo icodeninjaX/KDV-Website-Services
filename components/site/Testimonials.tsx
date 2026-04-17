@@ -2,19 +2,19 @@ import { FadeIn } from "./FadeIn";
 
 const quotes = [
   {
-    body: "Keith built us a CMS and POS dashboard that cut our ordering process by around 90%. Our staff stopped chasing phone orders — everything lives on one screen now.",
+    body: "Dati laging magulo ang pag-order ng aming mga customers sa phone. Yung system na ginawa ni Keith, sobrang linis at madaling gamitin ng staff namin. Hindi na kami naghahabol ng orders. Lahat nandoon na sa iisang screen.",
     name: "Toots Abella",
     role: "Hiring manager, New Z1on LPG",
     initial: "TA",
   },
   {
-    body: "I needed something simple on my phone to keep track of our members. Keith listened, asked the right questions, and delivered something I actually use every day.",
+    body: "Gusto ko lang ng simpleng paraan para makita ko ang mga members namin sa phone. Naintindihan niya agad kung ano ang kailangan ko at yung resulta mas maganda pa sa inaasahan ko. Ginagamit ko talaga ito every day.",
     name: "Cooperative officer",
     role: "Private cooperative, PH",
     initial: "C",
   },
   {
-    body: "371admin gave us the fleet visibility and reporting we couldn't get from spreadsheets. Keith understood the internal-tooling brief quickly and shipped without hand-holding.",
+    body: "Matagal na kaming gumagawa ng reports sa spreadsheet, sobrang hassle. Nung na-setup na ang 371admin, lahat ng kailangan namin makikita na agad. Si Keith, mabilis na naintindihan yung kailangan namin at nag-deliver ng maayos.",
     name: "Sai Maloles",
     role: "IT Head, X-Meta Technologies",
     initial: "SM",
@@ -41,7 +41,7 @@ export function Testimonials() {
               <span className="font-display text-5xl font-extrabold leading-none text-indigo-500/25 select-none" aria-hidden>
                 &ldquo;
               </span>
-              <blockquote className="mt-1 flex-1 text-[15px] leading-relaxed text-white/70">
+              <blockquote className="mt-1 flex-1 text-[15px] leading-relaxed text-white/70 text-justify">
                 {q.body}
               </blockquote>
               <figcaption className="mt-6 flex items-center gap-3 border-t border-white/[0.07] pt-5">

@@ -28,7 +28,7 @@ export const portfolio: CaseStudy[] = [
     client: "Private cooperative (PH)",
     title: "Mobile-first tracking system for a local co-op",
     summary:
-      "A mobile-first tracking system that gave a small cooperative real-time visibility into member contributions, loans, and daily activity — built for officers who mostly work from their phones.",
+      "A mobile-first tracking system that gave a small cooperative real-time visibility into member contributions, loans, and daily activity. Built for officers who mostly work from their phones.",
     tags: ["Mobile-first", "Web app", "Dashboard"],
     outcome: "Member activity visible in real time",
     year: 2024,
@@ -38,7 +38,7 @@ export const portfolio: CaseStudy[] = [
   {
     slug: "371admin",
     client: "X-Meta Technologies",
-    title: "371admin — device monitoring & reporting dashboard",
+    title: "371admin: device monitoring and reporting dashboard",
     summary:
       "An internal admin dashboard for monitoring device status and generating reports across X-Meta's deployed fleet. Built to replace manual status checks and ad-hoc spreadsheets.",
     tags: ["Dashboard", "Reporting", "Admin panel"],

@@ -8,13 +8,13 @@ import { CTASection } from "@/components/site/CTASection";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `Meet ${site.founder}, the founder of ${site.name}.`,
+  description: `Learn about ${site.name} — a Philippines-based web development studio for SMBs.`,
 };
 
 const values = [
   {
     title: "Clarity over cleverness",
-    body: "The best code is the boring code your future self can read. I build for the next developer, even when that's future-you.",
+    body: "The best code is the boring code your future self can read. We build for the next developer, even when that's future-you.",
   },
   {
     title: "Ship the thing",
@@ -44,27 +44,27 @@ export default function AboutPage() {
         <FadeIn mount>
           <div className="label-mono">About</div>
           <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
-            Hi, I&rsquo;m {site.founder}. I build the web for small businesses.
+            {site.name}. We build the web for small businesses.
           </h1>
         </FadeIn>
 
         <div className="mt-10 sm:mt-12 grid gap-8 sm:gap-10 lg:grid-cols-3">
           <FadeIn mount className="lg:col-span-2">
-            <div className="space-y-5 text-white/60 leading-relaxed text-[15px]">
+            <div className="space-y-5 text-white/60 leading-relaxed text-[15px] text-justify">
               <p>
-                I started {site.shortName} after watching too many small businesses get stuck with
+                {site.shortName} was built after watching too many small businesses get stuck with
                 bloated agencies, half-finished freelance projects, or templates that didn&rsquo;t fit.
                 You deserve better.
               </p>
               <p>
-                I work with a handful of clients at a time, intentionally. Every engagement gets my
-                focus — not a junior designer, not a revolving door of subcontractors. You talk to
-                me, you work with me, and I stake my name on the outcome.
+                {site.shortName} works with a handful of clients at a time, intentionally. Every
+                engagement gets full focus. Not a junior designer, not a revolving door of
+                subcontractors. You work directly with us, and we stake our name on the outcome.
               </p>
               <p>
-                Before going independent, I spent years shipping production software at product
-                companies, where the bar for performance, reliability, and clean code was high.
-                That bar comes with me.
+                The team behind {site.shortName} has years of experience shipping production software
+                at product companies, where the bar for performance, reliability, and clean code was
+                high. That bar comes with every project.
               </p>
             </div>
           </FadeIn>
@@ -92,14 +92,14 @@ export default function AboutPage() {
 
       <section className="container-page py-12 sm:py-16">
         <FadeIn>
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">What I care about</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">What we care about</h2>
         </FadeIn>
         <div className="mt-6 sm:mt-8 grid gap-5 md:grid-cols-3">
           {values.map((v, i) => (
             <FadeIn key={v.title} delay={i * 0.07}>
               <div className="h-full rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6">
                 <h3 className="font-display text-lg font-bold text-white">{v.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/55">{v.body}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/55 text-justify">{v.body}</p>
               </div>
             </FadeIn>
           ))}
@@ -108,8 +108,8 @@ export default function AboutPage() {
 
       <section className="container-page py-12 sm:py-16">
         <FadeIn>
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">Tools I reach for</h2>
-          <p className="mt-3 max-w-xl text-white/55 text-[15px]">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">Tools we use</h2>
+          <p className="mt-3 max-w-xl text-white/55 text-[15px] text-justify">
             A modern, battle-tested stack. Boring in the best way.
           </p>
         </FadeIn>

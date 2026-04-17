@@ -3,14 +3,14 @@ import { FadeIn } from "./FadeIn";
 const faqs = [
   {
     q: "Why hire you over a Manila agency?",
-    a: "Agencies bill for account managers, strategists, and overhead you don't need on an MSME-scale project. I'm the designer, developer, and your point of contact — fewer handoffs, faster shipping, and the savings stay with you.",
+    a: "Agencies bill for account managers, strategists, and overhead you don't need on an MSME-scale project. I'm the designer, developer, and your point of contact. Fewer handoffs, faster shipping, and the savings stay with you.",
   },
   {
     q: "Do you accept GCash, Maya, or bank transfer?",
-    a: "Yes — GCash, Maya, BPI, BDO, and Wise for clients abroad. Standard terms are 50% to start, 50% on launch. Receipts issued for each payment.",
+    a: "Yes. GCash, Maya, BPI, BDO, and Wise for clients abroad. Standard terms are 50% to start, 50% on launch. Receipts issued for each payment.",
   },
   {
-    q: "I only have a rough idea and no copy — can we still start?",
+    q: "I only have a rough idea and no copy. Can we still start?",
     a: "Absolutely. Most clients come in with messy notes and a logo. I'll help shape the structure, draft sections you're stuck on, and polish what you write. Full copywriting (English or Taglish) is available as an add-on.",
   },
   {
@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: "What happens if something breaks after launch?",
-    a: "Every project includes 30 days of post-launch support. After that I offer a flat monthly care plan, or you can call me per-incident — your choice. Hosting and infrastructure stay in your accounts, so you're never locked in.",
+    a: "Every project includes 30 days of post-launch support. After that I offer a flat monthly care plan, or you can call me per-incident. Your choice. Hosting and infrastructure stay in your accounts, so you're never locked in.",
   },
 ];
 
@@ -32,9 +32,9 @@ export function HomeFAQ() {
           <h2 className="mt-4 font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
             Answers before you ask.
           </h2>
-          <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base">
+          <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base text-justify">
             The things MSME owners usually want to know before reaching out. Don&rsquo;t see yours?
-            Message me — I reply personally.
+            Message me. I reply personally.
           </p>
         </div>
       </FadeIn>
@@ -56,7 +56,7 @@ export function HomeFAQ() {
                   </span>
                 </summary>
                 <div className="px-5 pb-5 pt-1 sm:px-7 sm:pb-6">
-                  <p className="max-w-3xl text-[14px] sm:text-[15px] leading-relaxed text-white/60">{item.a}</p>
+                  <p className="max-w-3xl text-[14px] sm:text-[15px] leading-relaxed text-white/60 text-justify">{item.a}</p>
                 </div>
               </details>
             ))}
