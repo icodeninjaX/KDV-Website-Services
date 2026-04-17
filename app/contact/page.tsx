@@ -21,7 +21,7 @@ export default function ContactPage() {
           </h1>
           <p className="mt-4 sm:mt-5 text-white/55 leading-relaxed text-[15px]">
             Tell me about your business, your goal, and where you&rsquo;re stuck. Every message
-            gets a real reply from me — not a sales funnel.
+            gets a real reply from me, not a sales funnel.
           </p>
 
           <dl className="mt-8 sm:mt-10 space-y-5 text-sm">

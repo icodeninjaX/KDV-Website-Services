@@ -9,7 +9,7 @@ import { services } from "@/lib/services";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Websites, business dashboards, and custom web apps — three ways I can help your Philippine MSME grow.",
+    "Websites, business dashboards, and custom web apps. Three ways I can help your Philippine MSME grow.",
 };
 
 export default function ServicesIndexPage() {
@@ -23,7 +23,7 @@ export default function ServicesIndexPage() {
             <span className="text-gradient">grow online</span>.
           </h1>
           <p className="mt-4 sm:mt-5 max-w-2xl text-white/55 text-[15px] leading-relaxed">
-            Clear scopes, transparent PHP pricing, and a direct line to me — no account managers in
+            Clear scopes, transparent PHP pricing, and a direct line to me. No account managers in
             between. Every engagement starts with a discovery call so you know exactly what you
             get before you pay anything.
           </p>

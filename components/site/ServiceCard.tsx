@@ -19,7 +19,7 @@ export function ServiceCard({ service, className }: { service: Service; classNam
 
       <h3 className="mt-6 font-display text-xl font-bold text-white">{service.title}</h3>
       <p className="mt-1.5 text-sm font-medium text-indigo-400/80">{service.tagline}</p>
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-white/55">{service.summary}</p>
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-white/55 text-justify">{service.summary}</p>
 
       <div className="mt-6 flex items-center justify-between border-t border-white/[0.07] pt-5">
         <div>

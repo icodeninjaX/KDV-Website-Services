@@ -81,7 +81,7 @@ export default async function CaseStudyPage(
           <div className="space-y-5 text-white/60 leading-relaxed text-[15px]">
             <p>
               <strong className="font-semibold text-white">The challenge.</strong>{" "}
-              {study.client} came to me with a familiar problem — the existing system worked, but
+              {study.client} came to me with a familiar problem: the existing system worked, but
               it couldn&rsquo;t keep up with the team, and every small change required a developer.
             </p>
             <p>
@@ -95,7 +95,7 @@ export default async function CaseStudyPage(
               quarterly improvements based on what they learn from customers.
             </p>
             <p className="text-white/35 italic">
-              Want a deeper walkthrough? I&rsquo;m happy to share more on a call — including
+              Want a deeper walkthrough? I&rsquo;m happy to share more on a call, including
               screens, the stack decisions, and what we&rsquo;d do differently.
             </p>
           </div>

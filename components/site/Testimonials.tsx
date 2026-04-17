@@ -2,7 +2,7 @@ import { FadeIn } from "./FadeIn";
 
 const quotes = [
   {
-    body: "Keith built us a CMS and POS dashboard that cut our ordering process by around 90%. Our staff stopped chasing phone orders — everything lives on one screen now.",
+    body: "Keith built us a CMS and POS dashboard that cut our ordering process by around 90%. Our staff stopped chasing phone orders. Everything lives on one screen now.",
     name: "Toots Abella",
     role: "Hiring manager, New Z1on LPG",
     initial: "TA",
@@ -41,7 +41,7 @@ export function Testimonials() {
               <span className="font-display text-5xl font-extrabold leading-none text-indigo-500/25 select-none" aria-hidden>
                 &ldquo;
               </span>
-              <blockquote className="mt-1 flex-1 text-[15px] leading-relaxed text-white/70">
+              <blockquote className="mt-1 flex-1 text-[15px] leading-relaxed text-white/70 text-justify">
                 {q.body}
               </blockquote>
               <figcaption className="mt-6 flex items-center gap-3 border-t border-white/[0.07] pt-5">

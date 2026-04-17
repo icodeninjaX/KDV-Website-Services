@@ -9,7 +9,7 @@ const steps = [
   {
     n: "02",
     title: "Design",
-    body: "Mockups before code. You approve the look, feel, and flow — no surprises once development starts.",
+    body: "Mockups before code. You approve the look, feel, and flow. No surprises once development starts.",
   },
   {
     n: "03",
@@ -32,7 +32,7 @@ export function ProcessSteps() {
           <h2 className="mt-4 font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
             A simple, transparent process.
           </h2>
-          <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base">
+          <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base text-justify">
             No bloated retainers. No surprise invoices. Just a predictable path from idea to live.
           </p>
         </div>
@@ -46,7 +46,7 @@ export function ProcessSteps() {
                 {step.n}
               </div>
               <h3 className="mt-4 font-display text-lg font-bold text-white">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/55">{step.body}</p>
+              <p className="mt-2 text-sm leading-relaxed text-white/55 text-justify">{step.body}</p>
             </div>
           </FadeIn>
         ))}

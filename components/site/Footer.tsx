@@ -12,7 +12,7 @@ export function Footer() {
             <Logo height={36} />
             <span className="text-sm font-medium text-white/40">Website Services</span>
           </div>
-          <p className="mt-5 max-w-sm text-sm text-white/40 leading-relaxed">
+          <p className="mt-5 max-w-sm text-sm text-white/40 leading-relaxed text-justify">
             {site.tagline}
           </p>
           <a

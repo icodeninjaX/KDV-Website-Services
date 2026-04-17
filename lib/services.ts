@@ -30,12 +30,12 @@ export const services: Service[] = [
       "One round of copy polish",
     ],
     idealFor: "Service businesses, freelancers, and small teams that need a real web presence, fast.",
-    timeline: "2 – 3 weeks",
+    timeline: "2 to 3 weeks",
     startingAt: "₱25,000",
     faq: [
       {
         q: "Do you write the copy?",
-        a: "I'll polish what you provide and draft sections you get stuck on. Full copywriting is available as an add-on — English or Taglish, your call.",
+        a: "I'll polish what you provide and draft sections you get stuck on. Full copywriting is available as an add-on. English or Taglish, your call.",
       },
       {
         q: "Can I edit the site myself later?",
@@ -47,7 +47,7 @@ export const services: Service[] = [
       },
       {
         q: "Do you accept GCash or bank transfer?",
-        a: "Yes — GCash, Maya, BPI, BDO, or Wise for international clients. 50% to start, 50% on launch.",
+        a: "Yes. GCash, Maya, BPI, BDO, or Wise for international clients. 50% to start, 50% on launch.",
       },
     ],
   },
@@ -56,7 +56,7 @@ export const services: Service[] = [
     title: "Business Dashboards",
     tagline: "See what's happening in your business, at a glance.",
     summary:
-      "Custom internal dashboards that pull from your tools — Stripe, Shopify, Google Sheets, your database — and give your team the numbers they actually need.",
+      "Custom internal dashboards that pull from your tools (Stripe, Shopify, Google Sheets, your database) and give your team the numbers they actually need.",
     icon: LayoutDashboard,
     deliverables: [
       "Discovery session to map the metrics that matter",
@@ -67,7 +67,7 @@ export const services: Service[] = [
       "30 days of post-launch support",
     ],
     idealFor: "Owners and ops leads drowning in spreadsheets who need one source of truth.",
-    timeline: "3 – 6 weeks",
+    timeline: "3 to 6 weeks",
     startingAt: "₱85,000",
     faq: [
       {
@@ -80,7 +80,7 @@ export const services: Service[] = [
       },
       {
         q: "Can my team log in?",
-        a: "Yes. Email/password or SSO via Clerk or Auth.js — your pick.",
+        a: "Yes. Email/password or SSO via Clerk or Auth.js. Your pick.",
       },
     ],
   },
@@ -89,7 +89,7 @@ export const services: Service[] = [
     title: "Custom Websites & Web Apps",
     tagline: "Something bespoke? Let's build it right.",
     summary:
-      "Booking systems, member portals, marketplaces, internal tools — the web applications that don't fit into a template. Engineered to be fast, scalable, and maintainable.",
+      "Booking systems, member portals, marketplaces, internal tools. Web applications that don't fit into a template, engineered to be fast, scalable, and maintainable.",
     icon: Wand2,
     deliverables: [
       "Deep discovery + written scope",

@@ -58,7 +58,7 @@ export default function AboutPage() {
               </p>
               <p>
                 I work with a handful of clients at a time, intentionally. Every engagement gets my
-                focus — not a junior designer, not a revolving door of subcontractors. You talk to
+                focus. Not a junior designer, not a revolving door of subcontractors. You talk to
                 me, you work with me, and I stake my name on the outcome.
               </p>
               <p>
