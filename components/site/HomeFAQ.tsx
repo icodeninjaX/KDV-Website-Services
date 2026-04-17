@@ -25,14 +25,14 @@ const faqs = [
 
 export function HomeFAQ() {
   return (
-    <section className="container-page py-24">
+    <section className="container-page py-16 sm:py-20 lg:py-24">
       <FadeIn>
         <div className="max-w-2xl">
           <div className="label-mono">Common questions</div>
-          <h2 className="mt-4 font-display text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <h2 className="mt-4 font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
             Answers before you ask.
           </h2>
-          <p className="mt-4 text-white/55 leading-relaxed">
+          <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base">
             The things MSME owners usually want to know before reaching out. Don&rsquo;t see yours?
             Message me — I reply personally.
           </p>
@@ -40,23 +40,23 @@ export function HomeFAQ() {
       </FadeIn>
 
       <FadeIn delay={0.06}>
-        <div className="mt-12 overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)]">
+        <div className="mt-10 sm:mt-12 overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)]">
           <div className="divide-y divide-white/[0.06]">
             {faqs.map((item) => (
               <details key={item.q} className="group">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-7 py-5 text-white transition-colors hover:bg-white/[0.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-500/70">
-                  <span className="font-display text-[17px] font-semibold leading-snug">
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-4 px-5 py-4 text-white transition-colors hover:bg-white/[0.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-500/70 sm:items-center sm:gap-6 sm:px-7 sm:py-5">
+                  <span className="font-display text-[15px] sm:text-[17px] font-semibold leading-snug">
                     {item.q}
                   </span>
                   <span
-                    className="shrink-0 font-display text-2xl font-light text-white/30 transition-transform duration-200 group-open:rotate-45"
+                    className="shrink-0 font-display text-2xl font-light leading-none text-white/30 transition-transform duration-200 group-open:rotate-45"
                     aria-hidden
                   >
                     +
                   </span>
                 </summary>
-                <div className="px-7 pb-6 pt-1">
-                  <p className="max-w-3xl text-[15px] leading-relaxed text-white/60">{item.a}</p>
+                <div className="px-5 pb-5 pt-1 sm:px-7 sm:pb-6">
+                  <p className="max-w-3xl text-[14px] sm:text-[15px] leading-relaxed text-white/60">{item.a}</p>
                 </div>
               </details>
             ))}

@@ -7,15 +7,15 @@ export function FeaturedWork() {
   const [primary, secondary, tertiary] = portfolio;
 
   return (
-    <section className="container-page py-24">
+    <section className="container-page py-16 sm:py-20 lg:py-24">
       <FadeIn>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
             <div className="label-mono">Selected work</div>
-            <h2 className="mt-4 font-display text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl">
+            <h2 className="mt-4 font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
               Real clients. Real outcomes.
             </h2>
-            <p className="mt-4 text-white/55 leading-relaxed">
+            <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base">
               Three recent projects — an LPG ordering system, a cooperative tracker, and an
               internal fleet dashboard. Same principles, different shapes.
             </p>
@@ -29,7 +29,7 @@ export function FeaturedWork() {
         </div>
       </FadeIn>
 
-      <div className="mt-12 grid gap-5 lg:grid-cols-5">
+      <div className="mt-10 sm:mt-12 grid gap-5 lg:grid-cols-5">
         <FadeIn className="lg:col-span-3" delay={0.04}>
           <FeaturedCard item={primary} size="lg" />
         </FadeIn>
@@ -57,7 +57,7 @@ function FeaturedCard({
   return (
     <Link
       href={`/portfolio/${item.slug}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-7 transition-all duration-200 hover:border-white/[0.18] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-5 sm:p-7 transition-all duration-200 hover:border-white/[0.18] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
     >
       {/* Mockup surface — browser frame stand-in */}
       <div
@@ -106,7 +106,7 @@ function FeaturedCard({
         </div>
         <h3
           className={`mt-3 font-display font-bold text-white ${
-            isLarge ? "text-2xl sm:text-[28px] leading-tight" : "text-lg leading-snug"
+            isLarge ? "text-xl sm:text-2xl lg:text-[28px] leading-tight" : "text-lg leading-snug"
           }`}
         >
           {item.title}

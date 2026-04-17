@@ -9,7 +9,7 @@ export function ServiceCard({ service, className }: { service: Service; classNam
     <Link
       href={`/services/${service.slug}`}
       className={cn(
-        "glow-card group relative flex h-full flex-col rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-7 transition-all duration-200 hover:border-white/[0.18] hover:-translate-y-1",
+        "glow-card group relative flex h-full flex-col rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 sm:p-7 transition-all duration-200 hover:border-white/[0.18] hover:-translate-y-1",
         className,
       )}
     >

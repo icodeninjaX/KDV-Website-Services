@@ -31,7 +31,7 @@ export default async function CaseStudyPage(
 
   return (
     <>
-      <section className="container-page pt-20 pb-10">
+      <section className="container-page pt-14 pb-8 sm:pt-20 sm:pb-10">
         <FadeIn mount>
           <Link
             href="/portfolio"
@@ -39,7 +39,7 @@ export default async function CaseStudyPage(
           >
             &larr; All work
           </Link>
-          <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-white/40">
+          <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-white/40">
             <span>{study.client}</span>
             <span className="text-white/15">&middot;</span>
             <span>{study.year}</span>
@@ -55,28 +55,28 @@ export default async function CaseStudyPage(
               </>
             )}
           </div>
-          <h1 className="mt-4 max-w-4xl font-display font-bold tracking-tight text-white text-balance text-5xl sm:text-6xl leading-tight">
+          <h1 className="mt-4 max-w-4xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
             {study.title}
           </h1>
           <p className="mt-4 max-w-2xl text-[15px] text-white/55 leading-relaxed">{study.summary}</p>
         </FadeIn>
       </section>
 
-      <section className="container-page pb-16">
+      <section className="container-page pb-12 sm:pb-16">
         <FadeIn>
           <div
-            className={`relative h-64 overflow-hidden rounded-2xl border border-white/[0.1] bg-gradient-to-br ${study.accent}`}
+            className={`relative h-48 overflow-hidden rounded-2xl border border-white/[0.1] bg-gradient-to-br sm:h-64 ${study.accent}`}
           >
             <div className="absolute inset-0 bg-black/50" />
-            <div className="relative flex h-full flex-col justify-end p-8">
+            <div className="relative flex h-full flex-col justify-end p-6 sm:p-8">
               <div className="label-mono text-white/50">Outcome</div>
-              <div className="mt-2 font-display text-3xl font-bold text-white">{study.outcome}</div>
+              <div className="mt-2 font-display text-2xl sm:text-3xl font-bold text-white">{study.outcome}</div>
             </div>
           </div>
         </FadeIn>
       </section>
 
-      <section className="container-page grid gap-10 pb-20 lg:grid-cols-3">
+      <section className="container-page grid gap-8 pb-16 sm:pb-20 lg:grid-cols-3 lg:gap-10">
         <FadeIn className="lg:col-span-2">
           <div className="space-y-5 text-white/60 leading-relaxed text-[15px]">
             <p>
@@ -102,7 +102,7 @@ export default async function CaseStudyPage(
         </FadeIn>
 
         <FadeIn delay={0.08}>
-          <aside className="sticky top-24 rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6">
+          <aside className="rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 lg:sticky lg:top-24">
             <div className="label-mono">Tech used</div>
             <div className="mt-3 flex flex-wrap gap-1.5">
               {study.tags.map((t) => (

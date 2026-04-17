@@ -40,7 +40,7 @@ export function Hero() {
 
   return (
     <section className="relative overflow-x-hidden">
-      <div className="container-page py-20 sm:py-28 lg:py-36">
+      <div className="container-page py-16 sm:py-24 lg:py-36">
         <FadeIn mount>
           <div className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-xs text-white/60 backdrop-blur">
             <span className="relative flex h-2 w-2" aria-hidden>
@@ -57,33 +57,33 @@ export function Hero() {
           initial="hidden"
           animate="visible"
           variants={headlineContainer}
-          className="mt-7 max-w-4xl font-display font-extrabold tracking-tight text-white leading-[1.08]"
+          className="mt-6 sm:mt-7 max-w-4xl font-display font-extrabold tracking-tight text-white leading-[1.05] sm:leading-[1.08]"
         >
           <motion.span
             variants={headlineLine}
             transition={lineTransition}
-            className="block text-[2.5rem] sm:text-5xl lg:text-[5.5rem]"
+            className="block text-[2rem] sm:text-5xl lg:text-[5.5rem]"
           >
             Websites,
           </motion.span>
           <motion.span
             variants={headlineLine}
             transition={lineTransition}
-            className="block text-[2.5rem] sm:text-5xl lg:text-[5.5rem]"
+            className="block text-[2rem] sm:text-5xl lg:text-[5.5rem]"
           >
             dashboards,
           </motion.span>
           <motion.span
             variants={headlineLine}
             transition={lineTransition}
-            className="block text-[2.5rem] sm:text-5xl lg:text-[5.5rem]"
+            className="block text-[2rem] sm:text-5xl lg:text-[5.5rem]"
           >
             &amp; apps that <span className="text-gradient">grow</span> your business.
           </motion.span>
         </motion.h1>
 
         <FadeIn mount delay={0.45}>
-          <p className="mt-8 max-w-xl text-base sm:text-lg leading-relaxed text-white/55">
+          <p className="mt-6 sm:mt-8 max-w-xl text-[15px] sm:text-lg leading-relaxed text-white/55">
             Kumusta! I&rsquo;m Keith. I partner with Philippine small and mid-sized
             businesses to ship fast, polished web products — from marketing sites to
             internal dashboards. Thoughtful design, modern stack, no agency overhead.
@@ -91,7 +91,7 @@ export function Hero() {
         </FadeIn>
 
         <FadeIn mount delay={0.52}>
-          <div className="mt-10 flex flex-wrap items-center gap-3">
+          <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3">
             <Magnetic>
               <Link href="/contact">
                 <Button size="lg">
@@ -110,10 +110,10 @@ export function Hero() {
         </FadeIn>
 
         <FadeIn mount delay={0.62}>
-          <div className="mt-16 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-white/[0.07] pt-10 sm:grid-cols-4">
+          <div className="mt-12 sm:mt-16 grid grid-cols-2 gap-x-5 gap-y-6 border-t border-white/[0.07] pt-8 sm:gap-x-8 sm:pt-10 sm:grid-cols-4">
             {stats.map((stat) => (
               <div key={stat.label}>
-                <div className="font-display text-3xl font-bold text-white tabular-nums">
+                <div className="font-display text-2xl sm:text-3xl font-bold text-white tabular-nums">
                   {"static" in stat ? (
                     stat.static
                   ) : (
@@ -124,7 +124,7 @@ export function Hero() {
                     />
                   )}
                 </div>
-                <div className="mt-1 text-sm text-white/40">{stat.label}</div>
+                <div className="mt-1 text-xs sm:text-sm text-white/40">{stat.label}</div>
               </div>
             ))}
           </div>
