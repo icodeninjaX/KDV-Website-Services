@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 export default function PortfolioPage() {
   return (
     <>
-      <section className="container-page pt-20 pb-10">
+      <section className="container-page pt-14 pb-8 sm:pt-20 sm:pb-10">
         <FadeIn mount>
           <div className="label-mono">Selected work</div>
-          <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-5xl sm:text-6xl leading-tight">
+          <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
             A few projects I&rsquo;m proud to have shipped.
           </h1>
           <p className="mt-4 max-w-xl text-white/55 text-[15px] leading-relaxed">
@@ -26,12 +26,12 @@ export default function PortfolioPage() {
         </FadeIn>
       </section>
 
-      <section className="container-page grid gap-5 pb-20 md:grid-cols-2">
+      <section className="container-page grid gap-5 pb-16 sm:pb-20 md:grid-cols-2">
         {portfolio.map((item, i) => (
           <FadeIn key={item.slug} delay={i * 0.06}>
             <Link
               href={`/portfolio/${item.slug}`}
-              className="group relative block h-full overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-8 transition-all duration-200 hover:border-white/[0.18] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
+              className="group relative block h-full overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 transition-all duration-200 hover:border-white/[0.18] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 sm:p-8"
             >
               <div
                 aria-hidden
@@ -42,7 +42,7 @@ export default function PortfolioPage() {
                   <span>{item.client}</span>
                   <span>{item.year}</span>
                 </div>
-                <h2 className="mt-4 font-display text-2xl font-bold text-white">{item.title}</h2>
+                <h2 className="mt-4 font-display text-xl sm:text-2xl font-bold text-white leading-snug">{item.title}</h2>
                 <p className="mt-3 text-sm leading-relaxed text-white/55">{item.summary}</p>
 
                 <div className="mt-6 flex flex-wrap gap-1.5">

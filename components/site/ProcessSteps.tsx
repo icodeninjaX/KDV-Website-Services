@@ -25,20 +25,20 @@ const steps = [
 
 export function ProcessSteps() {
   return (
-    <section className="container-page py-24">
+    <section className="container-page py-16 sm:py-20 lg:py-24">
       <FadeIn>
         <div className="max-w-2xl">
           <div className="label-mono">How it works</div>
-          <h2 className="mt-4 font-display text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <h2 className="mt-4 font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
             A simple, transparent process.
           </h2>
-          <p className="mt-4 text-white/55 leading-relaxed">
+          <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base">
             No bloated retainers. No surprise invoices. Just a predictable path from idea to live.
           </p>
         </div>
       </FadeIn>
 
-      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-10 sm:mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         {steps.map((step, i) => (
           <FadeIn key={step.n} delay={i * 0.06}>
             <div className="relative h-full rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6">

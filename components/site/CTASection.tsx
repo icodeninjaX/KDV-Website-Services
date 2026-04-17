@@ -6,9 +6,9 @@ import { site } from "@/lib/site";
 
 export function CTASection() {
   return (
-    <section className="container-page py-20">
+    <section className="container-page py-16 sm:py-20">
       <FadeIn>
-        <div className="relative overflow-hidden rounded-3xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-10 sm:p-16">
+        <div className="relative overflow-hidden rounded-3xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 sm:p-10 lg:p-16">
           {/* Single elegant indigo glow */}
           <div
             aria-hidden
@@ -21,11 +21,11 @@ export function CTASection() {
 
           <div className="relative">
             <div className="label-mono mb-6">Ready to build?</div>
-            <h2 className="max-w-2xl font-display text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl">
+            <h2 className="max-w-2xl font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
               Let&rsquo;s build something{" "}
               <span className="text-gradient">that works</span> for your business.
             </h2>
-            <p className="mt-5 max-w-lg text-white/55 leading-relaxed">
+            <p className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-base text-white/55 leading-relaxed">
               Tell me a bit about your business. I read every message and reply{" "}
               {site.responseWindow}.
             </p>

@@ -15,14 +15,14 @@ export const metadata: Metadata = {
 export default function ServicesIndexPage() {
   return (
     <>
-      <section className="container-page pt-20 pb-12">
+      <section className="container-page pt-14 pb-10 sm:pt-20 sm:pb-12">
         <FadeIn mount>
           <div className="label-mono">Services</div>
-          <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-5xl sm:text-6xl leading-tight">
+          <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
             Three ways I can help your business{" "}
             <span className="text-gradient">grow online</span>.
           </h1>
-          <p className="mt-5 max-w-2xl text-white/55 text-[15px] leading-relaxed">
+          <p className="mt-4 sm:mt-5 max-w-2xl text-white/55 text-[15px] leading-relaxed">
             Clear scopes, transparent PHP pricing, and a direct line to me — no account managers in
             between. Every engagement starts with a discovery call so you know exactly what you
             get before you pay anything.
@@ -30,33 +30,33 @@ export default function ServicesIndexPage() {
         </FadeIn>
       </section>
 
-      <section className="container-page space-y-5 pb-20">
+      <section className="container-page space-y-5 pb-16 sm:pb-20">
         {services.map((service, i) => {
           const Icon = service.icon;
           return (
             <FadeIn key={service.slug} delay={i * 0.06}>
-              <article className="relative overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-8 transition-colors hover:border-white/[0.18] sm:p-10">
-                <div className="grid gap-10 lg:grid-cols-[1fr_300px]">
+              <article className="relative overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 transition-colors hover:border-white/[0.18] sm:p-8 lg:p-10">
+                <div className="grid gap-8 lg:grid-cols-[1fr_300px] lg:gap-10">
                   <div>
                     <div className="flex items-start gap-4">
-                      <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-brand-soft border border-white/[0.08] text-indigo-400">
-                        <Icon size={22} aria-hidden />
+                      <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-brand-soft border border-white/[0.08] text-indigo-400 sm:h-12 sm:w-12">
+                        <Icon size={20} aria-hidden />
                       </div>
-                      <div>
-                        <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">
+                      <div className="min-w-0">
+                        <h2 className="font-display text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
                           {service.title}
                         </h2>
-                        <p className="mt-2 text-base text-indigo-400/80 font-medium">
+                        <p className="mt-2 text-sm sm:text-base text-indigo-400/80 font-medium">
                           {service.tagline}
                         </p>
                       </div>
                     </div>
 
-                    <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-white/60">
+                    <p className="mt-5 sm:mt-6 max-w-2xl text-[15px] leading-relaxed text-white/60">
                       {service.summary}
                     </p>
 
-                    <div className="mt-7">
+                    <div className="mt-6 sm:mt-7">
                       <div className="label-mono mb-4">What&rsquo;s included</div>
                       <ul
                         className="grid gap-2.5 sm:grid-cols-2"
@@ -84,7 +84,7 @@ export default function ServicesIndexPage() {
                     </div>
                   </div>
 
-                  <aside className="lg:border-l lg:border-white/[0.07] lg:pl-8">
+                  <aside className="border-t border-white/[0.07] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
                     <dl className="space-y-5 text-sm">
                       <div>
                         <dt className="label-mono">Starting at</dt>

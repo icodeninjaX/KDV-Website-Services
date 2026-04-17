@@ -94,9 +94,14 @@ export function ContactForm() {
         />
       </Field>
 
-      <div className="flex items-center justify-between gap-4 pt-1">
+      <div className="flex flex-col-reverse items-stretch gap-4 pt-1 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs text-white/35">I&rsquo;ll reply within one business day.</p>
-        <Button type="submit" disabled={pending} aria-disabled={pending}>
+        <Button
+          type="submit"
+          disabled={pending}
+          aria-disabled={pending}
+          className="w-full sm:w-auto"
+        >
           {pending ? (
             <>
               <Loader2 size={15} className="animate-spin" aria-hidden />

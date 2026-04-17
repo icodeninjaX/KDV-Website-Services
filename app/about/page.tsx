@@ -40,15 +40,15 @@ const stack = [
 export default function AboutPage() {
   return (
     <>
-      <section className="container-page pt-20 pb-12">
+      <section className="container-page pt-14 pb-10 sm:pt-20 sm:pb-12">
         <FadeIn mount>
           <div className="label-mono">About</div>
-          <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-5xl sm:text-6xl leading-tight">
+          <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
             Hi, I&rsquo;m {site.founder}. I build the web for small businesses.
           </h1>
         </FadeIn>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-3">
+        <div className="mt-10 sm:mt-12 grid gap-8 sm:gap-10 lg:grid-cols-3">
           <FadeIn mount className="lg:col-span-2">
             <div className="space-y-5 text-white/60 leading-relaxed text-[15px]">
               <p>
@@ -90,11 +90,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="container-page py-16">
+      <section className="container-page py-12 sm:py-16">
         <FadeIn>
-          <h2 className="font-display text-3xl font-bold text-white">What I care about</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">What I care about</h2>
         </FadeIn>
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
+        <div className="mt-6 sm:mt-8 grid gap-5 md:grid-cols-3">
           {values.map((v, i) => (
             <FadeIn key={v.title} delay={i * 0.07}>
               <div className="h-full rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6">
@@ -106,15 +106,15 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="container-page py-16">
+      <section className="container-page py-12 sm:py-16">
         <FadeIn>
-          <h2 className="font-display text-3xl font-bold text-white">Tools I reach for</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">Tools I reach for</h2>
           <p className="mt-3 max-w-xl text-white/55 text-[15px]">
             A modern, battle-tested stack. Boring in the best way.
           </p>
         </FadeIn>
         <FadeIn delay={0.07}>
-          <div className="mt-8 flex flex-wrap gap-2">
+          <div className="mt-6 sm:mt-8 flex flex-wrap gap-2">
             {stack.map((s) => (
               <span
                 key={s}
