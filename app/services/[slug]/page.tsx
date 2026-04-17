@@ -37,7 +37,7 @@ export default async function ServicePage(
       <section className="container-page pt-20 pb-12">
         <FadeIn mount>
           <Link
-            href="/#services"
+            href="/services"
             className="label-mono hover:text-white/70 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded"
           >
             &larr; All services

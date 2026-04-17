@@ -2,22 +2,22 @@ import { FadeIn } from "./FadeIn";
 
 const quotes = [
   {
-    body: "Keith took a vague idea and turned it into a dashboard our whole team now depends on. He asks better questions than most PMs I've worked with.",
-    name: "Maria Santos",
-    role: "Ops Director, Pasig Logistics Corp.",
-    initial: "MS",
+    body: "Keith built us a CMS and POS dashboard that cut our ordering process by around 90%. Our staff stopped chasing phone orders — everything lives on one screen now.",
+    name: "Toots Abella",
+    role: "Hiring manager, New Z1on LPG",
+    initial: "TA",
   },
   {
-    body: "Our pre-order volume jumped within the first month of launch. The site is fast, beautiful, and our staff can actually update it.",
-    name: "Tomas Reyes",
-    role: "Owner, Kamayan Bakeshop (Makati)",
-    initial: "TR",
+    body: "I needed something simple on my phone to keep track of our members. Keith listened, asked the right questions, and delivered something I actually use every day.",
+    name: "Cooperative officer",
+    role: "Private cooperative, PH",
+    initial: "C",
   },
   {
-    body: "We had scoped this as a 3-month project with a Manila agency. Keith delivered a better version in 6 weeks.",
-    name: "Dr. Angela Lim",
-    role: "Managing Partner, Cebu Smile Dental Group",
-    initial: "AL",
+    body: "371admin gave us the fleet visibility and reporting we couldn't get from spreadsheets. Keith understood the internal-tooling brief quickly and shipped without hand-holding.",
+    name: "Sai Maloles",
+    role: "IT Head, X-Meta Technologies",
+    initial: "SM",
   },
 ];
 

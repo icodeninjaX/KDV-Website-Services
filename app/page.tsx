@@ -1,8 +1,11 @@
 import Script from "next/script";
 import { Hero } from "@/components/site/Hero";
+import { TrustBar } from "@/components/site/TrustBar";
 import { ServicesGrid } from "@/components/site/ServicesGrid";
+import { FeaturedWork } from "@/components/site/FeaturedWork";
 import { ProcessSteps } from "@/components/site/ProcessSteps";
 import { Testimonials } from "@/components/site/Testimonials";
+import { HomeFAQ } from "@/components/site/HomeFAQ";
 import { CTASection } from "@/components/site/CTASection";
 import { site } from "@/lib/site";
 
@@ -33,9 +36,12 @@ export default function HomePage() {
         {JSON.stringify(jsonLd)}
       </Script>
       <Hero />
+      <TrustBar />
       <ServicesGrid />
+      <FeaturedWork />
       <ProcessSteps />
       <Testimonials />
+      <HomeFAQ />
       <CTASection />
     </>
   );

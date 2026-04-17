@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { GradientBackground } from "@/components/site/GradientBackground";
+import { ScrollProgress } from "@/components/site/ScrollProgress";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+        <ScrollProgress />
         <GradientBackground />
         <Header />
         <main id="main-content" className="flex-1">{children}</main>

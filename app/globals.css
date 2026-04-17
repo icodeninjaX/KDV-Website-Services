@@ -4,6 +4,10 @@
 
 @layer base {
   :root {
+    /* Hint to the browser that native form controls (select dropdowns,
+       date pickers, scrollbars) should render with a dark palette. */
+    color-scheme: dark;
+
     /* Neutral very-dark — no blue tint (was the "generic dev portfolio" tell) */
     --background: 0 0% 3%;
     --foreground: 0 0% 96%;
@@ -39,6 +43,13 @@
     color: white;
   }
 
+  /* Native <select> dropdown options — Chrome/Firefox honor these styles.
+     Safari relies on color-scheme: dark above. */
+  select option {
+    background-color: hsl(0 0% 6%);
+    color: hsl(0 0% 96%);
+  }
+
   /* Skip-to-content — accessibility */
   .skip-link {
     position: absolute;
@@ -63,12 +74,26 @@
     @apply mx-auto w-full max-w-6xl px-6 sm:px-8;
   }
 
-  /* Indigo → purple gradient — more premium than violet→cyan */
+  /* Indigo → purple gradient — more premium than violet→cyan.
+     Slow pan for a subtle "alive" feel. */
   .text-gradient {
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    background-image: linear-gradient(
+      120deg,
+      #6366f1 0%,
+      #a855f7 50%,
+      #6366f1 100%
+    );
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    animation: gradient-pan 8s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .text-gradient {
+      animation: none;
+      background-size: 100% 100%;
+    }
   }
 
   /* Section label — editorial mono style instead of gradient text */
