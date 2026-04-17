@@ -19,7 +19,7 @@ export default function PortfolioPage() {
           <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
             A few projects I&rsquo;m proud to have shipped.
           </h1>
-          <p className="mt-4 max-w-xl text-white/55 text-[15px] leading-relaxed">
+          <p className="mt-4 max-w-xl text-white/55 text-[15px] leading-relaxed text-justify">
             Details are anonymized where clients have asked. Happy to walk through any of these on
             a call.
           </p>
@@ -43,7 +43,7 @@ export default function PortfolioPage() {
                   <span>{item.year}</span>
                 </div>
                 <h2 className="mt-4 font-display text-xl sm:text-2xl font-bold text-white leading-snug">{item.title}</h2>
-                <p className="mt-3 text-sm leading-relaxed text-white/55">{item.summary}</p>
+                <p className="mt-3 text-sm leading-relaxed text-white/55 text-justify">{item.summary}</p>
 
                 <div className="mt-6 flex flex-wrap gap-1.5">
                   {item.tags.map((t) => (

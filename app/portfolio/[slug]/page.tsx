@@ -58,7 +58,7 @@ export default async function CaseStudyPage(
           <h1 className="mt-4 max-w-4xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
             {study.title}
           </h1>
-          <p className="mt-4 max-w-2xl text-[15px] text-white/55 leading-relaxed">{study.summary}</p>
+          <p className="mt-4 max-w-2xl text-[15px] text-white/55 leading-relaxed text-justify">{study.summary}</p>
         </FadeIn>
       </section>
 
@@ -78,7 +78,7 @@ export default async function CaseStudyPage(
 
       <section className="container-page grid gap-8 pb-16 sm:pb-20 lg:grid-cols-3 lg:gap-10">
         <FadeIn className="lg:col-span-2">
-          <div className="space-y-5 text-white/60 leading-relaxed text-[15px]">
+          <div className="space-y-5 text-white/60 leading-relaxed text-[15px] text-justify">
             <p>
               <strong className="font-semibold text-white">The challenge.</strong>{" "}
               {study.client} came to me with a familiar problem: the existing system worked, but

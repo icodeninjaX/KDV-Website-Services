@@ -19,7 +19,7 @@ export default function ContactPage() {
             Let&rsquo;s build{" "}
             <span className="text-gradient">something good</span>.
           </h1>
-          <p className="mt-4 sm:mt-5 text-white/55 leading-relaxed text-[15px]">
+          <p className="mt-4 sm:mt-5 text-white/55 leading-relaxed text-[15px] text-justify">
             Tell me about your business, your goal, and where you&rsquo;re stuck. Every message
             gets a real reply from me, not a sales funnel.
           </p>
@@ -57,8 +57,10 @@ export default function ContactPage() {
         </FadeIn>
 
         <FadeIn mount delay={0.08} className="lg:col-span-3">
-          <div className="rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-5 sm:p-8">
-            <ContactForm />
+          <div className="border-spin-wrapper">
+            <div className="relative z-10 rounded-[15px] bg-[hsl(0_0%_6%)] p-5 sm:p-8">
+              <ContactForm />
+            </div>
           </div>
         </FadeIn>
       </div>
