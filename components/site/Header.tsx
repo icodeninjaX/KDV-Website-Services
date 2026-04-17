@@ -62,7 +62,7 @@ export function Header() {
         <button
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          className="md:hidden rounded-md p-2 text-white/60 hover:bg-white/[0.05] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 transition-colors"
+          className="md:hidden grid h-11 w-11 place-items-center rounded-md text-white/60 hover:bg-white/[0.05] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 transition-colors"
           onClick={() => setOpen((o) => !o)}
         >
           {open ? <X size={20} /> : <Menu size={20} />}
@@ -87,7 +87,7 @@ export function Header() {
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "rounded-md px-3 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70",
+                  "flex min-h-[44px] items-center rounded-md px-3 text-[15px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70",
                   active
                     ? "text-white bg-white/[0.06]"
                     : "text-white/70 hover:bg-white/[0.05] hover:text-white",
