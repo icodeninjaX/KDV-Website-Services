@@ -5,19 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "./FadeIn";
-import { CountUp } from "./CountUp";
 import { Magnetic } from "./Magnetic";
-
-type Stat =
-  | { value: number; prefix?: string; suffix?: string; label: string }
-  | { static: string; label: string };
-
-const stats: Stat[] = [
-  { value: 20, suffix: "+", label: "PH businesses shipped" },
-  { value: 98, label: "Avg. Lighthouse score" },
-  { static: "< 1 day", label: "Reply time" },
-  { value: 85, suffix: "%", label: "Clients retained" },
-];
 
 const headlineContainer: Variants = {
   hidden: {},
@@ -107,26 +95,7 @@ export function Hero() {
           </div>
         </FadeIn>
 
-        <FadeIn mount delay={0.62}>
-          <div className="mt-12 sm:mt-16 grid grid-cols-2 gap-x-5 gap-y-6 border-t border-white/[0.07] pt-8 sm:gap-x-8 sm:pt-10 sm:grid-cols-4">
-            {stats.map((stat) => (
-              <div key={stat.label}>
-                <div className="font-display text-2xl sm:text-3xl font-bold text-white tabular-nums">
-                  {"static" in stat ? (
-                    stat.static
-                  ) : (
-                    <CountUp
-                      value={stat.value}
-                      prefix={stat.prefix}
-                      suffix={stat.suffix}
-                    />
-                  )}
-                </div>
-                <div className="mt-1 text-xs sm:text-sm text-white/40">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </FadeIn>
+
       </div>
     </section>
   );
