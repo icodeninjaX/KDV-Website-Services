@@ -154,6 +154,7 @@
     padding: 1px;
     border-radius: 1rem;
     overflow: hidden;
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .border-spin-wrapper::before {
@@ -171,6 +172,12 @@
       transparent 130deg
     );
     animation: border-spin 4s linear infinite;
+    opacity: 0;
+    transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .border-spin-wrapper.is-active::before {
+    opacity: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {
