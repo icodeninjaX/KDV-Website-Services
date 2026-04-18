@@ -39,6 +39,7 @@ All motion respects `prefers-reduced-motion`. Primitives:
 - `CountUp` — animates 0→value when in view
 - `Magnetic` — cursor-attraction wrapper for CTAs
 - `grid-bg`, `glow-card`, `.text-gradient` — CSS-level effects
+- `.border-spin-wrapper` — conic gradient border beam. Beam is hidden by default; add `.is-active` to show it (used for always-on beams like contact form, or toggled state like ProcessSteps)
 
 Keep animation restrained (Stripe/Linear tier). **No** parallax, cursor trails, 3D tilts, or Lottie.
 
