@@ -29,7 +29,7 @@ export const portfolio: CaseStudy[] = [
   {
     slug: "new-zion-lpg",
     client: "New Z1on LPG",
-    title: "New Zion POS — multi-branch LPG retail & ordering platform",
+    title: "New Zion POS",
     summary:
       "A full retail operations platform for an LPG distributor: a cashier-friendly POS, an admin panel for orders, customers, products, branches, and users, plus date-ranged sales reports with PDF export. SMS-based order intake feeds the same queue, so phone-in and walk-in orders share one workflow across every branch.",
     tags: ["PHP", "JavaScript", "HTML/CSS", "SMS API", "Multi-branch", "POS", "Reporting"],
@@ -51,8 +51,8 @@ export const portfolio: CaseStudy[] = [
         "Three branches now share one workflow and one source of truth. Cashiers onboard in minutes instead of days, daily reconciliation is a button click, and the owner can pull a sales report for any date range without asking anyone.",
     },
     cover: {
-      src: "/portfolio/new-zion-lpg/pos-dashboard.webp",
-      alt: "New Zion POS dashboard showing customer and order metrics",
+      src: "/portfolio/new-zion-lpg/cover.png",
+      alt: "New Zion POS shown across desktop and laptop screens",
     },
     gallery: [
       {
@@ -115,7 +115,7 @@ export const portfolio: CaseStudy[] = [
   {
     slug: "coop-tracking",
     client: "Private cooperative (PH)",
-    title: "CoopTracker — member, loan, and shares management for a local co-op",
+    title: "CoopTracker",
     summary:
       "A mobile-first cooperative management web app: members, contributions, loans with interest and balances, share holdings with per-share pricing, a running ledger of collections and disbursements, period archives, and per-member equity and payment-compliance views. Officers run the whole co-op from their phones — no spreadsheets.",
     tags: [
@@ -143,8 +143,8 @@ export const portfolio: CaseStudy[] = [
         "Officers now run the entire co-op from their phones during meetings. Contributions, loans, and share equity are always live, audit-ready, and visible to every officer at the same time.",
     },
     cover: {
-      src: "/portfolio/coop-tracking/dashboard.webp",
-      alt: "CoopTracker dashboard with total balance, members, loans, and shares",
+      src: "/portfolio/coop-tracking/cover.png",
+      alt: "CoopTracker shown across desktop and laptop screens",
     },
     gallery: [
       {
@@ -187,7 +187,7 @@ export const portfolio: CaseStudy[] = [
   {
     slug: "371admin",
     client: "X-Meta Technologies",
-    title: "371admin — out-of-home ads operations & device fleet platform",
+    title: "371admin",
     summary:
       "An internal operations platform for an out-of-home advertising network: campaign and booking management with full VAT/WHT financials, a play-plan builder that links charge playplans to connected screens, real-time e-jeep device and SIM monitoring with expiry alerts, a program library with video previews and schedules, and take-away order management — all in one admin panel.",
     tags: [
@@ -217,8 +217,8 @@ export const portfolio: CaseStudy[] = [
         "Ads ops, finance, and field operations now share one source of truth. SIM cards stop being forgotten until they fail, bookings land with their numbers already reconciled, and the playplan-to-screen handoff is a single click.",
     },
     cover: {
-      src: "/portfolio/371admin/overview-dashboard.webp",
-      alt: "X-Meta 371admin overview dashboard with device, SIM, and ad metrics",
+      src: "/portfolio/371admin/cover.png",
+      alt: "X-Meta 371admin shown across desktop and laptop screens",
     },
     gallery: [
       {
@@ -261,7 +261,7 @@ export const portfolio: CaseStudy[] = [
   {
     slug: "ipay-international",
     client: "IPAY International",
-    title: "IPAY International — corporate site for a BSP-registered payments operator",
+    title: "IPAY International",
     summary:
       "A polished marketing site for a BSP-registered, OPSCOR-licensed payments infrastructure company. Communicates a complex enterprise offering — payment acceptance, billing & invoicing, disbursement, reconciliation, and APIs — through a clean, segmented narrative for SMEs, institutions, and platform partners, with a focused proposal-request flow at the end.",
     tags: [
@@ -290,8 +290,8 @@ export const portfolio: CaseStudy[] = [
         "A site that does the qualifying for sales. Prospects arrive, find the trust signals, route themselves to the right capability, and either book a proposal or self-serve from the app store badges in the footer. The marketing team can update copy without a developer.",
     },
     cover: {
-      src: "/portfolio/ipay/hero.webp",
-      alt: "IPAY International homepage hero with the headline Powering Seamless Business Payments Across the Philippines",
+      src: "/portfolio/ipay/cover.png",
+      alt: "IPAY International shown across desktop and laptop screens",
     },
     gallery: [
       {
