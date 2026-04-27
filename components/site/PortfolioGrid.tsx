@@ -75,19 +75,19 @@ export function PortfolioGrid({ items }: { items: CaseStudy[] }) {
               className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] transition-all duration-200 hover:border-white/[0.18] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
             >
               {item.cover ? (
-                <div className="relative aspect-[4/3] overflow-hidden border-b border-white/[0.08] bg-[hsl(0_0%_4%)] sm:aspect-[16/10]">
+                <div className="relative aspect-[16/10] overflow-hidden border-b border-white/[0.08] bg-[hsl(0_0%_4%)]">
                   <Image
                     src={item.cover.src}
                     alt={item.cover.alt}
                     fill
                     sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                    className="object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                 </div>
               ) : (
                 <div
                   aria-hidden
-                  className={`relative aspect-[4/3] overflow-hidden border-b border-white/[0.08] bg-gradient-to-br sm:aspect-[16/10] ${item.accent} opacity-30`}
+                  className={`relative aspect-[16/10] overflow-hidden border-b border-white/[0.08] bg-gradient-to-br ${item.accent} opacity-30`}
                 />
               )}
               <div className="relative p-5 sm:p-8">

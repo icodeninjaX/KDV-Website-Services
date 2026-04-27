@@ -64,7 +64,7 @@ function FeaturedCard({
       <div
         aria-hidden
         className={`relative overflow-hidden rounded-xl border border-white/[0.08] bg-[hsl(0_0%_4%)] ${
-          isLarge ? "aspect-[4/3] sm:aspect-[16/10]" : "aspect-[4/3] sm:aspect-[16/9]"
+          isLarge ? "aspect-[16/10]" : "aspect-[16/10] sm:aspect-[16/9]"
         }`}
       >
         {/* Browser chrome dots — hidden on mobile to maximize image area */}
@@ -79,7 +79,7 @@ function FeaturedCard({
             alt={item.cover.alt}
             fill
             sizes={isLarge ? "(min-width: 1024px) 60vw, 100vw" : "(min-width: 1024px) 30vw, 100vw"}
-            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+            className="object-contain transition-transform duration-500 group-hover:scale-[1.02]"
           />
         ) : (
           <>

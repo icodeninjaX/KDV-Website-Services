@@ -68,14 +68,14 @@ export default async function CaseStudyPage(
         <FadeIn>
           {study.cover ? (
             <>
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_4%)] sm:aspect-[16/8]">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_4%)] sm:aspect-[16/8]">
                 <Image
                   src={study.cover.src}
                   alt={study.cover.alt}
                   fill
                   priority
                   sizes="(min-width: 1024px) 1024px, 100vw"
-                  className="object-cover object-top"
+                  className="object-contain"
                 />
                 {/* Outcome overlay — only on >= sm so the screenshot stays unobscured on mobile */}
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-32 bg-gradient-to-t from-black/85 via-black/40 to-transparent sm:block" />
