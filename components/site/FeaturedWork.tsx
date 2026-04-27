@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { portfolio } from "@/lib/portfolio";
@@ -63,36 +64,48 @@ function FeaturedCard({
       <div
         aria-hidden
         className={`relative overflow-hidden rounded-xl border border-white/[0.08] bg-[hsl(0_0%_4%)] ${
-          isLarge ? "aspect-[16/10]" : "aspect-[16/9]"
+          isLarge ? "aspect-[4/3] sm:aspect-[16/10]" : "aspect-[4/3] sm:aspect-[16/9]"
         }`}
       >
-        {/* Browser chrome dots */}
-        <div className="flex items-center gap-1.5 border-b border-white/[0.06] px-3 py-2">
+        {/* Browser chrome dots — hidden on mobile to maximize image area */}
+        <div className="relative z-10 hidden items-center gap-1.5 border-b border-white/[0.06] bg-[hsl(0_0%_4%/0.85)] px-3 py-2 backdrop-blur sm:flex">
           <span className="h-2 w-2 rounded-full bg-white/15" />
           <span className="h-2 w-2 rounded-full bg-white/15" />
           <span className="h-2 w-2 rounded-full bg-white/15" />
         </div>
-        {/* Accent gradient wash */}
-        <div
-          className={`absolute inset-x-0 bottom-0 top-8 bg-gradient-to-br ${item.accent} opacity-20`}
-        />
-        {/* Subtle grid on top */}
-        <div
-          className="absolute inset-x-0 bottom-0 top-8 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-          }}
-        />
+        {item.cover ? (
+          <Image
+            src={item.cover.src}
+            alt={item.cover.alt}
+            fill
+            sizes={isLarge ? "(min-width: 1024px) 60vw, 100vw" : "(min-width: 1024px) 30vw, 100vw"}
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+        ) : (
+          <>
+            {/* Accent gradient wash */}
+            <div
+              className={`absolute inset-x-0 bottom-0 top-8 bg-gradient-to-br ${item.accent} opacity-20`}
+            />
+            {/* Subtle grid on top */}
+            <div
+              className="absolute inset-x-0 bottom-0 top-8 opacity-[0.04]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+                backgroundSize: "32px 32px",
+              }}
+            />
+          </>
+        )}
         {/* Pinned outcome pill */}
-        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+        <div className="absolute bottom-3 left-3 right-3 z-10 flex items-center justify-between">
           <span className="inline-flex items-center rounded-full border border-white/15 bg-[hsl(0_0%_4%/0.85)] px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur">
             {item.outcome}
           </span>
           <ArrowUpRight
             size={16}
-            className="text-white/40 transition-all duration-200 group-hover:text-white group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            className="rounded-full bg-[hsl(0_0%_4%/0.85)] p-0.5 text-white/70 backdrop-blur transition-all duration-200 group-hover:text-white group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
             aria-hidden
           />
         </div>

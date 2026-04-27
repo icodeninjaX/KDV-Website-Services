@@ -10,3 +10,6 @@ out
 .DS_Store
 *.log
 next-env.d.ts
+
+# Source screenshots — converted to WebP under public/portfolio/
+images/
