@@ -98,7 +98,7 @@ export function PortfolioGrid({ items }: { items: CaseStudy[] }) {
                 <h2 className="mt-3 font-display text-lg sm:text-2xl font-bold text-white leading-snug sm:mt-4">
                   {item.title}
                 </h2>
-                <p className="mt-2 text-sm leading-relaxed text-white/55 sm:mt-3 sm:text-justify">
+                <p className="mt-2 text-sm leading-relaxed text-white/55 sm:mt-3 text-justify">
                   {item.summary}
                 </p>
 

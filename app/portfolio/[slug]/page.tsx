@@ -60,7 +60,7 @@ export default async function CaseStudyPage(
           <h1 className="mt-4 max-w-4xl font-display font-bold tracking-tight text-white text-balance text-3xl sm:text-5xl lg:text-6xl leading-[1.15] sm:leading-[1.1]">
             {study.title}
           </h1>
-          <p className="mt-4 max-w-2xl text-[15px] text-white/55 leading-relaxed sm:text-justify">{study.summary}</p>
+          <p className="mt-4 max-w-2xl text-[15px] text-white/55 leading-relaxed text-justify">{study.summary}</p>
         </FadeIn>
       </section>
 
@@ -116,7 +116,7 @@ export default async function CaseStudyPage(
             <div className="space-y-8 sm:space-y-10">
               <div>
                 <div className="label-mono">The challenge</div>
-                <p className="mt-3 text-white/65 leading-relaxed text-[15px] sm:text-base sm:text-justify">
+                <p className="mt-3 text-white/65 leading-relaxed text-[15px] sm:text-base text-justify">
                   {study.body.challenge}
                 </p>
               </div>
@@ -138,7 +138,7 @@ export default async function CaseStudyPage(
               </div>
               <div>
                 <div className="label-mono">Result</div>
-                <p className="mt-3 text-white/65 leading-relaxed text-[15px] sm:text-base sm:text-justify">
+                <p className="mt-3 text-white/65 leading-relaxed text-[15px] sm:text-base text-justify">
                   {study.body.result}
                 </p>
               </div>
@@ -148,7 +148,7 @@ export default async function CaseStudyPage(
               </p>
             </div>
           ) : (
-            <div className="space-y-5 text-white/60 leading-relaxed text-[15px] sm:text-justify">
+            <div className="space-y-5 text-white/60 leading-relaxed text-[15px] text-justify">
               <p>
                 <strong className="font-semibold text-white">The challenge.</strong>{" "}
                 {study.client} came to me with a familiar problem: the existing system worked,
