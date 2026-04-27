@@ -131,7 +131,7 @@ export default async function CaseStudyPage(
                       <span className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/80">
                         <Check size={12} aria-hidden />
                       </span>
-                      <span>{item}</span>
+                      <span className="flex-1 text-justify">{item}</span>
                     </li>
                   ))}
                 </ul>
