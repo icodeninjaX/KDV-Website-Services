@@ -50,14 +50,8 @@ function FeaturedCard({ item }: { item: (typeof portfolio)[number] }) {
       {/* Mockup surface — browser frame stand-in */}
       <div
         aria-hidden
-        className="relative aspect-[16/10] overflow-hidden rounded-xl border border-white/[0.08] bg-[hsl(0_0%_4%)]"
+        className="relative aspect-[16/10] overflow-hidden rounded-xl bg-[hsl(0_0%_4%)]"
       >
-        {/* Browser chrome dots — hidden on mobile to maximize image area */}
-        <div className="relative z-10 hidden items-center gap-1.5 border-b border-white/[0.06] bg-[hsl(0_0%_4%/0.85)] px-3 py-2 backdrop-blur sm:flex">
-          <span className="h-2 w-2 rounded-full bg-white/15" />
-          <span className="h-2 w-2 rounded-full bg-white/15" />
-          <span className="h-2 w-2 rounded-full bg-white/15" />
-        </div>
         {item.cover ? (
           <Image
             src={item.cover.src}
