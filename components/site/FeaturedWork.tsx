@@ -64,7 +64,7 @@ function FeaturedCard({ item }: { item: (typeof portfolio)[number] }) {
             alt={item.cover.alt}
             fill
             sizes="(min-width: 1024px) 45vw, 100vw"
-            className="object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+            className={`${item.cover.fit === "cover" ? "object-cover" : "object-contain"} transition-transform duration-500 group-hover:scale-[1.02]`}
           />
         ) : (
           <>

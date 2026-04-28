@@ -81,7 +81,7 @@ export function PortfolioGrid({ items }: { items: CaseStudy[] }) {
                     alt={item.cover.alt}
                     fill
                     sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                    className={`${item.cover.fit === "cover" ? "object-cover" : "object-contain"} transition-transform duration-500 group-hover:scale-[1.02]`}
                   />
                 </div>
               ) : (

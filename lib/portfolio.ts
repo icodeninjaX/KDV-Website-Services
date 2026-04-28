@@ -2,6 +2,7 @@ export type CaseStudyImage = {
   src: string;
   alt: string;
   caption?: string;
+  fit?: "cover" | "contain";
 };
 
 export type CaseStudyBody = {
@@ -53,6 +54,7 @@ export const portfolio: CaseStudy[] = [
     cover: {
       src: "/portfolio/new-zion-lpg/cover.png",
       alt: "New Zion POS shown across desktop and laptop screens",
+      fit: "cover",
     },
     gallery: [
       {
@@ -144,7 +146,8 @@ export const portfolio: CaseStudy[] = [
     },
     cover: {
       src: "/portfolio/coop-tracking/cover.png",
-      alt: "CoopTracker shown across desktop and laptop screens",
+      alt: "CoopTracker — smarter cooperative management on mobile",
+      fit: "cover",
     },
     gallery: [
       {
@@ -218,7 +221,8 @@ export const portfolio: CaseStudy[] = [
     },
     cover: {
       src: "/portfolio/371admin/cover.png",
-      alt: "X-Meta 371admin shown across desktop and laptop screens",
+      alt: "X-Meta 371admin — one platform for ads, devices, and finance",
+      fit: "cover",
     },
     gallery: [
       {
@@ -292,6 +296,7 @@ export const portfolio: CaseStudy[] = [
     cover: {
       src: "/portfolio/ipay/cover.png",
       alt: "IPAY International shown across desktop and laptop screens",
+      fit: "cover",
     },
     gallery: [
       {
