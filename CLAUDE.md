@@ -35,7 +35,7 @@ public/logos/      # Manual SVG payment-brand assets (awaiting sourcing)
 ## Animation conventions
 All motion respects `prefers-reduced-motion`. Primitives:
 - `FadeIn` — wrapper for in-view fade-up
-- `ScrollProgress` — fixed top gradient bar driven by `useScroll + useSpring`
+- `RouteProgress` — fixed top gradient bar that animates on internal navigation (not scroll); shows after 80ms to avoid flicker on instant route changes
 - `CountUp` — animates 0→value when in view
 - `Magnetic` — cursor-attraction wrapper for CTAs
 - `grid-bg`, `glow-card`, `.text-gradient` — CSS-level effects
@@ -73,7 +73,7 @@ npm run lint    # eslint
 - **PH-local specificity matters.** Mention GCash / Maya / PayMongo / BPI by name when relevant — that's the trust signal for MSME clients.
 
 ## Key files to know
-- `app/layout.tsx` — fonts, global chrome (Header, Footer, ScrollProgress, GradientBackground, Toaster)
+- `app/layout.tsx` — fonts, global chrome (Header, Footer, RouteProgress, GradientBackground, Toaster)
 - `app/page.tsx` — home composition order: Hero → TrustBar → ServicesGrid → FeaturedWork → ProcessSteps → Testimonials → HomeFAQ → CTASection
 - `lib/site.ts` — site metadata, nav config, response window
 - `lib/services.ts` — 3 services (website-creation, business-dashboards, custom-websites)

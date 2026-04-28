@@ -5,7 +5,7 @@ import { portfolio } from "@/lib/portfolio";
 import { FadeIn } from "./FadeIn";
 
 export function FeaturedWork() {
-  const [primary, secondary, tertiary] = portfolio;
+  const items = portfolio.slice(0, 4);
 
   return (
     <section className="container-page py-16 sm:py-20 lg:py-24">
@@ -17,8 +17,8 @@ export function FeaturedWork() {
               Real clients. Real outcomes.
             </h2>
             <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base text-justify">
-              Three recent projects: an LPG ordering system, a cooperative tracker, and an
-              internal fleet dashboard. Same principles, different shapes.
+              Four recent projects: an LPG ordering system, a cooperative tracker, an internal
+              ad-ops dashboard, and a fintech marketing site. Same principles, different shapes.
             </p>
           </div>
           <Link
@@ -30,31 +30,18 @@ export function FeaturedWork() {
         </div>
       </FadeIn>
 
-      <div className="mt-10 sm:mt-12 grid gap-5 lg:grid-cols-5">
-        <FadeIn className="lg:col-span-3" delay={0.04}>
-          <FeaturedCard item={primary} size="lg" />
-        </FadeIn>
-        <div className="grid gap-5 lg:col-span-2">
-          <FadeIn delay={0.1}>
-            <FeaturedCard item={secondary} size="sm" />
+      <div className="mt-10 sm:mt-12 grid gap-5 lg:grid-cols-2">
+        {items.map((item, i) => (
+          <FadeIn key={item.slug} delay={Math.min(0.04 + i * 0.06, 0.22)}>
+            <FeaturedCard item={item} />
           </FadeIn>
-          <FadeIn delay={0.16}>
-            <FeaturedCard item={tertiary} size="sm" />
-          </FadeIn>
-        </div>
+        ))}
       </div>
     </section>
   );
 }
 
-function FeaturedCard({
-  item,
-  size,
-}: {
-  item: (typeof portfolio)[number];
-  size: "lg" | "sm";
-}) {
-  const isLarge = size === "lg";
+function FeaturedCard({ item }: { item: (typeof portfolio)[number] }) {
   return (
     <Link
       href={`/portfolio/${item.slug}`}
@@ -63,9 +50,7 @@ function FeaturedCard({
       {/* Mockup surface — browser frame stand-in */}
       <div
         aria-hidden
-        className={`relative overflow-hidden rounded-xl border border-white/[0.08] bg-[hsl(0_0%_4%)] ${
-          isLarge ? "aspect-[16/10]" : "aspect-[16/10] sm:aspect-[16/9]"
-        }`}
+        className="relative aspect-[16/10] overflow-hidden rounded-xl border border-white/[0.08] bg-[hsl(0_0%_4%)]"
       >
         {/* Browser chrome dots — hidden on mobile to maximize image area */}
         <div className="relative z-10 hidden items-center gap-1.5 border-b border-white/[0.06] bg-[hsl(0_0%_4%/0.85)] px-3 py-2 backdrop-blur sm:flex">
@@ -78,7 +63,7 @@ function FeaturedCard({
             src={item.cover.src}
             alt={item.cover.alt}
             fill
-            sizes={isLarge ? "(min-width: 1024px) 60vw, 100vw" : "(min-width: 1024px) 30vw, 100vw"}
+            sizes="(min-width: 1024px) 45vw, 100vw"
             className="object-contain transition-transform duration-500 group-hover:scale-[1.02]"
           />
         ) : (
@@ -117,18 +102,11 @@ function FeaturedCard({
           <span>{item.client}</span>
           <span>{item.year}</span>
         </div>
-        <h3
-          className={`mt-3 font-display font-bold text-white ${
-            isLarge ? "text-xl sm:text-2xl lg:text-[28px] leading-tight" : "text-lg leading-snug"
-          }`}
-        >
+        <h3 className="mt-3 font-display font-bold text-white text-lg sm:text-xl leading-snug">
           {item.title}
         </h3>
-        {isLarge && (
-          <p className="mt-3 text-sm leading-relaxed text-white/55 text-justify">{item.summary}</p>
-        )}
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {item.tags.slice(0, isLarge ? 4 : 2).map((t) => (
+          {item.tags.slice(0, 3).map((t) => (
             <span
               key={t}
               className="rounded-full border border-white/[0.08] bg-white/[0.04] px-2 py-0.5 text-[11px] text-white/55"

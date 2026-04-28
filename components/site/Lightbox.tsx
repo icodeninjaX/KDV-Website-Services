@@ -60,14 +60,15 @@ export function Gallery({ images }: { images: CaseStudyImage[] }) {
                 type="button"
                 onClick={() => open(i)}
                 aria-label={`Zoom: ${shot.caption ?? shot.alt}`}
-                className="group relative block aspect-[16/9] w-full cursor-zoom-in overflow-hidden border-b border-white/[0.08] bg-[hsl(0_0%_4%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
+                className="group relative block aspect-[16/9] w-full cursor-zoom-in overflow-hidden border-b border-white/[0.08] bg-[hsl(0_0%_4%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 md:aspect-auto"
               >
                 <Image
                   src={shot.src}
                   alt={shot.alt}
-                  fill
+                  width={1920}
+                  height={1080}
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                  className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02] md:static md:h-auto md:w-full md:object-contain md:transition-none md:group-hover:scale-100"
                 />
                 <span className="pointer-events-none absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-white/15 bg-black/55 px-2 py-1 text-[11px] font-medium text-white/85 opacity-0 backdrop-blur transition-opacity duration-200 group-hover:opacity-100">
                   <ZoomIn size={12} aria-hidden /> Zoom
@@ -177,10 +178,10 @@ export function Gallery({ images }: { images: CaseStudyImage[] }) {
           )}
 
           <figure
-            className="relative flex max-h-full max-w-6xl flex-col items-center"
+            className="relative flex max-h-full w-full max-w-[96vw] flex-col items-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative max-h-[78vh] w-full overflow-hidden rounded-xl border border-white/10 bg-[hsl(0_0%_4%)] sm:max-h-[80vh]">
+            <div className="relative flex max-h-[78vh] w-full items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-[hsl(0_0%_4%)] sm:max-h-[88vh]">
               <Image
                 key={current.src}
                 src={current.src}
@@ -188,8 +189,8 @@ export function Gallery({ images }: { images: CaseStudyImage[] }) {
                 width={1920}
                 height={1080}
                 priority
-                sizes="(min-width: 1280px) 1152px, 100vw"
-                className="h-auto max-h-[78vh] w-auto object-contain sm:max-h-[80vh]"
+                sizes="96vw"
+                className="h-auto max-h-[78vh] w-auto max-w-full object-contain sm:max-h-[88vh]"
               />
             </div>
             {current.caption && (
