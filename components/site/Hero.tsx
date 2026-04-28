@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
@@ -28,6 +29,17 @@ export function Hero() {
 
   return (
     <section className="relative overflow-x-hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <Image
+          src="/hero-section.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[70%_center] sm:object-center scale-[1.6] sm:scale-100 origin-center opacity-70 sm:opacity-100"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/20 to-background sm:from-background/30 sm:via-background/10" />
+      </div>
       <div className="container-page py-16 sm:py-24 lg:py-36">
         <FadeIn mount>
           <div className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-xs text-white/60 backdrop-blur">
