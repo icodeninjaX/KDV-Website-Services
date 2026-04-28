@@ -5,6 +5,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { GradientBackground } from "@/components/site/GradientBackground";
 import { RouteProgress } from "@/components/site/RouteProgress";
+import { TawkChat } from "@/components/site/TawkChat";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main-content" className="flex-1">{children}</main>
         <Footer />
         <Toaster theme="dark" richColors position="top-right" />
+        <TawkChat />
       </body>
     </html>
   );
