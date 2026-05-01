@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Mail, Clock, MapPin } from "lucide-react";
 import { SiWhatsapp, SiViber, SiMessenger } from "react-icons/si";
 import { FadeIn } from "@/components/site/FadeIn";
-import { ContactForm } from "@/components/site/ContactForm";
+import { ContactPanel } from "@/components/site/ContactPanel";
 import { site } from "@/lib/site";
 
 const channels = [
@@ -103,7 +103,7 @@ export default function ContactPage() {
         <FadeIn mount delay={0.08} className="lg:col-span-3">
           <div className="border-spin-wrapper is-active">
             <div className="relative z-10 rounded-[15px] bg-[hsl(0_0%_6%)] p-5 sm:p-8">
-              <ContactForm />
+              <ContactPanel />
             </div>
           </div>
         </FadeIn>

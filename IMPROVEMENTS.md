@@ -38,18 +38,18 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ## Tier 1 — Lead conversion
 
 ### 1.1 Calendar booking embed on `/contact`
-**Status:** 🔴 Not started
+**Status:** 🟡 In progress
 
 **Why.** PH MSME owners almost always want a 15-min call before paying anything. Email-only forces a back-and-forth thread that loses momentum. Self-booking removes the bottleneck and signals "this is a real operator."
 
-**How.** Cal.com (free tier) inline embed next to `ContactForm.tsx`. Keep the form — some clients still prefer async.
+**How.** Cal.com (free tier) inline embed surfaced as a tabbed panel in `ContactPanel.tsx` ("Send a message" / "Book a 15-min call"). Form stays the default tab — some clients still prefer async.
 
 **Steps:**
-1. 🔲 Sign up at cal.com, create a 15-min "Discovery call" event type with PH timezone, set availability windows
-2. 🔲 Copy the inline embed snippet from cal.com → `</> embed` → React
-3. 🔲 Install the Cal.com React package: `npm i @calcom/embed-react`
-4. 🔲 Create `components/site/CalEmbed.tsx` (client component) wrapping `<Cal />` with theme="dark" and the brand indigo as the primary color
-5. 🔲 Add it to `app/contact/page.tsx` as a third panel ("Email · Form · Book a call") or above the form on mobile
+1. ✅ Sign up at cal.com, create a 15-min event type with PH timezone, set availability windows (slug: `kdvwebservices/15min`)
+2. ✅ Copy the inline embed snippet from cal.com → `</> embed` → React
+3. ✅ Install the Cal.com React package: `npm i @calcom/embed-react`
+4. ✅ Create `components/site/CalEmbed.tsx` (client component) wrapping `<Cal />` with brand violet `#a855f7` and `theme: "dark"`
+5. ✅ Wire it into `app/contact/page.tsx` via new `ContactPanel.tsx` tab switcher (form default, calendar on second tab)
 6. 🔲 Test: pick a slot, confirm booking lands in your calendar and an email arrives
 7. 🔲 Mark Status 🟢 Done
 
