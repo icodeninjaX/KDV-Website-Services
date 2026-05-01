@@ -38,7 +38,7 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ## Tier 1 — Lead conversion
 
 ### 1.1 Calendar booking embed on `/contact`
-**Status:** 🟡 In progress
+**Status:** 🟢 Done
 
 **Why.** PH MSME owners almost always want a 15-min call before paying anything. Email-only forces a back-and-forth thread that loses momentum. Self-booking removes the bottleneck and signals "this is a real operator."
 
@@ -50,8 +50,8 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 3. ✅ Install the Cal.com React package: `npm i @calcom/embed-react`
 4. ✅ Create `components/site/CalEmbed.tsx` (client component) wrapping `<Cal />` with brand violet `#a855f7` and `theme: "dark"`
 5. ✅ Wire it into `app/contact/page.tsx` via new `ContactPanel.tsx` tab switcher (form default, calendar on second tab)
-6. 🔲 Test: pick a slot, confirm booking lands in your calendar and an email arrives
-7. 🔲 Mark Status 🟢 Done
+6. ✅ Test: pick a slot, confirm booking lands in your calendar and an email arrives
+7. ✅ Mark Status 🟢 Done
 
 ---
 
