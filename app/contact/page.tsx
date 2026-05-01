@@ -1,8 +1,30 @@
 import type { Metadata } from "next";
 import { Mail, Clock, MapPin } from "lucide-react";
+import { SiWhatsapp, SiViber, SiMessenger } from "react-icons/si";
 import { FadeIn } from "@/components/site/FadeIn";
 import { ContactForm } from "@/components/site/ContactForm";
 import { site } from "@/lib/site";
+
+const channels = [
+  {
+    label: "WhatsApp",
+    href: site.whatsapp,
+    Icon: SiWhatsapp,
+    hover: "hover:border-[#25D366]/60 hover:text-[#25D366]",
+  },
+  {
+    label: "Viber",
+    href: site.viber,
+    Icon: SiViber,
+    hover: "hover:border-[#7360F2]/60 hover:text-[#9b8cff]",
+  },
+  {
+    label: "Messenger",
+    href: site.messenger,
+    Icon: SiMessenger,
+    hover: "hover:border-[#0084FF]/60 hover:text-[#3aa0ff]",
+  },
+] as const;
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -24,7 +46,29 @@ export default function ContactPage() {
             gets a real reply from me, not a sales funnel.
           </p>
 
-          <dl className="mt-8 sm:mt-10 space-y-5 text-sm">
+          <div className="mt-8 sm:mt-10">
+            <div className="label-mono text-white/40">Chat with me</div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {channels.map(({ label, href, Icon, hover }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Chat with Keith on ${label}`}
+                  className={`inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-sm text-white/75 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 ${hover}`}
+                >
+                  <Icon size={16} aria-hidden />
+                  <span>{label}</span>
+                </a>
+              ))}
+            </div>
+            <p className="mt-2 text-xs text-white/35">
+              Best on mobile. Desktop browsers may not have a handler installed.
+            </p>
+          </div>
+
+          <dl className="mt-8 space-y-5 text-sm">
             <div className="flex items-start gap-3">
               <Mail size={17} className="mt-0.5 shrink-0 text-indigo-400" aria-hidden />
               <div>

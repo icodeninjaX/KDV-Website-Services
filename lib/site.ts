@@ -11,6 +11,9 @@ export const site = {
   location: "Philippines — serving clients nationwide",
   country: "PH",
   currency: "PHP",
+  whatsapp: "https://wa.me/639555583927",
+  viber: "viber://chat?number=%2B639555583927",
+  messenger: "https://m.me/kdvwebsiteservices",
 } as const;
 
 export const nav = [

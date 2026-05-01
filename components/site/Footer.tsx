@@ -1,7 +1,14 @@
 import Link from "next/link";
+import { SiWhatsapp, SiViber, SiMessenger } from "react-icons/si";
 import { site } from "@/lib/site";
 import { services } from "@/lib/services";
 import { Logo } from "./Logo";
+
+const footerChannels = [
+  { label: "WhatsApp", href: site.whatsapp, Icon: SiWhatsapp },
+  { label: "Viber", href: site.viber, Icon: SiViber },
+  { label: "Messenger", href: site.messenger, Icon: SiMessenger },
+] as const;
 
 export function Footer() {
   return (
@@ -21,6 +28,20 @@ export function Footer() {
           >
             {site.email}
           </a>
+          <div className="mt-4 flex items-center gap-2">
+            {footerChannels.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Chat with Keith on ${label}`}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/55 transition-colors hover:border-white/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
+              >
+                <Icon size={15} aria-hidden />
+              </a>
+            ))}
+          </div>
         </div>
 
         <div>
