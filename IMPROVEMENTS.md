@@ -56,7 +56,7 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ---
 
 ### 1.2 WhatsApp / Viber / Messenger contact channel
-**Status:** 🟡 In progress
+**Status:** 🟢 Done
 
 **Why.** PH SMB owners live in WhatsApp/Viber/Messenger. Forcing them through a contact form drops conversion meaningfully. This is the single most PH-local improvement available.
 
@@ -66,8 +66,8 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 1. ✅ Add `whatsapp`, `viber`, `messenger` fields to the `site` const in `lib/site.ts` (WhatsApp format: `https://wa.me/63XXXXXXXXXX`, Viber: `viber://chat?number=%2B63XXXXXXXXXX`, Messenger: `https://m.me/<page-handle>`)
 2. ✅ Add a "Chat with me" block in the contact page sidebar (`app/contact/page.tsx`) with the three channel links above the existing email row
 3. ✅ Add channel icons to `Footer.tsx` next to the existing email link
-4. 🔲 Test the deep links on a real phone (desktop browsers fail silently)
-5. 🔲 Mark Status 🟢 Done
+4. ✅ Test the deep links on a real phone (desktop browsers fail silently)
+5. ✅ Mark Status 🟢 Done
 
 ---
 
