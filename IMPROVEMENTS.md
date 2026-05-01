@@ -60,16 +60,14 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 
 **Why.** PH SMB owners live in WhatsApp/Viber/Messenger. Forcing them through a contact form drops conversion meaningfully. This is the single most PH-local improvement available.
 
-**How.** Add channels to `lib/site.ts`, surface in `Footer.tsx` and the contact-page sidebar, plus a floating "Chat on WhatsApp" pill on mobile. Use deep links — no SDK.
+**How.** Add channels to `lib/site.ts`, surface in `Footer.tsx` and the contact-page sidebar. Deep links — no SDK. Floating mobile pill scoped out: contact-page badges + footer icons + Tawk widget already cover the mobile entry points without adding a third overlay.
 
 **Steps:**
 1. ✅ Add `whatsapp`, `viber`, `messenger` fields to the `site` const in `lib/site.ts` (WhatsApp format: `https://wa.me/63XXXXXXXXXX`, Viber: `viber://chat?number=%2B63XXXXXXXXXX`, Messenger: `https://m.me/<page-handle>`)
-3. ✅ Add a "Chat with me" block in the contact page sidebar (`app/contact/page.tsx`) with the three channel links above the existing email row
-4. ✅ Add channel icons to `Footer.tsx` next to the existing email link
-5. ✅ Create `components/site/MobileChatPill.tsx` — a floating bottom-right pill linking to WhatsApp, only visible on `<md` breakpoint, hidden on `/contact`
-6. ✅ Mount the pill in `app/layout.tsx` next to `<TawkChat />`
-7. 🔲 Test the deep links on a real phone (desktop browsers fail silently)
-8. 🔲 Mark Status 🟢 Done
+2. ✅ Add a "Chat with me" block in the contact page sidebar (`app/contact/page.tsx`) with the three channel links above the existing email row
+3. ✅ Add channel icons to `Footer.tsx` next to the existing email link
+4. 🔲 Test the deep links on a real phone (desktop browsers fail silently)
+5. 🔲 Mark Status 🟢 Done
 
 ---
 
