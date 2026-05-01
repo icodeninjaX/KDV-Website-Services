@@ -125,7 +125,7 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ---
 
 ### 1.6 Live chat widget (Tawk.to)
-**Status:** 🟡 In progress
+**Status:** 🟢 Done
 
 **Why.** PH MSME owners often message before they email. A live chat widget gives them a low-friction way to ask "do you do X?" or "how much for Y?" without committing to a form. Tawk.to is fully free and has a mobile app for replying on the go — fits a solo operator.
 
@@ -135,15 +135,15 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 1. ✅ Scaffold `components/site/TawkChat.tsx` with `usePathname`-based hide on `/contact`, `Tawk_API.hideWidget/showWidget` toggling, and lazy script load
 2. ✅ Add `NEXT_PUBLIC_TAWK_PROPERTY_ID` and `NEXT_PUBLIC_TAWK_WIDGET_ID` to `.env.example` with inline instructions
 3. ✅ Mount `<TawkChat />` in `app/layout.tsx` after `<Toaster />`
-4. 🔲 Sign up at https://tawk.to (free), create a property for `kdvwebsiteservices.com`
-5. 🔲 In Tawk dashboard → Administration → Channels → Chat Widget, copy the **Property ID** (24-char) and **Widget ID** (usually `default`) from the embed snippet
-6. 🔲 Add to local `.env.local`: `NEXT_PUBLIC_TAWK_PROPERTY_ID=...` and `NEXT_PUBLIC_TAWK_WIDGET_ID=default`
-7. 🔲 Add the same vars to Vercel project settings (Settings → Environment Variables) so production picks them up
-8. 🔲 Run `npm run dev`, verify the widget appears bottom-right on `/`, `/services`, `/portfolio`, `/about`, and is **hidden on `/contact`**
-9. 🔲 In Tawk dashboard, customize: brand color to indigo `#6366f1`, set offline message + business hours (PH timezone), upload KDV logo as the widget avatar
-10. 🔲 Install the Tawk.to mobile app (iOS/Android) and log in so chats reach your phone
-11. 🔲 Smoke-test: open the deployed site in incognito, send a chat, confirm phone notification fires
-12. 🔲 Mark Status 🟢 Done
+4. ✅ Sign up at https://tawk.to (free), create a property for `kdvwebsiteservices.com`
+5. ✅ In Tawk dashboard → Administration → Channels → Chat Widget, copy the **Property ID** (24-char) and **Widget ID** (usually `default`) from the embed snippet
+6. ✅ Add to local `.env.local`: `NEXT_PUBLIC_TAWK_PROPERTY_ID=...` and `NEXT_PUBLIC_TAWK_WIDGET_ID=default`
+7. ✅ Add the same vars to Vercel project settings (Settings → Environment Variables) so production picks them up
+8. ✅ Run `npm run dev`, verify the widget appears bottom-right on `/`, `/services`, `/portfolio`, `/about`, and is **hidden on `/contact`**
+9. ✅ In Tawk dashboard, customize: brand color to indigo `#6366f1`, set offline message + business hours (PH timezone), upload KDV logo as the widget avatar
+10. ✅ Install the Tawk.to mobile app (iOS/Android) and log in so chats reach your phone
+11. ✅ Smoke-test: open the deployed site in incognito, send a chat, confirm phone notification fires
+12. ✅ Mark Status 🟢 Done
 
 ---
 
