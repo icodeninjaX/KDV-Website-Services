@@ -13,7 +13,7 @@ export const site = {
   currency: "PHP",
   whatsapp: "https://wa.me/639555583927",
   viber: "viber://chat?number=%2B639555583927",
-  messenger: "https://m.me/kdvwebsiteservices",
+  messenger: "https://www.messenger.com/t/kdvwebsiteservices",
 } as const;
 
 export const nav = [
