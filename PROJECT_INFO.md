@@ -90,19 +90,10 @@ Consider adding:
 - WhatsApp / Viber (PH-common)
 - Calendar booking link (Cal.com, Google Calendar)
 
-### 10. Logo assets
-`/public/logos/` is empty. Needed for trust bar:
-- `gcash.svg`
-- `maya.svg`
-- `paymongo.svg`
-- `bpi.svg`
-
-Without these, `LogoMark` falls back to the brand name as text — functional but less polished.
-
-### 11. Brand voice notes
+### 10. Brand voice notes
 For future copy: confirm tone (technical + warm? straight-talk + PH-local? more corporate?) so future edits stay consistent.
 
-### 12. Project screenshots
+### 11. Project screenshots
 `/screenshots/` dir exists (untracked). Are these intended as portfolio mockup sources?
 If yes — wire them into `FeaturedWork` card visuals instead of the gradient browser-frame placeholder.
 

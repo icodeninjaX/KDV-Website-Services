@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Syne } from "next/font/google";
 import { Toaster } from "sonner";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { FloatingNav } from "@/components/site/FloatingNav";
 import { GradientBackground } from "@/components/site/GradientBackground";
 import { RouteProgress } from "@/components/site/RouteProgress";
 import { TawkChat } from "@/components/site/TawkChat";
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <RouteProgress />
         <GradientBackground />
         <Header />
+        <FloatingNav />
         <main id="main-content" className="flex-1">{children}</main>
         <Footer />
         <Toaster theme="dark" richColors position="top-right" />

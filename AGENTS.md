@@ -1,6 +1,6 @@
-# CLAUDE.md — KDV Website Services
+# AGENTS.md — KDV Website Services
 
-Project context for Claude Code. Kept short; follow the rules below and check `PROJECT_INFO.md` (real-content tracker) and `IMPROVEMENTS.md` (feature roadmap with status) before starting any task.
+Project context for Codex. Kept short; follow the rules below and check `PROJECT_INFO.md` (real-content tracker) and `IMPROVEMENTS.md` (feature roadmap with status) before starting any task.
 
 ---
 
@@ -8,7 +8,7 @@ Project context for Claude Code. Kept short; follow the rules below and check `P
 
 These rules govern *every* conversation in this repo — read them before doing anything else.
 
-1. **Three living docs, no others.** This repo has `CLAUDE.md` (rules), `PROJECT_INFO.md` (content gaps), `IMPROVEMENTS.md` (feature roadmap). Don't create a fourth without asking — doc sprawl rots fast.
+1. **Three living docs, no others.** This repo has `AGENTS.md` (rules), `PROJECT_INFO.md` (content gaps), `IMPROVEMENTS.md` (feature roadmap). Don't create a fourth without asking — doc sprawl rots fast.
 2. **Roadmap is source of truth.** If a task matches an `IMPROVEMENTS.md` item, flip its **Status** to 🟡 In progress, check off (`🔲` → `✅`) each step as you finish it, and flip to 🟢 Done only when every step is `✅`. Never silently skip the doc update.
 3. **Reference roadmap IDs in commits.** Working on item 1.6 → `feat(1.6): add Tawk.to scaffold`. Makes the changelog readable.
 4. **No fabricated content.** Stats, client names, quotes, outcomes, testimonials — only real, verifiable data. If unsure, anonymize or omit. See `PROJECT_INFO.md` for what's confirmed vs pending.

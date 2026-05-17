@@ -181,23 +181,7 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 
 ---
 
-### 2.3 Trust bar logo assets
-**Status:** 🔴 Not started
-
-**Why.** Already flagged in `PROJECT_INFO.md` (item 10). The trust bar text-falls-back, which reads as unfinished. Lowest-effort credibility bump on the site.
-
-**How.** Source SVGs into `/public/logos/`. `LogoMark` already handles the swap.
-
-**Steps:**
-1. 🔲 Download official brand SVGs: GCash, Maya, PayMongo, BPI (use brand-press kits or Simple Icons where available — confirm permission for each)
-2. 🔲 Save into `/public/logos/` with the exact filenames referenced in `lib/logos.ts`: `gcash.svg`, `maya.svg`, `paymongo.svg`, `bpi.svg`
-3. 🔲 Verify each SVG renders monochrome white (override `fill` in CSS if not)
-4. 🔲 Confirm `LogoMark` no longer falls back to text on the home page trust bar
-5. 🔲 Mark Status 🟢 Done
-
----
-
-### 2.4 "Process in their words" — short audio clip from a real client
+### 2.3 "Process in their words" — short audio clip from a real client
 **Status:** 🔴 Not started
 
 **Why.** A 30-second voice clip is more persuasive than any paragraph. PH B2B buying is heavily relationship-driven; hearing another business owner closes faster than written copy.
@@ -214,7 +198,7 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 
 ---
 
-### 2.5 Per-page OpenGraph images (auto-generated)
+### 2.4 Per-page OpenGraph images (auto-generated)
 **Status:** 🔴 Not started
 
 **Why.** Every link shared in Viber/Messenger/Slack/WhatsApp shows an OG card. A generic site-wide card hurts CTR. Per-page cards look like a real product, not a template.
@@ -526,15 +510,14 @@ These came up while drafting and were rejected — listed so they don't get re-p
 If picking one item per week:
 
 1. **1.6 Live chat widget** — already 🟡; finish steps 4–12 as soon as you create the Tawk account
-2. **2.3 Trust bar logo assets** — half a day, unblocks a flagged item
-3. **1.2 WhatsApp/Viber link** — half a day, biggest PH-local lift
-4. **5.1 + 5.2 Privacy Policy + form consent** — one day; unblocks compliance
-5. **1.1 Calendar booking** — one day
-6. **1.4 Auto-reply email** — one day
-7. **5.3 Analytics** — one day; needed to evaluate everything else
-8. **2.5 Per-page OG images** — one day
-9. **2.2 Quantified case study metrics** — gated on real numbers from clients
-10. **4.1 Care plans page** — needs pricing decision first
-11. **3.1 First two blog posts + `/insights` route** — start the SEO compounding
+2. **1.2 WhatsApp/Viber link** — half a day, biggest PH-local lift
+3. **5.1 + 5.2 Privacy Policy + form consent** — one day; unblocks compliance
+4. **1.1 Calendar booking** — one day
+5. **1.4 Auto-reply email** — one day
+6. **5.3 Analytics** — one day; needed to evaluate everything else
+7. **2.4 Per-page OG images** — one day
+8. **2.2 Quantified case study metrics** — gated on real numbers from clients
+9. **4.1 Care plans page** — needs pricing decision first
+10. **3.1 First two blog posts + `/insights` route** — start the SEO compounding
 
 Tier 6 polish items can interleave whenever there's a 30-min gap.

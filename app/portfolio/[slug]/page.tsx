@@ -58,7 +58,7 @@ export default async function CaseStudyPage(
             )}
           </div>
           <h1 className="mt-4 max-w-4xl font-display font-bold tracking-tight text-white text-balance text-3xl sm:text-5xl lg:text-6xl leading-[1.15] sm:leading-[1.1]">
-            {study.title}
+            <span className="text-gradient">{study.title}</span>
           </h1>
           <p className="mt-4 max-w-2xl text-[15px] text-white/55 leading-relaxed text-justify">{study.summary}</p>
         </FadeIn>

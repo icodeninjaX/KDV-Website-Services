@@ -16,7 +16,8 @@ export default function PortfolioPage() {
         <FadeIn mount>
           <div className="label-mono">Selected work</div>
           <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
-            A few projects I&rsquo;m proud to have shipped.
+            A few projects I&rsquo;m proud to have{" "}
+            <span className="text-gradient">shipped</span>.
           </h1>
           <p className="mt-4 max-w-xl text-white/55 text-[15px] leading-relaxed text-justify">
             Details are anonymized where clients have asked. Happy to walk through any of these on

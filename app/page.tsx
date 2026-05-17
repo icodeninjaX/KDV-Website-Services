@@ -1,6 +1,5 @@
 import Script from "next/script";
 import { Hero } from "@/components/site/Hero";
-import { TrustBar } from "@/components/site/TrustBar";
 import { ServicesGrid } from "@/components/site/ServicesGrid";
 import { FeaturedWork } from "@/components/site/FeaturedWork";
 import { ProcessSteps } from "@/components/site/ProcessSteps";
@@ -36,7 +35,6 @@ export default function HomePage() {
         {JSON.stringify(jsonLd)}
       </Script>
       <Hero />
-      <TrustBar />
       <ServicesGrid />
       <FeaturedWork />
       <ProcessSteps />

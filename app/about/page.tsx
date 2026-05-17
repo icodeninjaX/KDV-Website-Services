@@ -44,7 +44,8 @@ export default function AboutPage() {
         <FadeIn mount>
           <div className="label-mono">About</div>
           <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
-            {site.name}. We build the web for small businesses.
+            {site.name}. We build the web for{" "}
+            <span className="text-gradient">small businesses</span>.
           </h1>
         </FadeIn>
 

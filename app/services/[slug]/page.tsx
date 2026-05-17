@@ -48,7 +48,7 @@ export default async function ServicePage(
             </div>
             <div>
               <h1 className="font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
-                {service.title}
+                <span className="text-gradient">{service.title}</span>
               </h1>
               <p className="mt-3 text-base sm:text-lg text-indigo-400/80 font-medium">{service.tagline}</p>
             </div>
