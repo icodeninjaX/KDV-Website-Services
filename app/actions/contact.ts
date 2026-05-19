@@ -2,7 +2,12 @@
 
 import { z } from "zod";
 import { Resend } from "resend";
+import { headers } from "next/headers";
 import { env, hasResend } from "@/lib/env";
+import {
+  contactAutoReplyHtml,
+  contactAutoReplyText,
+} from "@/lib/emails/auto-reply";
 
 const schema = z.object({
   name: z.string().min(2, "Please enter your name").max(120),
@@ -13,6 +18,11 @@ const schema = z.object({
     .enum(["website-creation", "business-dashboards", "custom-websites", "not-sure"])
     .optional(),
   message: z.string().min(10, "A little more detail helps me respond well").max(4000),
+  consent: z.literal("on", {
+    errorMap: () => ({
+      message: "Please confirm the privacy consent before sending.",
+    }),
+  }),
   website: z.string().max(0).optional(),
 });
 
@@ -37,7 +47,11 @@ export async function sendContact(
   _prev: ContactResult | null,
   formData: FormData,
 ): Promise<ContactResult> {
-  const ip = (formData.get("_ip") as string) || "anon";
+  const requestHeaders = await headers();
+  const ip =
+    requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    requestHeaders.get("x-real-ip") ||
+    "anon";
   if (!rateLimit(ip)) {
     return { ok: false, error: "Too many requests. Please try again in a minute." };
   }
@@ -49,6 +63,7 @@ export async function sendContact(
     budget: (formData.get("budget")?.toString() || undefined) as z.infer<typeof schema>["budget"],
     service: (formData.get("service")?.toString() || undefined) as z.infer<typeof schema>["service"],
     message: formData.get("message")?.toString() ?? "",
+    consent: formData.get("consent")?.toString() ?? "",
     website: formData.get("website")?.toString() ?? "",
   };
 
@@ -94,6 +109,26 @@ export async function sendContact(
     if (error) {
       console.error("[contact] Resend error", error);
       return { ok: false, error: "Email delivery failed. Please email me directly." };
+    }
+    try {
+      const autoReply = {
+        name: parsed.data.name,
+        service: parsed.data.service,
+        budget: parsed.data.budget,
+      };
+      const { error: autoReplyError } = await resend.emails.send({
+        from: `KDV Website Services <${env.CONTACT_FROM_EMAIL}>`,
+        to: parsed.data.email,
+        replyTo: env.CONTACT_TO_EMAIL,
+        subject: "Got your message - KDV Website Services",
+        text: contactAutoReplyText(autoReply),
+        html: contactAutoReplyHtml(autoReply),
+      });
+      if (autoReplyError) {
+        console.error("[contact] Auto-reply Resend error", autoReplyError);
+      }
+    } catch (autoReplyError) {
+      console.error("[contact] Auto-reply failed", autoReplyError);
     }
     return { ok: true };
   } catch (err) {

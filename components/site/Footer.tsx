@@ -17,9 +17,9 @@ export function Footer() {
         <div className="md:col-span-2">
           <div className="flex items-center gap-3">
             <Logo height={36} />
-            <span className="text-sm font-medium text-white/40">Website Services</span>
+            <span className="text-sm font-medium text-white/60">Website Services</span>
           </div>
-          <p className="mt-5 max-w-sm text-sm text-white/40 leading-relaxed text-justify">
+          <p className="mt-5 max-w-sm text-sm text-white/60 leading-relaxed sm:text-justify">
             {site.tagline}
           </p>
           <a
@@ -45,7 +45,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-xs font-mono uppercase tracking-[0.15em] text-white/30">Services</h4>
+          <h2 className="text-xs font-mono uppercase tracking-[0.15em] text-white/50">Services</h2>
           <ul className="mt-4 space-y-2.5 text-sm text-white/50">
             {services.map((s) => (
               <li key={s.slug}>
@@ -61,12 +61,15 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-xs font-mono uppercase tracking-[0.15em] text-white/30">Company</h4>
+          <h2 className="text-xs font-mono uppercase tracking-[0.15em] text-white/50">Company</h2>
           <ul className="mt-4 space-y-2.5 text-sm text-white/50">
             {[
               { href: "/portfolio", label: "Work" },
+              { href: "/estimate", label: "Estimate" },
               { href: "/about", label: "About" },
               { href: "/contact", label: "Contact" },
+              { href: "/privacy", label: "Privacy" },
+              { href: "/terms", label: "Terms" },
             ].map((item) => (
               <li key={item.href}>
                 <Link
@@ -82,7 +85,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/[0.07]">
-        <div className="container-page flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/25 sm:flex-row">
+        <div className="container-page flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/60 sm:flex-row">
           <p>
             &copy; {new Date().getFullYear()} {site.name}. Crafted with care.
           </p>

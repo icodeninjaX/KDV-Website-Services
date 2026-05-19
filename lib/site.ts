@@ -11,6 +11,7 @@ export const site = {
   location: "Philippines — serving clients nationwide",
   country: "PH",
   currency: "PHP",
+  calBookingUrl: "https://cal.com/kdvwebservices/15min",
   whatsapp: "https://wa.me/639555583927",
   viber: "viber://chat?number=%2B639555583927",
   messenger: "https://www.messenger.com/t/kdvwebsiteservices",
@@ -19,6 +20,7 @@ export const site = {
 export const nav = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
+  { href: "/estimate", label: "Estimate" },
   { href: "/portfolio", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },

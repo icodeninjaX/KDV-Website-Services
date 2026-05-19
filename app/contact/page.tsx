@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Mail, Clock, MapPin } from "lucide-react";
 import { SiWhatsapp, SiViber, SiMessenger } from "react-icons/si";
 import { FadeIn } from "@/components/site/FadeIn";
@@ -29,6 +30,9 @@ const channels = [
 export const metadata: Metadata = {
   title: "Contact",
   description: `Start a project with ${site.name}. Typical reply ${site.responseWindow}.`,
+  alternates: {
+    canonical: "/contact",
+  },
 };
 
 export default function ContactPage() {
@@ -41,7 +45,7 @@ export default function ContactPage() {
             Let&rsquo;s build{" "}
             <span className="text-gradient">something good</span>.
           </h1>
-          <p className="mt-4 sm:mt-5 text-white/55 leading-relaxed text-[15px] text-justify">
+          <p className="mt-4 sm:mt-5 text-white/55 leading-relaxed text-[15px] sm:text-justify">
             Tell me about your business, your goal, and where you&rsquo;re stuck. Every message
             gets a real reply from me, not a sales funnel.
           </p>
@@ -103,7 +107,9 @@ export default function ContactPage() {
         <FadeIn mount delay={0.08} className="lg:col-span-3">
           <div className="border-spin-wrapper is-active">
             <div className="relative z-10 rounded-[15px] bg-[hsl(0_0%_6%)] p-5 sm:p-8">
-              <ContactPanel />
+              <Suspense fallback={<div className="h-96 rounded-xl bg-white/[0.03]" />}>
+                <ContactPanel />
+              </Suspense>
             </div>
           </div>
         </FadeIn>

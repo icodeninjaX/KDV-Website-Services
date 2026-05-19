@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "Websites, business dashboards, and custom web apps. Three ways I can help your Philippine MSME grow.",
+  alternates: {
+    canonical: "/services",
+  },
 };
 
 export default function ServicesIndexPage() {
@@ -110,7 +113,7 @@ export default function ServicesIndexPage() {
                           Service details <ArrowRight size={14} aria-hidden />
                         </Button>
                       </Link>
-                      <Link href="/contact">
+                      <Link href={`/contact?service=${service.slug}`}>
                         <Button className="w-full">Start this project</Button>
                       </Link>
                     </div>

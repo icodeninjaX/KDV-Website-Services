@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/site/FadeIn";
 import { getService, services } from "@/lib/services";
+import { portfolio } from "@/lib/portfolio";
 import { CTASection } from "@/components/site/CTASection";
 
 export function generateStaticParams() {
@@ -20,6 +22,9 @@ export async function generateMetadata(
   return {
     title: service.title,
     description: service.summary,
+    alternates: {
+      canonical: `/services/${service.slug}`,
+    },
   };
 }
 
@@ -31,6 +36,7 @@ export default async function ServicePage(
   if (!service) notFound();
 
   const Icon = service.icon;
+  const relatedWork = portfolio.filter((study) => study.service === service.slug).slice(0, 3);
 
   return (
     <>
@@ -73,6 +79,55 @@ export default async function ServicePage(
             </ul>
           </div>
 
+          {relatedWork.length > 0 ? (
+            <div className="mt-5 rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 sm:p-8">
+              <div className="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <div className="label-mono">Proof</div>
+                  <h2 className="mt-2 font-display text-xl font-bold text-white sm:text-2xl">
+                    Recent work in this service
+                  </h2>
+                </div>
+                <Link
+                  href="/portfolio"
+                  className="rounded text-sm text-white/55 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
+                >
+                  View all work
+                </Link>
+              </div>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                {relatedWork.map((study) => (
+                  <Link
+                    key={study.slug}
+                    href={`/portfolio/${study.slug}`}
+                    className="group overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03] transition-colors hover:border-white/[0.18] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
+                  >
+                    {study.cover ? (
+                      <div className="relative aspect-[16/10] border-b border-white/[0.08] bg-[hsl(0_0%_4%)]">
+                        <Image
+                          src={study.cover.src}
+                          alt={study.cover.alt}
+                          fill
+                          sizes="(min-width: 1024px) 320px, 100vw"
+                          className={study.cover.fit === "cover" ? "object-cover" : "object-contain"}
+                        />
+                      </div>
+                    ) : null}
+                    <div className="p-4">
+                      <div className="text-xs text-white/45">{study.client}</div>
+                      <div className="mt-1 font-display text-lg font-bold text-white">
+                        {study.title}
+                      </div>
+                      <p className="mt-2 text-sm leading-relaxed text-white/55">
+                        {study.outcome}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
           <div className="mt-5 rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 sm:p-8">
             <h2 className="font-display text-xl sm:text-2xl font-bold text-white">FAQ</h2>
             <div className="mt-4 divide-y divide-white/[0.06]">
@@ -107,7 +162,7 @@ export default async function ServicePage(
                 <dd className="mt-1 text-white/70">{service.idealFor}</dd>
               </div>
             </dl>
-            <Link href="/contact" className="mt-6 block">
+            <Link href={`/contact?service=${service.slug}`} className="mt-6 block">
               <Button className="w-full">
                 Start this project <ArrowRight size={15} />
               </Button>

@@ -7,6 +7,9 @@ import { CTASection } from "@/components/site/CTASection";
 export const metadata: Metadata = {
   title: "Selected work",
   description: "Recent websites, dashboards, and custom web apps built for real clients.",
+  alternates: {
+    canonical: "/portfolio",
+  },
 };
 
 export default function PortfolioPage() {
@@ -19,7 +22,7 @@ export default function PortfolioPage() {
             A few projects I&rsquo;m proud to have{" "}
             <span className="text-gradient">shipped</span>.
           </h1>
-          <p className="mt-4 max-w-xl text-white/55 text-[15px] leading-relaxed text-justify">
+          <p className="mt-4 max-w-xl text-white/55 text-[15px] leading-relaxed sm:text-justify">
             Details are anonymized where clients have asked. Happy to walk through any of these on
             a call.
           </p>

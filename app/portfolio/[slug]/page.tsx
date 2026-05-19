@@ -20,7 +20,13 @@ export async function generateMetadata(
   const { slug } = await params;
   const study = getCaseStudy(slug);
   if (!study) return {};
-  return { title: study.title, description: study.summary };
+  return {
+    title: study.title,
+    description: study.summary,
+    alternates: {
+      canonical: `/portfolio/${study.slug}`,
+    },
+  };
 }
 
 export default async function CaseStudyPage(
@@ -60,7 +66,7 @@ export default async function CaseStudyPage(
           <h1 className="mt-4 max-w-4xl font-display font-bold tracking-tight text-white text-balance text-3xl sm:text-5xl lg:text-6xl leading-[1.15] sm:leading-[1.1]">
             <span className="text-gradient">{study.title}</span>
           </h1>
-          <p className="mt-4 max-w-2xl text-[15px] text-white/55 leading-relaxed text-justify">{study.summary}</p>
+          <p className="mt-4 max-w-2xl text-[15px] text-white/55 leading-relaxed sm:text-justify">{study.summary}</p>
         </FadeIn>
       </section>
 
@@ -116,7 +122,7 @@ export default async function CaseStudyPage(
             <div className="space-y-8 sm:space-y-10">
               <div>
                 <div className="label-mono">The challenge</div>
-                <p className="mt-3 text-white/65 leading-relaxed text-[15px] sm:text-base text-justify">
+                <p className="mt-3 text-white/65 leading-relaxed text-[15px] sm:text-base sm:text-justify">
                   {study.body.challenge}
                 </p>
               </div>
@@ -131,14 +137,14 @@ export default async function CaseStudyPage(
                       <span className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/80">
                         <Check size={12} aria-hidden />
                       </span>
-                      <span className="flex-1 text-justify">{item}</span>
+                      <span className="flex-1 sm:text-justify">{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
               <div>
                 <div className="label-mono">Result</div>
-                <p className="mt-3 text-white/65 leading-relaxed text-[15px] sm:text-base text-justify">
+                <p className="mt-3 text-white/65 leading-relaxed text-[15px] sm:text-base sm:text-justify">
                   {study.body.result}
                 </p>
               </div>
@@ -148,7 +154,7 @@ export default async function CaseStudyPage(
               </p>
             </div>
           ) : (
-            <div className="space-y-5 text-white/60 leading-relaxed text-[15px] text-justify">
+            <div className="space-y-5 text-white/60 leading-relaxed text-[15px] sm:text-justify">
               <p>
                 <strong className="font-semibold text-white">The challenge.</strong>{" "}
                 {study.client} came to me with a familiar problem: the existing system worked,
@@ -182,7 +188,7 @@ export default async function CaseStudyPage(
                 </span>
               ))}
             </div>
-            <Link href="/contact" className="mt-6 block">
+            <Link href={`/contact?service=${study.service}`} className="mt-6 block">
               <Button className="w-full">
                 Start something similar <ArrowRight size={15} />
               </Button>

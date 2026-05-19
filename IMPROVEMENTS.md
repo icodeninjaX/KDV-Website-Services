@@ -72,34 +72,34 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ---
 
 ### 1.3 Quick Quote / project estimator
-**Status:** 🔴 Not started
+**Status:** 🟡 In progress
 
 **Why.** Posted prices start at ₱25k / ₱85k / "quoted" — but a prospect with a 4-page bakery site has no way to know if their job is ₱25k or ₱60k. A 3-question wizard returning a price band qualifies leads in 30 seconds and pre-warms them for the contact form.
 
 **How.** New route `app/estimate/page.tsx`, client component, no backend. Output is a price band, recommended service slug, and a CTA into `/contact?service=...&budget=...`.
 
 **Steps:**
-1. 🔲 Create `app/estimate/page.tsx` with metadata, hero, and a `<EstimatorWizard />` client component
-2. 🔲 Build `components/site/EstimatorWizard.tsx` with 3 questions: project type (dropdown of `services` from `lib/services.ts`), scope (small / medium / large), urgency (no rush / 1 month / ASAP)
-3. 🔲 Add a pricing matrix function (`lib/estimator.ts`) that maps the 3 inputs → a `{ low, high, recommendedSlug }` band
-4. 🔲 Render the result with a "Continue to contact" button that links to `/contact?service=<slug>&budget=<band>`
-5. 🔲 Update `ContactForm.tsx` to pre-select `service` and `budget` defaults from URL search params (use `useSearchParams`)
-6. 🔲 Add `Estimate` to the nav in `lib/site.ts` (or just CTA to it from the home Hero secondary button)
+1. ✅ Create `app/estimate/page.tsx` with metadata, hero, and a `<EstimatorWizard />` client component
+2. ✅ Build `components/site/EstimatorWizard.tsx` with 3 questions: project type (dropdown of `services` from `lib/services.ts`), scope (small / medium / large), urgency (no rush / 1 month / ASAP)
+3. ✅ Add a pricing matrix function (`lib/estimator.ts`) that maps the 3 inputs → a `{ low, high, recommendedSlug }` band
+4. ✅ Render the result with a "Continue to contact" button that links to `/contact?service=<slug>&budget=<band>`
+5. ✅ Update `ContactForm.tsx` to pre-select `service` and `budget` defaults from URL search params (use `useSearchParams`)
+6. ✅ Add `Estimate` to the nav in `lib/site.ts` (or just CTA to it from the home Hero secondary button)
 7. 🔲 Mark Status 🟢 Done
 
 ---
 
 ### 1.4 Auto-reply email on contact form submit
-**Status:** 🔴 Not started
+**Status:** 🟡 In progress
 
 **Why.** Right now the form shows a toast and goes silent. Submitters wonder "did it send?" An auto-reply confirms receipt, restates the response window, and offers the calendar link as a parallel path.
 
 **How.** Inside `app/actions/contact.ts`, after the existing Resend send-to-Keith call, fire a second Resend send to the submitter.
 
 **Steps:**
-1. 🔲 Create `lib/emails/auto-reply.tsx` (or `.ts` if not using react-email) with a branded HTML template — KDV header, "Thanks for reaching out", expected reply window, Cal.com link (after 1.1 ships), portfolio link
-2. 🔲 In `app/actions/contact.ts`, after the existing `resend.emails.send` to Keith, add a second send: `from: CONTACT_FROM_EMAIL`, `to: parsed.email`, `subject: "Got your message — KDV Website Services"`, body from template
-3. 🔲 Wrap the second send in try/catch — auto-reply failure must NOT fail the whole form (the lead notification is more important)
+1. ✅ Create `lib/emails/auto-reply.tsx` (or `.ts` if not using react-email) with a branded HTML template — KDV header, "Thanks for reaching out", expected reply window, Cal.com link (after 1.1 ships), portfolio link
+2. ✅ In `app/actions/contact.ts`, after the existing `resend.emails.send` to Keith, add a second send: `from: CONTACT_FROM_EMAIL`, `to: parsed.email`, `subject: "Got your message — KDV Website Services"`, body from template
+3. ✅ Wrap the second send in try/catch — auto-reply failure must NOT fail the whole form (the lead notification is more important)
 4. 🔲 Test with a real address; verify the auto-reply lands in Inbox not Spam (may need Resend domain verification)
 5. 🔲 Mark Status 🟢 Done
 
@@ -199,17 +199,17 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ---
 
 ### 2.4 Per-page OpenGraph images (auto-generated)
-**Status:** 🔴 Not started
+**Status:** 🟡 In progress
 
 **Why.** Every link shared in Viber/Messenger/Slack/WhatsApp shows an OG card. A generic site-wide card hurts CTR. Per-page cards look like a real product, not a template.
 
 **How.** Next.js `app/[route]/opengraph-image.tsx` route handler with `next/og`. Static generation, zero runtime cost.
 
 **Steps:**
-1. 🔲 Create `app/opengraph-image.tsx` for the home page — KDV logo + tagline on the brand gradient background
-2. 🔲 Create `app/portfolio/[slug]/opengraph-image.tsx` reading `study.title`, `study.outcome`, and `study.cover.src` (use as background with overlay)
-3. 🔲 Create `app/services/[slug]/opengraph-image.tsx` rendering service title + tagline
-4. 🔲 Set the runtime to `"edge"` for fast generation
+1. ✅ Create `app/opengraph-image.tsx` for the home page — KDV logo + tagline on the brand gradient background
+2. ✅ Create `app/portfolio/[slug]/opengraph-image.tsx` reading `study.title`, `study.outcome`, and `study.cover.src` (use as background with overlay)
+3. ✅ Create `app/services/[slug]/opengraph-image.tsx` rendering service title + tagline
+4. ✅ Set the runtime to `"edge"` for fast generation
 5. 🔲 Test cards via the LinkedIn Post Inspector and Twitter Card Validator (or Open Graph debugger)
 6. 🔲 Mark Status 🟢 Done
 
@@ -256,15 +256,15 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ---
 
 ### 3.3 LocalBusiness JSON-LD with PH address
-**Status:** 🔴 Not started
+**Status:** 🟡 In progress
 
 **Why.** Home already emits `ProfessionalService` JSON-LD (`app/page.tsx:13`). Adding `LocalBusiness` with a PH address (region-level OK) helps Google local pack visibility for "web developer near me" searches.
 
 **How.** Extend the existing `jsonLd` object on `app/page.tsx`.
 
 **Steps:**
-1. 🔲 Decide privacy boundary — full address, NCR-only region, or just country (`PH`). Region-only is the usual freelancer choice
-2. 🔲 In `app/page.tsx`, extend `jsonLd`: `"@type": ["ProfessionalService", "LocalBusiness"]`, add `address: { "@type": "PostalAddress", addressCountry: "PH", addressRegion: "<region>" }`, `priceRange: "₱₱"`, `telephone` (use WhatsApp number from 1.2 if comfortable)
+1. ✅ Decide privacy boundary — full address, NCR-only region, or just country (`PH`). Region-only is the usual freelancer choice
+2. ✅ In `app/page.tsx`, extend `jsonLd`: `"@type": ["ProfessionalService", "LocalBusiness"]`, add country-only `PostalAddress`, and set `priceRange`
 3. 🔲 Validate the markup at https://validator.schema.org/
 4. 🔲 Submit the homepage to Google Search Console for re-indexing
 5. 🔲 Mark Status 🟢 Done
@@ -272,33 +272,33 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ---
 
 ### 3.4 Sitemap completeness audit
-**Status:** 🔴 Not started
+**Status:** 🟡 In progress
 
 **Why.** `app/sitemap.ts` exists but as new routes (insights, solutions, estimate) ship, they need to land in the sitemap automatically.
 
 **How.** Refactor `sitemap.ts` to glob from `lib/portfolio.ts`, `lib/services.ts`, `lib/solutions.ts`, and `content/insights/`.
 
 **Steps:**
-1. 🔲 Open `app/sitemap.ts` and audit — confirm every static route is listed
-2. 🔲 Extract a helper `lib/routes.ts` returning an array of all dynamic + static routes with `lastModified` and `priority`
-3. 🔲 Refactor `sitemap.ts` to call the helper
-4. 🔲 After each new feature ships (1.3 estimate, 3.1 insights, 3.2 solutions), confirm it appears in `/sitemap.xml`
+1. ✅ Open `app/sitemap.ts` and audit — confirm every static route is listed
+2. ✅ Extract a helper `lib/routes.ts` returning an array of all dynamic + static routes with `lastModified` and `priority`
+3. ✅ Refactor `sitemap.ts` to call the helper
+4. ✅ After each new feature ships (1.3 estimate, 3.1 insights, 3.2 solutions), confirm it appears in `/sitemap.xml`
 5. 🔲 Mark Status 🟢 Done
 
 ---
 
 ### 3.5 Internal linking between case studies and services
-**Status:** 🔴 Not started
+**Status:** 🟡 In progress
 
 **Why.** Case study → service link already exists (`app/portfolio/[slug]/page.tsx:52`), but services pages don't reciprocate with "see this in action" links to relevant case studies. Bidirectional linking improves dwell time and SEO.
 
 **How.** Add a "Recent work in this service" strip on `/services/[slug]` filtering `portfolio` by matching `service`.
 
 **Steps:**
-1. 🔲 In `app/services/[slug]/page.tsx`, after the deliverables block, add a section: "Recent work in this service"
-2. 🔲 Filter `portfolio` from `lib/portfolio.ts` by `c.service === params.slug`
-3. 🔲 Render up to 3 matching case studies as compact cards (reuse the `FeaturedCard` markup or a slim variant)
-4. 🔲 Hide the section if no matching case studies exist
+1. ✅ In `app/services/[slug]/page.tsx`, after the deliverables block, add a section: "Recent work in this service"
+2. ✅ Filter `portfolio` from `lib/portfolio.ts` by `c.service === params.slug`
+3. ✅ Render up to 3 matching case studies as compact cards (reuse the `FeaturedCard` markup or a slim variant)
+4. ✅ Hide the section if no matching case studies exist
 5. 🔲 Mark Status 🟢 Done
 
 ---
@@ -343,35 +343,35 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ## Tier 5 — Compliance & operations
 
 ### 5.1 Privacy Policy & Terms pages
-**Status:** 🔴 Not started
+**Status:** 🟡 In progress
 
 **Why.** Required under the PH Data Privacy Act (RA 10173) the moment any form collects personal data. Current contact form already triggers this. Missing policy = legal exposure and credibility hit for institutional clients.
 
 **How.** Two static pages: `/privacy` and `/terms`, linked from `Footer.tsx`.
 
 **Steps:**
-1. 🔲 Draft Privacy Policy with: data controller (KDV / Keith Vergara, contact email), data collected (name, email, company, message, IP via analytics), purpose (responding to inquiries), retention (e.g. 24 months), sharing (none / processors only — Resend, Vercel, analytics provider), data subject rights, contact for requests
-2. 🔲 Draft Terms of Service with: scope, payment terms (50/50, GCash/Maya/bank), IP ownership (client owns deliverables on full payment), warranties / limitations, governing law (PH)
+1. ✅ Draft Privacy Policy with: data controller (KDV / Keith Vergara, contact email), data collected (name, email, company, message, IP via analytics), purpose (responding to inquiries), retention (e.g. 24 months), sharing (none / processors only — Resend, Vercel, analytics provider), data subject rights, contact for requests
+2. ✅ Draft Terms of Service with: scope, payment terms (50/50, GCash/Maya/bank), IP ownership (client owns deliverables on full payment), warranties / limitations, governing law (PH)
 3. 🔲 Have both reviewed by a PH-qualified lawyer before publishing (worth the one-time cost)
-4. 🔲 Create `app/privacy/page.tsx` and `app/terms/page.tsx` — plain prose, container-page layout
-5. 🔲 Add both links to `Footer.tsx`
+4. ✅ Create `app/privacy/page.tsx` and `app/terms/page.tsx` — plain prose, container-page layout
+5. ✅ Add both links to `Footer.tsx`
 6. 🔲 Mark Status 🟢 Done
 
 ---
 
 ### 5.2 Privacy consent on the contact form
-**Status:** 🔴 Not started
+**Status:** 🟡 In progress
 
 **Why.** Same regulation. Submission must require explicit consent: "I agree to KDV processing my information to respond to this inquiry."
 
 **How.** Required checkbox in `ContactForm.tsx`, validated in the Zod schema in `app/actions/contact.ts`.
 
 **Steps:**
-1. 🔲 Add a required `consent` checkbox to `ContactForm.tsx` above the submit button — label links to `/privacy`
-2. 🔲 Extend the Zod schema in `app/actions/contact.ts` to require `consent: z.literal("on")` (or boolean true)
-3. 🔲 Surface a clear field error if unchecked
-4. 🔲 Verify the form refuses to submit without the checkbox via real browser test
-5. 🔲 Depends on 5.1 (the link must point at a live `/privacy`)
+1. ✅ Add a required `consent` checkbox to `ContactForm.tsx` above the submit button — label links to `/privacy`
+2. ✅ Extend the Zod schema in `app/actions/contact.ts` to require `consent: z.literal("on")` (or boolean true)
+3. ✅ Surface a clear field error if unchecked
+4. ✅ Verify the form refuses to submit without the checkbox via real browser test
+5. ✅ Depends on 5.1 (the link must point at a live `/privacy`)
 6. 🔲 Mark Status 🟢 Done
 
 ---
@@ -413,17 +413,17 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ## Tier 6 — Polish
 
 ### 6.1 Image optimization audit
-**Status:** 🔴 Not started
+**Status:** 🟡 In progress
 
 **Why.** `public/portfolio/new-zion-lpg/cover.png` is ~1.4 MB. Other case study covers likely similar. Mobile PH connections feel that on first paint.
 
 **How.** Convert PNG covers to WebP/AVIF (quality 80). Target <250 KB per cover.
 
 **Steps:**
-1. 🔲 List every `.png` in `public/portfolio/` over 300 KB (`find public/portfolio -name "*.png" -size +300k`)
-2. 🔲 For each, run `npx @squoosh/cli --webp '{quality:80}' <file>` (or use an online converter)
-3. 🔲 Replace the file in place (keep `.png` extension or update `cover.src` references in `lib/portfolio.ts` to the new path)
-4. 🔲 Re-run Lighthouse on `/portfolio/<slug>` to confirm LCP improvement
+1. ✅ List every `.png` in `public/portfolio/` over 300 KB (`find public/portfolio -name "*.png" -size +300k`)
+2. ✅ For each, convert to WebP at quality 80+ using the existing `sharp` dependency
+3. ✅ Replace the file in place (keep `.png` extension or update `cover.src` references in `lib/portfolio.ts` to the new path)
+4. ✅ Re-run Lighthouse on `/portfolio/<slug>` to confirm LCP improvement
 5. 🔲 Mark Status 🟢 Done
 
 ---
@@ -461,16 +461,16 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ---
 
 ### 6.4 404 with useful next steps
-**Status:** 🔴 Not started
+**Status:** 🟡 In progress
 
 **Why.** Default 404 ends the visitor's journey. A custom one with "Back to work · Browse services · Contact" recovers a non-trivial slice.
 
 **How.** `app/not-found.tsx` with the same chrome and three CTAs.
 
 **Steps:**
-1. 🔲 Create `app/not-found.tsx` with hero ("This page doesn't exist") and three buttons: Portfolio, Services, Contact
-2. 🔲 Optionally include a search box (only if 3.1 insights has shipped and there's content to search)
-3. 🔲 Verify the 404 status code is sent (check Network tab)
+1. ✅ Create `app/not-found.tsx` with hero ("This page doesn't exist") and three buttons: Portfolio, Services, Contact
+2. ✅ Optionally include a search box (only if 3.1 insights has shipped and there's content to search)
+3. ✅ Verify the 404 status code is sent (check Network tab)
 4. 🔲 Mark Status 🟢 Done
 
 ---

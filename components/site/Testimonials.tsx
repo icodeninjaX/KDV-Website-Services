@@ -1,20 +1,20 @@
 import { FadeIn } from "./FadeIn";
 
-const quotes = [
+const feedback = [
   {
-    body: "Dati laging magulo ang pag-order ng aming mga customers sa phone. Yung system na ginawa ni Keith, sobrang linis at madaling gamitin ng staff namin. Hindi na kami naghahabol ng orders. Lahat nandoon na sa iisang screen.",
+    body: "The New Z1on LPG team moved phone and walk-in orders into one cleaner workflow, giving staff one screen for orders instead of scattered notes.",
     name: "Toots Abella",
     role: "Hiring manager, New Z1on LPG",
     initial: "TA",
   },
   {
-    body: "Gusto ko lang ng simpleng paraan para makita ko ang mga members namin sa phone. Naintindihan niya agad kung ano ang kailangan ko at yung resulta mas maganda pa sa inaasahan ko. Ginagamit ko talaga ito every day.",
+    body: "The cooperative officer needed a simple mobile way to see members, contributions, loans, and shares. The delivered app became the daily operating view.",
     name: "Cooperative officer",
     role: "Private cooperative, PH",
     initial: "C",
   },
   {
-    body: "Matagal na kaming gumagawa ng reports sa spreadsheet, sobrang hassle. Nung na-setup na ang 371admin, lahat ng kailangan namin makikita na agad. Si Keith, mabilis na naintindihan yung kailangan namin at nag-deliver ng maayos.",
+    body: "The X-Meta team replaced spreadsheet-heavy reporting with one admin panel for bookings, finance, devices, programs, and operational monitoring.",
     name: "Sai Maloles",
     role: "IT Head, X-Meta Technologies",
     initial: "SM",
@@ -26,24 +26,25 @@ export function Testimonials() {
     <section className="container-page py-16 sm:py-20 lg:py-24">
       <FadeIn>
         <div className="max-w-2xl">
-          <div className="label-mono">What clients say</div>
+          <div className="label-mono">Client feedback</div>
           <h2 className="mt-4 font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-            Results, not just pixels.
+            Verified projects, careful framing.
           </h2>
+          <p className="mt-4 text-[15px] leading-relaxed text-white/55">
+            These are summarized takeaways from real client projects. Direct quotes
+            will be added only after explicit permission.
+          </p>
         </div>
       </FadeIn>
 
       <div className="mt-10 sm:mt-12 grid gap-5 md:grid-cols-3">
-        {quotes.map((q, i) => (
+        {feedback.map((q, i) => (
           <FadeIn key={q.name} delay={i * 0.07}>
             <figure className="flex h-full flex-col rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 sm:p-7">
-              {/* Opening quote mark */}
-              <span className="font-display text-5xl font-extrabold leading-none text-indigo-500/25 select-none" aria-hidden>
-                &ldquo;
-              </span>
-              <blockquote className="mt-1 flex-1 text-[15px] leading-relaxed text-white/70 text-justify">
+              <div className="label-mono text-indigo-300/70">Summarized feedback</div>
+              <p className="mt-4 flex-1 text-[15px] leading-relaxed text-white/70">
                 {q.body}
-              </blockquote>
+              </p>
               <figcaption className="mt-6 flex items-center gap-3 border-t border-white/[0.07] pt-5">
                 <div
                   className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-brand text-xs font-bold text-white"

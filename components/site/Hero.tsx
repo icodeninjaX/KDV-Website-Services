@@ -31,7 +31,7 @@ export function Hero() {
     <section className="relative overflow-x-hidden">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <Image
-          src="/hero-section.png"
+          src="/hero-section.webp"
           alt=""
           fill
           priority
@@ -83,7 +83,7 @@ export function Hero() {
         </motion.h1>
 
         <FadeIn mount delay={0.45}>
-          <p className="mt-6 sm:mt-8 max-w-xl text-[15px] sm:text-lg leading-relaxed text-white/55 text-justify">
+          <p className="mt-6 sm:mt-8 max-w-xl text-[15px] sm:text-lg leading-relaxed text-white/60 sm:text-justify">
              KDV Website Services builds websites, dashboards, and internal tools for Philippine SMBs. Built directly with the developer, no middlemen.
           </p>
         </FadeIn>
@@ -98,9 +98,9 @@ export function Hero() {
               </Link>
             </Magnetic>
             <Magnetic strength={0.15}>
-              <Link href="/portfolio">
+              <Link href="/estimate">
                 <Button size="lg" variant="outline">
-                  See recent work
+                  Get a quick quote
                 </Button>
               </Link>
             </Magnetic>

@@ -48,8 +48,8 @@ Testimonial author currently shown as "Cooperative officer — Private cooperati
 - If not, need a name + role + permission to publish.
 
 ### 3. Testimonial quotes (verbatim)
-All three quote bodies currently live in `Testimonials.tsx` are Keith-voiced paraphrases, not actual client quotes.
-**Action:** get real quotes (SMS / email screenshots) from:
+`Testimonials.tsx` now frames these as summarized feedback, not direct quotes.
+**Action:** get real quotes (SMS / email screenshots + permission to publish) from:
 - Toots Abella
 - The coop officer
 - Sai Maloles
@@ -77,18 +77,17 @@ Hard-coded: "2 slots open · Booking May 2026"
 Verify step titles + durations reflect Keith's actual engagement flow.
 
 ### 8. About page
-Not yet written. Needs:
+Initial page uses only confirmed solo-founder positioning. Still needs:
 - Keith's bio (1–2 paragraphs)
 - Years freelancing
 - Geographic focus (PH-wide? NCR only?)
 - Stack preferences / specialization
 
 ### 9. Contact channels
-Currently only email (`keithvergara1997@gmail.com`).
-Consider adding:
+Email, WhatsApp, Viber, Messenger, and Cal.com booking are now wired in the site.
+Still consider adding:
 - LinkedIn URL
-- WhatsApp / Viber (PH-common)
-- Calendar booking link (Cal.com, Google Calendar)
+- A public business phone display format, if Keith wants it shown beyond chat links
 
 ### 10. Brand voice notes
 For future copy: confirm tone (technical + warm? straight-talk + PH-local? more corporate?) so future edits stay consistent.

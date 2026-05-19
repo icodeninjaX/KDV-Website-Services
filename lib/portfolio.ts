@@ -52,7 +52,7 @@ export const portfolio: CaseStudy[] = [
         "Three branches now share one workflow and one source of truth. Cashiers onboard in minutes instead of days, daily reconciliation is a button click, and the owner can pull a sales report for any date range without asking anyone.",
     },
     cover: {
-      src: "/portfolio/new-zion-lpg/cover.png",
+      src: "/portfolio/new-zion-lpg/cover.webp",
       alt: "New Zion POS shown across desktop and laptop screens",
       fit: "cover",
     },
@@ -145,7 +145,7 @@ export const portfolio: CaseStudy[] = [
         "Officers now run the entire co-op from their phones during meetings. Contributions, loans, and share equity are always live, audit-ready, and visible to every officer at the same time.",
     },
     cover: {
-      src: "/portfolio/coop-tracking/cover.png",
+      src: "/portfolio/coop-tracking/cover.webp",
       alt: "CoopTracker — smarter cooperative management on mobile",
       fit: "cover",
     },
@@ -220,7 +220,7 @@ export const portfolio: CaseStudy[] = [
         "Ads ops, finance, and field operations now share one source of truth. SIM cards stop being forgotten until they fail, bookings land with their numbers already reconciled, and the playplan-to-screen handoff is a single click.",
     },
     cover: {
-      src: "/portfolio/371admin/cover.png",
+      src: "/portfolio/371admin/cover.webp",
       alt: "X-Meta 371admin — one platform for ads, devices, and finance",
       fit: "cover",
     },
@@ -294,7 +294,7 @@ export const portfolio: CaseStudy[] = [
         "A site that does the qualifying for sales. Prospects arrive, find the trust signals, route themselves to the right capability, and either book a proposal or self-serve from the app store badges in the footer. The marketing team can update copy without a developer.",
     },
     cover: {
-      src: "/portfolio/ipay/cover.png",
+      src: "/portfolio/ipay/cover.webp",
       alt: "IPAY International shown across desktop and laptop screens",
       fit: "cover",
     },

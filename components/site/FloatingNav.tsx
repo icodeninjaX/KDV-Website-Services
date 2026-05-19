@@ -63,6 +63,7 @@ export function FloatingNav() {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
+                  tabIndex={visible ? undefined : -1}
                   className={cn(
                     "group relative flex items-center gap-2.5 rounded-sm py-1 pl-4",
                     "transition-transform duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
