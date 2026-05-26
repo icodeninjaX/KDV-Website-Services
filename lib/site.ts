@@ -5,8 +5,7 @@ export const site = {
   description:
     "KDV Website Services is a Philippines-based studio that designs and builds fast, conversion-focused websites, business dashboards, and custom web apps for MSMEs nationwide.",
   url: "https://kdvwebsiteservices.com",
-  email: "keithvergara1997@gmail.com",
-  founder: "Keith D. Vergara",
+  founder: "Keith",
   responseWindow: "within 1 business day (PH time)",
   location: "Philippines — serving clients nationwide",
   country: "PH",

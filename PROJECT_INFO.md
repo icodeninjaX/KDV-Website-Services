@@ -9,8 +9,8 @@ Update in-place as new facts come in. Anything marked `⏳` is a prompt for the 
 
 ### Business identity
 - **Company:** KDV Website Services
-- **Founder:** Keith D. Vergara
-- **Email:** keithvergara1997@gmail.com
+- **Founder display name:** Keith
+- **Public contact:** Contact form, WhatsApp, Viber, Messenger, and Cal.com booking
 - **Market:** Philippines MSMEs (freelance / solo operator)
 - **Pricing:** Locked as-is for now (explicit user instruction — do not edit `lib/services.ts` pricing)
 
@@ -80,7 +80,7 @@ Verify step titles + durations reflect Keith's actual engagement flow.
 Initial page uses only confirmed solo-founder positioning. Still needs:
 - Keith's bio (1–2 paragraphs)
 - Years freelancing
-- Geographic focus (PH-wide? NCR only?)
+- Geographic focus (currently phrased broadly as "local businesses in the Philippines"; confirm PH-wide vs NCR only)
 - Stack preferences / specialization
 
 ### 9. Contact channels

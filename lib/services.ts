@@ -5,6 +5,10 @@ export type Service = {
   title: string;
   tagline: string;
   summary: string;
+  image: {
+    src: string;
+    alt: string;
+  };
   icon: LucideIcon;
   deliverables: string[];
   idealFor: string;
@@ -20,6 +24,10 @@ export const services: Service[] = [
     tagline: "A polished, high-converting site your business deserves.",
     summary:
       "Marketing sites, landing pages, and multi-page business sites designed to turn visitors into leads. SEO-ready, fast on mobile, easy for you to update.",
+    image: {
+      src: "/services/website-creation.webp",
+      alt: "Dark website and mobile mockup representing a responsive business website.",
+    },
     icon: Globe,
     deliverables: [
       "Custom design tuned to your brand",
@@ -57,6 +65,10 @@ export const services: Service[] = [
     tagline: "See what's happening in your business, at a glance.",
     summary:
       "Custom internal dashboards that pull from your tools (Stripe, Shopify, Google Sheets, your database) and give your team the numbers they actually need.",
+    image: {
+      src: "/services/business-dashboards.webp",
+      alt: "Dark analytics dashboard mockup with charts and mobile reporting views.",
+    },
     icon: LayoutDashboard,
     deliverables: [
       "Discovery session to map the metrics that matter",
@@ -90,6 +102,10 @@ export const services: Service[] = [
     tagline: "Something bespoke? Let's build it right.",
     summary:
       "Booking systems, member portals, marketplaces, internal tools. Web applications that don't fit into a template, engineered to be fast, scalable, and maintainable.",
+    image: {
+      src: "/services/custom-websites.webp",
+      alt: "Dark custom web app mockup with workflow, portal, and admin interface panels.",
+    },
     icon: Wand2,
     deliverables: [
       "Deep discovery + written scope",

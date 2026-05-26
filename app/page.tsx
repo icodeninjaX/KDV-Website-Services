@@ -21,7 +21,6 @@ export default function HomePage() {
     name: site.name,
     description: site.description,
     url: site.url,
-    email: site.email,
     founder: { "@type": "Person", name: site.founder },
     areaServed: {
       "@type": "Country",
