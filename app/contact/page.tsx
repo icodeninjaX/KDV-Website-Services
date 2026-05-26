@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Mail, Clock, MapPin } from "lucide-react";
+import { Clock, MapPin } from "lucide-react";
 import { SiWhatsapp, SiViber, SiMessenger } from "react-icons/si";
 import { FadeIn } from "@/components/site/FadeIn";
 import { ContactPanel } from "@/components/site/ContactPanel";
@@ -73,20 +73,6 @@ export default function ContactPage() {
           </div>
 
           <dl className="mt-8 space-y-5 text-sm">
-            <div className="flex items-start gap-3">
-              <Mail size={17} className="mt-0.5 shrink-0 text-indigo-400" aria-hidden />
-              <div>
-                <dt className="text-white/40">Email</dt>
-                <dd>
-                  <a
-                    href={`mailto:${site.email}`}
-                    className="text-white/80 underline-offset-4 hover:underline hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded transition-colors"
-                  >
-                    {site.email}
-                  </a>
-                </dd>
-              </div>
-            </div>
             <div className="flex items-start gap-3">
               <Clock size={17} className="mt-0.5 shrink-0 text-indigo-400" aria-hidden />
               <div>

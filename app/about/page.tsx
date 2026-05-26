@@ -53,11 +53,12 @@ export default function AboutPage() {
 
         <div className="mt-10 sm:mt-12 grid gap-8 sm:gap-10 lg:grid-cols-3">
           <FadeIn mount className="lg:col-span-2">
-            <div className="space-y-5 text-white/60 leading-relaxed text-[15px] sm:text-justify">
+            <div className="space-y-5 text-white/60 leading-relaxed text-[15px] text-justify">
               <p>
                 I&rsquo;m {site.founder}, the developer behind {site.name}. I work
-                with Philippine MSMEs that need practical websites, dashboards,
-                and custom tools without agency layers in the middle.
+                with local businesses in the Philippines that need practical
+                websites, dashboards, and custom tools without agency layers in
+                the middle.
               </p>
               <p>
                 The offer is intentionally direct: you talk to the person scoping,
@@ -76,12 +77,9 @@ export default function AboutPage() {
           <FadeIn mount delay={0.08}>
             <div className="rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6">
               <div className="label-mono">Get in touch</div>
-              <a
-                href={`mailto:${site.email}`}
-                className="mt-3 block text-sm text-white/70 underline-offset-4 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded"
-              >
-                {site.email}
-              </a>
+              <p className="mt-3 text-sm leading-relaxed text-white/60 text-justify">
+                Send the project details through the contact form or chat links.
+              </p>
               <div className="mt-6 label-mono">Response time</div>
               <div className="mt-2 text-sm text-white/70">{site.responseWindow}</div>
               <Link href="/contact" className="mt-6 block">
@@ -103,7 +101,7 @@ export default function AboutPage() {
             <FadeIn key={v.title} delay={i * 0.07}>
               <div className="h-full rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6">
                 <h3 className="font-display text-lg font-bold text-white">{v.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/55 sm:text-justify">{v.body}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/55 text-justify">{v.body}</p>
               </div>
             </FadeIn>
           ))}
@@ -113,7 +111,7 @@ export default function AboutPage() {
       <section className="container-page py-12 sm:py-16">
         <FadeIn>
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">Tools I use</h2>
-          <p className="mt-3 max-w-xl text-white/55 text-[15px] sm:text-justify">
+          <p className="mt-3 max-w-xl text-white/55 text-[15px] text-justify">
             A modern, battle-tested stack. Boring in the best way.
           </p>
         </FadeIn>

@@ -33,7 +33,7 @@ export function contactAutoReplyText({ name, service, budget }: AutoReplyInput) 
     "",
     `Recent work: ${site.url}/portfolio`,
     "",
-    "Keith D. Vergara",
+    "Keith",
     "KDV Website Services",
   ]
     .filter(Boolean)

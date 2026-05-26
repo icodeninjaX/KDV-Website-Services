@@ -22,12 +22,6 @@ export function Footer() {
           <p className="mt-5 max-w-sm text-sm text-white/60 leading-relaxed sm:text-justify">
             {site.tagline}
           </p>
-          <a
-            href={`mailto:${site.email}`}
-            className="mt-4 inline-block text-sm text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded"
-          >
-            {site.email}
-          </a>
           <div className="mt-4 flex items-center gap-2">
             {footerChannels.map(({ label, href, Icon }) => (
               <a

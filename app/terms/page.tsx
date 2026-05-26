@@ -96,14 +96,8 @@ export default function TermsPage() {
                 Questions
               </h2>
               <p className="mt-4 text-[15px] leading-relaxed text-white/60">
-                For questions about a project scope or agreement, email{" "}
-                <a
-                  href={`mailto:${site.email}`}
-                  className="rounded text-white underline-offset-4 transition-colors hover:text-indigo-300 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
-                >
-                  {site.email}
-                </a>
-                .
+                For questions about a project scope or agreement, use the
+                contact page.
               </p>
               <Link href="/contact" className="mt-6 inline-flex">
                 <Button>

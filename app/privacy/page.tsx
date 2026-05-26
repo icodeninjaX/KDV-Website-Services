@@ -38,7 +38,7 @@ const sections = [
     title: "Your rights",
     body: [
       "Under the Philippine Data Privacy Act of 2012, you may request access, correction, deletion or blocking, objection to processing, data portability where applicable, and information about how your data is handled.",
-      `To make a privacy request, email ${site.email}. You may also contact the National Privacy Commission if you believe your rights have been violated.`,
+      "To make a privacy request, use the contact page. You may also contact the National Privacy Commission if you believe your rights have been violated.",
     ],
   },
 ];
@@ -82,14 +82,7 @@ export default function PrivacyPage() {
                 Questions
               </h2>
               <p className="mt-4 text-[15px] leading-relaxed text-white/60">
-                For privacy questions or requests, email{" "}
-                <a
-                  href={`mailto:${site.email}`}
-                  className="rounded text-white underline-offset-4 transition-colors hover:text-indigo-300 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
-                >
-                  {site.email}
-                </a>
-                .
+                For privacy questions or requests, use the contact page.
               </p>
               <Link href="/contact" className="mt-6 inline-flex">
                 <Button>

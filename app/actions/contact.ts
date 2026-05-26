@@ -108,7 +108,7 @@ export async function sendContact(
     });
     if (error) {
       console.error("[contact] Resend error", error);
-      return { ok: false, error: "Email delivery failed. Please email me directly." };
+      return { ok: false, error: "Email delivery failed. Please try another contact option." };
     }
     try {
       const autoReply = {
@@ -133,6 +133,6 @@ export async function sendContact(
     return { ok: true };
   } catch (err) {
     console.error("[contact] unexpected error", err);
-    return { ok: false, error: "Something went wrong. Please email me directly." };
+    return { ok: false, error: "Something went wrong. Please try another contact option." };
   }
 }

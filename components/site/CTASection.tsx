@@ -25,7 +25,7 @@ export function CTASection() {
               Let&rsquo;s build something{" "}
               <span className="text-gradient">that works</span> for your business.
             </h2>
-            <p className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-base text-white/55 leading-relaxed sm:text-justify">
+            <p className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-base text-white/55 leading-relaxed text-justify">
               Tell me a bit about your business. I read every message and reply{" "}
               {site.responseWindow}.
             </p>
@@ -35,12 +35,6 @@ export function CTASection() {
                   Start a project <ArrowRight size={16} />
                 </Button>
               </Link>
-              <a
-                href={`mailto:${site.email}`}
-                className="text-sm text-white/50 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded"
-              >
-                Or email me directly
-              </a>
             </div>
           </div>
         </div>
