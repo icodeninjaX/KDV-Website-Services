@@ -16,7 +16,7 @@ export function FeaturedWork() {
             <h2 className="mt-4 font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
               Real clients. Real outcomes.
             </h2>
-            <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base sm:text-justify">
+            <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base text-justify">
               Four recent projects: an LPG ordering system, a cooperative tracker, an internal
               ad-ops dashboard, and a fintech marketing site. Same principles, different shapes.
             </p>

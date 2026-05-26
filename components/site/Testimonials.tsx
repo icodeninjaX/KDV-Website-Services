@@ -30,7 +30,7 @@ export function Testimonials() {
           <h2 className="mt-4 font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
             Verified projects, careful framing.
           </h2>
-          <p className="mt-4 text-[15px] leading-relaxed text-white/55">
+          <p className="mt-4 text-[15px] leading-relaxed text-white/55 text-justify">
             These are summarized takeaways from real client projects. Direct quotes
             will be added only after explicit permission.
           </p>
@@ -42,7 +42,7 @@ export function Testimonials() {
           <FadeIn key={q.name} delay={i * 0.07}>
             <figure className="flex h-full flex-col rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 sm:p-7">
               <div className="label-mono text-indigo-300/70">Summarized feedback</div>
-              <p className="mt-4 flex-1 text-[15px] leading-relaxed text-white/70">
+              <p className="mt-4 flex-1 text-[15px] leading-relaxed text-white/70 text-justify">
                 {q.body}
               </p>
               <figcaption className="mt-6 flex items-center gap-3 border-t border-white/[0.07] pt-5">

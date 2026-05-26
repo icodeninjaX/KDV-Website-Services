@@ -32,7 +32,7 @@ export function HomeFAQ() {
           <h2 className="mt-4 font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
             Answers before you ask.
           </h2>
-          <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base sm:text-justify">
+          <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base text-justify">
             The things MSME owners usually want to know before reaching out. Don&rsquo;t see yours?
             Message me. I reply personally.
           </p>
@@ -56,7 +56,7 @@ export function HomeFAQ() {
                   </span>
                 </summary>
                 <div className="px-5 pb-5 pt-1 sm:px-7 sm:pb-6">
-                  <p className="max-w-3xl text-[14px] sm:text-[15px] leading-relaxed text-white/60 sm:text-justify">{item.a}</p>
+                  <p className="max-w-3xl text-[14px] sm:text-[15px] leading-relaxed text-white/60 text-justify">{item.a}</p>
                 </div>
               </details>
             ))}

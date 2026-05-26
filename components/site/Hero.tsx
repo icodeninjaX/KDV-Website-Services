@@ -83,7 +83,7 @@ export function Hero() {
         </motion.h1>
 
         <FadeIn mount delay={0.45}>
-          <p className="mt-6 sm:mt-8 max-w-xl text-[15px] sm:text-lg leading-relaxed text-white/60 sm:text-justify">
+          <p className="mt-6 sm:mt-8 max-w-xl text-[15px] sm:text-lg leading-relaxed text-white/60 text-justify">
              KDV Website Services builds websites, dashboards, and internal tools for Philippine SMBs. Built directly with the developer, no middlemen.
           </p>
         </FadeIn>
