@@ -1,10 +1,26 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/site/FadeIn";
 import { CTASection } from "@/components/site/CTASection";
 import { services } from "@/lib/services";
+
+const serviceProjectImages = {
+  "website-creation": {
+    src: "/portfolio/ipay/cover.webp",
+    alt: "IPAY International marketing website shown across desktop and laptop screens.",
+  },
+  "business-dashboards": {
+    src: "/portfolio/371admin/cover.webp",
+    alt: "371admin dashboard showing ads, devices, and finance operations in one platform.",
+  },
+  "custom-websites": {
+    src: "/portfolio/coop-tracking/cover.webp",
+    alt: "CoopTracker mobile-first cooperative management web app shown on a phone.",
+  },
+} satisfies Record<(typeof services)[number]["slug"], { src: string; alt: string }>;
 
 export const metadata: Metadata = {
   title: "Services",
@@ -36,10 +52,22 @@ export default function ServicesIndexPage() {
       <section className="container-page space-y-5 pb-16 sm:pb-20">
         {services.map((service, i) => {
           const Icon = service.icon;
+          const image = serviceProjectImages[service.slug];
           return (
             <FadeIn key={service.slug} delay={i * 0.06}>
-              <article className="relative overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 transition-colors hover:border-white/[0.18] sm:p-8 lg:p-10">
-                <div className="grid gap-8 lg:grid-cols-[1fr_300px] lg:gap-10">
+              <article className="relative overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] transition-colors hover:border-white/[0.18]">
+                <div className="relative aspect-[16/10] overflow-hidden border-b border-white/[0.08] bg-[hsl(0_0%_4%)] sm:aspect-[16/8] lg:aspect-[16/6]">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="(min-width: 1024px) 1152px, 100vw"
+                    className="object-cover transition-transform duration-500 hover:scale-[1.02]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[hsl(0_0%_6%/0.5)] via-transparent to-transparent" />
+                </div>
+
+                <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_300px] lg:gap-10 lg:p-10">
                   <div>
                     <div className="flex items-start gap-4">
                       <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-brand-soft border border-white/[0.08] text-indigo-400 sm:h-12 sm:w-12">
@@ -55,7 +83,7 @@ export default function ServicesIndexPage() {
                       </div>
                     </div>
 
-                    <p className="mt-5 sm:mt-6 max-w-2xl text-[15px] leading-relaxed text-white/60">
+                    <p className="mt-5 sm:mt-6 max-w-2xl text-[15px] leading-relaxed text-white/60 text-justify">
                       {service.summary}
                     </p>
 

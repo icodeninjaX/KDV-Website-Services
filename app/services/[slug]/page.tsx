@@ -66,7 +66,7 @@ export default async function ServicePage(
         <FadeIn as="article" className="lg:col-span-2">
           <div className="rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 sm:p-8">
             <h2 className="font-display text-xl sm:text-2xl font-bold text-white">What you get</h2>
-            <p className="mt-3 text-white/55 leading-relaxed text-[15px]">{service.summary}</p>
+            <p className="mt-3 text-white/55 leading-relaxed text-[15px] text-justify">{service.summary}</p>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2" aria-label="Deliverables">
               {service.deliverables.map((d) => (
                 <li key={d} className="flex items-start gap-3 text-sm text-white/70">
