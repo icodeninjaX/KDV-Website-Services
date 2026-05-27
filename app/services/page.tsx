@@ -7,6 +7,21 @@ import { FadeIn } from "@/components/site/FadeIn";
 import { CTASection } from "@/components/site/CTASection";
 import { services } from "@/lib/services";
 
+const serviceProjectImages = {
+  "website-creation": {
+    src: "/portfolio/ipay/cover.webp",
+    alt: "IPAY International marketing website shown across desktop and laptop screens.",
+  },
+  "business-dashboards": {
+    src: "/portfolio/371admin/cover.webp",
+    alt: "371admin dashboard showing ads, devices, and finance operations in one platform.",
+  },
+  "custom-websites": {
+    src: "/portfolio/coop-tracking/cover.webp",
+    alt: "CoopTracker mobile-first cooperative management web app shown on a phone.",
+  },
+} satisfies Record<(typeof services)[number]["slug"], { src: string; alt: string }>;
+
 export const metadata: Metadata = {
   title: "Services",
   description:
@@ -37,13 +52,14 @@ export default function ServicesIndexPage() {
       <section className="container-page space-y-5 pb-16 sm:pb-20">
         {services.map((service, i) => {
           const Icon = service.icon;
+          const image = serviceProjectImages[service.slug];
           return (
             <FadeIn key={service.slug} delay={i * 0.06}>
               <article className="relative overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] transition-colors hover:border-white/[0.18]">
                 <div className="relative aspect-[16/10] overflow-hidden border-b border-white/[0.08] bg-[hsl(0_0%_4%)] sm:aspect-[16/8] lg:aspect-[16/6]">
                   <Image
-                    src={service.image.src}
-                    alt={service.image.alt}
+                    src={image.src}
+                    alt={image.alt}
                     fill
                     sizes="(min-width: 1024px) 1152px, 100vw"
                     className="object-cover transition-transform duration-500 hover:scale-[1.02]"
@@ -67,7 +83,7 @@ export default function ServicesIndexPage() {
                       </div>
                     </div>
 
-                    <p className="mt-5 sm:mt-6 max-w-2xl text-[15px] leading-relaxed text-white/60">
+                    <p className="mt-5 sm:mt-6 max-w-2xl text-[15px] leading-relaxed text-white/60 text-justify">
                       {service.summary}
                     </p>
 

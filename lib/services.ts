@@ -25,8 +25,8 @@ export const services: Service[] = [
     summary:
       "Marketing sites, landing pages, and multi-page business sites designed to turn visitors into leads. SEO-ready, fast on mobile, easy for you to update.",
     image: {
-      src: "/portfolio/ipay/cover.webp",
-      alt: "IPAY International marketing website shown across desktop and laptop screens.",
+      src: "/services/website-creation-v2.webp",
+      alt: "Dark laptop and phone mockup showing a responsive business website creation workflow.",
     },
     icon: Globe,
     deliverables: [
@@ -66,8 +66,8 @@ export const services: Service[] = [
     summary:
       "Custom internal dashboards that pull from your tools (Stripe, Shopify, Google Sheets, your database) and give your team the numbers they actually need.",
     image: {
-      src: "/portfolio/371admin/cover.webp",
-      alt: "371admin dashboard showing ads, devices, and finance operations in one platform.",
+      src: "/services/business-dashboards-v2.webp",
+      alt: "Dark business dashboard mockup with KPI cards, charts, tables, and mobile reporting views.",
     },
     icon: LayoutDashboard,
     deliverables: [
@@ -103,8 +103,8 @@ export const services: Service[] = [
     summary:
       "Booking systems, member portals, marketplaces, internal tools. Web applications that don't fit into a template, engineered to be fast, scalable, and maintainable.",
     image: {
-      src: "/portfolio/coop-tracking/cover.webp",
-      alt: "CoopTracker mobile-first cooperative management web app shown on a phone.",
+      src: "/services/custom-websites-v2.webp",
+      alt: "Dark custom web app system mockup with booking, member portal, marketplace, admin, and integration modules.",
     },
     icon: Wand2,
     deliverables: [
