@@ -66,7 +66,7 @@ export default function TermsPage() {
           <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
             Terms of <span className="text-gradient">Service</span>
           </h1>
-          <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/55">
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
             Last updated: 2026-05-17. These terms outline how KDV scopes,
             delivers, and hands off website, dashboard, and web app work.
           </p>
@@ -81,7 +81,7 @@ export default function TermsPage() {
                 <h2 className="font-display text-2xl font-bold text-white">
                   {section.title}
                 </h2>
-                <div className="mt-4 space-y-4 text-[15px] leading-relaxed text-white/60">
+                <div className="mt-4 space-y-4 text-base leading-relaxed text-muted-foreground">
                   {section.body.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
@@ -95,13 +95,13 @@ export default function TermsPage() {
               <h2 className="font-display text-2xl font-bold text-white">
                 Questions
               </h2>
-              <p className="mt-4 text-[15px] leading-relaxed text-white/60">
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                 For questions about a project scope or agreement, use the
                 contact page.
               </p>
               <Link href="/contact" className="mt-6 inline-flex">
                 <Button>
-                  Start a project <ArrowRight size={15} aria-hidden />
+                  Contact KDV <ArrowRight size={15} aria-hidden />
                 </Button>
               </Link>
             </div>

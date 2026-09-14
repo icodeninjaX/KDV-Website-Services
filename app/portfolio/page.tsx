@@ -18,11 +18,11 @@ export default function PortfolioPage() {
       <section className="container-page pt-14 pb-8 sm:pt-20 sm:pb-10">
         <FadeIn mount>
           <div className="label-mono">Selected work</div>
-          <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
+          <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-5xl leading-[1.1]">
             A few projects I&rsquo;m proud to have{" "}
             <span className="text-gradient">shipped</span>.
           </h1>
-          <p className="mt-4 max-w-xl text-white/55 text-[15px] leading-relaxed sm:text-justify">
+          <p className="mt-4 max-w-xl text-[hsl(var(--muted-foreground))] text-base leading-relaxed text-left">
             Details are anonymized where clients have asked. Happy to walk through any of these on
             a call.
           </p>

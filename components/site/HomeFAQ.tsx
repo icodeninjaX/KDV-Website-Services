@@ -1,4 +1,5 @@
 import { FadeIn } from "./FadeIn";
+import { Plus } from "lucide-react";
 
 const faqs = [
   {
@@ -32,7 +33,7 @@ export function HomeFAQ() {
           <h2 className="mt-4 font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
             Answers before you ask.
           </h2>
-          <p className="mt-4 text-white/55 leading-relaxed text-[15px] sm:text-base text-justify">
+          <p className="mt-4 text-muted-foreground leading-relaxed text-base sm:text-base text-left">
             The things MSME owners usually want to know before reaching out. Don&rsquo;t see yours?
             Message me. I reply personally.
           </p>
@@ -45,18 +46,13 @@ export function HomeFAQ() {
             {faqs.map((item) => (
               <details key={item.q} className="group">
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-4 px-5 py-4 text-white transition-colors hover:bg-white/[0.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-500/70 sm:items-center sm:gap-6 sm:px-7 sm:py-5">
-                  <span className="font-display text-[15px] sm:text-[17px] font-semibold leading-snug">
+                  <span className="font-display text-base sm:text-[17px] font-semibold leading-snug">
                     {item.q}
                   </span>
-                  <span
-                    className="shrink-0 font-display text-2xl font-light leading-none text-white/30 transition-transform duration-200 group-open:rotate-45"
-                    aria-hidden
-                  >
-                    +
-                  </span>
+                  <Plus size={22} className="shrink-0 text-muted-foreground transition-transform duration-200 group-open:rotate-45 motion-reduce:transition-none" aria-hidden />
                 </summary>
                 <div className="px-5 pb-5 pt-1 sm:px-7 sm:pb-6">
-                  <p className="max-w-3xl text-[14px] sm:text-[15px] leading-relaxed text-white/60 text-justify">{item.a}</p>
+                  <p className="max-w-3xl text-base sm:text-base leading-relaxed text-muted-foreground text-left">{item.a}</p>
                 </div>
               </details>
             ))}

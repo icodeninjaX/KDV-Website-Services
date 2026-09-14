@@ -31,7 +31,7 @@ export default function NotFound() {
         <h1 className="mt-4 font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">
           This page does not <span className="text-gradient">exist</span>.
         </h1>
-        <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/60">
+        <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
           The link may have moved. These paths are the fastest way back to the
           parts of the site most visitors need.
         </p>
@@ -50,10 +50,10 @@ export default function NotFound() {
             <h2 className="mt-5 font-display text-xl font-bold text-white">
               {label}
             </h2>
-            <p className="mt-2 text-sm leading-relaxed text-white/55">
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
               {description}
             </p>
-            <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-white/75 transition-colors group-hover:text-white">
+            <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors group-hover:text-white">
               Go there <ArrowRight size={14} aria-hidden />
             </div>
           </Link>

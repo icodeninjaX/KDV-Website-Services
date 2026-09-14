@@ -17,11 +17,12 @@ Update in-place as new facts come in. Anything marked `⏳` is a prompt for the 
 ### Portfolio case studies (live in `lib/portfolio.ts`)
 | Slug | Client | Year | Outcome |
 |---|---|---|---|
-| `new-zion-lpg` | New Z1on LPG | 2024 | Ordering workflow streamlined by 90% |
-| `coop-tracking` | Private cooperative (PH) | 2024 | Member activity visible in real time |
-| `371admin` | X-Meta Technologies | 2024 | Fleet visibility + automated reporting |
+| `new-zion-lpg` | New Z1on LPG | 2024 | One unified workflow across branches |
+| `coop-tracking` | Private cooperative (PH) | 2024 | The whole co-op runs from one phone screen |
+| `371admin` | X-Meta Technologies | 2024 | One platform for ads, devices, and finance |
+| `ipay-international` | IPAY International | 2025 | Enterprise credibility in a single scroll |
 
-### Testimonials (live in `components/site/Testimonials.tsx`)
+### Project feedback sources (not published as testimonials)
 | Name | Role | Project |
 |---|---|---|
 | Toots Abella | Hiring manager, New Z1on LPG | New Z1on LPG |
@@ -33,37 +34,32 @@ Update in-place as new facts come in. Anything marked `⏳` is a prompt for the 
 ## Pending / needs user input ⏳
 
 ### 1. COOP-TRACKING one-liner — **proposed**
-User asked for a one-liner. Current draft used on site:
+User asked for a one-liner. Earlier proposed wording (not the current longer case-study summary):
 
 > "A mobile-first tracking system that gave a small cooperative real-time visibility into member contributions, loans, and daily activity — built for officers who mostly work from their phones."
 
-Short version (used as `summary`):
+Earlier short version:
 > "Mobile-first tracking for a local co-op — real-time member, loan, and contribution visibility."
 
 **Action:** confirm wording or supply alternative.
 
 ### 2. Anonymous coop client
-Testimonial author currently shown as "Cooperative officer — Private cooperative, PH."
+The case study remains anonymous as "Private cooperative (PH)"; the former testimonial author attribution is no longer displayed.
 - Is full anonymization OK?
 - If not, need a name + role + permission to publish.
 
 ### 3. Testimonial quotes (verbatim)
-`Testimonials.tsx` now frames these as summarized feedback, not direct quotes.
+The homepage testimonial section was removed on 2026-09-14. Existing summaries now appear in the matching case studies as KDV-authored project notes, without attributed endorsements. Verbatim approved quotes are still pending.
 **Action:** get real quotes (SMS / email screenshots + permission to publish) from:
 - Toots Abella
 - The coop officer
 - Sai Maloles
 
-### 4. Hero stats (`components/site/Hero.tsx`)
-Currently placeholder values:
-- "20+ PH businesses" — real count?
-- "98 Lighthouse" — true across recent launches?
-- "<1 day reply" — matches `site.responseWindow`, fine
-- "85% retained" — real retention %?
+### 4. Hero stats
+No numerical credibility stats are displayed. Earlier 20+ businesses, 98 Lighthouse, and 85% retention placeholders are not verified and must not be restored without evidence.
 
-### 5. Availability pill (`components/site/Hero.tsx`)
-Hard-coded: "2 slots open · Booking May 2026"
-**Action:** confirm current month/slot count, or swap to a dynamic date helper.
+### 5. Availability pill
+Removed stale slot/month scarcity on 2026-09-14. Hero now uses the confirmed response window from `lib/site.ts`; no availability count is claimed.
 
 ### 6. Home FAQ content (`components/site/HomeFAQ.tsx`)
 5 objection-handling questions drafted by Claude. Need Keith to confirm wording matches how he actually answers on calls:
@@ -94,7 +90,7 @@ For future copy: confirm tone (technical + warm? straight-talk + PH-local? more 
 
 ### 11. Project screenshots
 `/screenshots/` dir exists (untracked). Are these intended as portfolio mockup sources?
-If yes — wire them into `FeaturedWork` card visuals instead of the gradient browser-frame placeholder.
+The site already uses four project covers and screenshot galleries from `public/portfolio/`. The 2026-09-14 refinement also uses the actual New Zion POS dashboard in the hero. The separate `/screenshots/` source folder still needs clarification before using additional assets.
 
 ---
 

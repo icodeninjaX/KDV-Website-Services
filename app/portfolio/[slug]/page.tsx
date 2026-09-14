@@ -10,6 +10,31 @@ import { Gallery } from "@/components/site/Lightbox";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/site/CTASection";
 
+const briefs: Record<string, { problem: string; delivered: string }> = {
+  "new-zion-lpg": {
+    problem: "Branch orders and sales were scattered across phone calls, paper logs, and spreadsheets.",
+    delivered: "A shared point-of-sale system with order management, SMS intake, and sales reports.",
+  },
+  "coop-tracking": {
+    problem: "Cooperative officers had to rebuild member equity and loan totals from notebooks and a shared spreadsheet.",
+    delivered: "A mobile app for members, contributions, loans, shares, and the cooperative ledger.",
+  },
+  "371admin": {
+    problem: "Advertising operations needed bookings, device monitoring, and finance in one place.",
+    delivered: "An admin platform for campaigns, connected devices, programs, and financial reporting.",
+  },
+  "ipay-international": {
+    problem: "A complex enterprise payments offer needed a clearer explanation for prospective buyers.",
+    delivered: "A marketing website with audience-specific service information and a proposal-request flow.",
+  },
+};
+
+const projectNotes: Record<string, string> = {
+  "new-zion-lpg": "The New Z1on LPG team moved phone and walk-in orders into one cleaner workflow, giving staff one screen for orders instead of scattered notes.",
+  "coop-tracking": "The cooperative officer needed a simple mobile way to see members, contributions, loans, and shares. The delivered app became the daily operating view.",
+  "371admin": "The X-Meta team replaced spreadsheet-heavy reporting with one admin panel for bookings, finance, devices, programs, and operational monitoring.",
+};
+
 export function generateStaticParams() {
   return portfolio.map((c) => ({ slug: c.slug }));
 }
@@ -43,30 +68,43 @@ export default async function CaseStudyPage(
         <FadeIn mount>
           <Link
             href="/portfolio"
-            className="label-mono hover:text-white/70 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded"
+            className="label-mono hover:text-[hsl(var(--muted-foreground))] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded"
           >
             &larr; All work
           </Link>
-          <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-white/40">
+          <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[hsl(var(--muted-foreground))]">
             <span>{study.client}</span>
-            <span className="text-white/15">&middot;</span>
+            <span className="text-[hsl(var(--muted-foreground))]">&middot;</span>
             <span>{study.year}</span>
             {related && (
               <>
-                <span className="text-white/15">&middot;</span>
+                <span className="text-[hsl(var(--muted-foreground))]">&middot;</span>
                 <Link
                   href={`/services/${related.slug}`}
-                  className="text-indigo-400 hover:text-indigo-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded transition-colors"
+                  className="text-[hsl(var(--accent-foreground))] hover:text-[hsl(var(--foreground))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 rounded transition-colors"
                 >
                   {related.title}
                 </Link>
               </>
             )}
           </div>
-          <h1 className="mt-4 max-w-4xl font-display font-bold tracking-tight text-white text-balance text-3xl sm:text-5xl lg:text-6xl leading-[1.15] sm:leading-[1.1]">
-            <span className="text-gradient">{study.title}</span>
+          <h1 className="mt-4 max-w-4xl font-display font-bold tracking-tight text-white text-balance text-3xl sm:text-5xl lg:text-5xl leading-[1.15] sm:leading-[1.1]">
+            {study.title}
           </h1>
-          <p className="mt-4 max-w-2xl text-[15px] text-white/55 leading-relaxed sm:text-justify">{study.summary}</p>
+          <div className="mt-6 grid gap-6 border-t border-[hsl(var(--border))] pt-6 lg:grid-cols-[1.5fr_1fr]">
+            <div>
+              <h2 className="font-display text-xl font-bold">Project brief</h2>
+              <p className="mt-3 text-base leading-relaxed text-[hsl(var(--muted-foreground))]">{briefs[study.slug]?.problem ?? study.summary}</p>
+              <p className="mt-3 text-base leading-relaxed text-[hsl(var(--muted-foreground))]">{briefs[study.slug]?.delivered}</p>
+            </div>
+            <div>
+              <h2 className="font-display text-xl font-bold">Outcome</h2>
+              <p className="mt-3 text-base leading-relaxed">{study.outcome}</p>
+              <Link href={`/contact?service=${study.service}`} className="mt-5 inline-block">
+                <Button>Start something similar <ArrowRight size={15} aria-hidden /></Button>
+              </Link>
+            </div>
+          </div>
         </FadeIn>
       </section>
 
@@ -74,7 +112,7 @@ export default async function CaseStudyPage(
         <FadeIn>
           {study.cover ? (
             <>
-              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_4%)]">
+              <div className="relative aspect-[16/10] sm:aspect-[16/7] overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(var(--background))]">
                 <Image
                   src={study.cover.src}
                   alt={study.cover.alt}
@@ -83,21 +121,6 @@ export default async function CaseStudyPage(
                   sizes="(min-width: 1024px) 1024px, 100vw"
                   className={study.cover.fit === "cover" ? "object-cover" : "object-contain"}
                 />
-                {/* Outcome overlay — only on >= sm so the screenshot stays unobscured on mobile */}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-32 bg-gradient-to-t from-black/85 via-black/40 to-transparent sm:block" />
-                <div className="absolute inset-x-0 bottom-0 hidden flex-col justify-end p-6 sm:flex sm:p-8">
-                  <div className="label-mono text-white/60">Outcome</div>
-                  <div className="mt-2 font-display text-2xl sm:text-3xl font-bold text-white drop-shadow">
-                    {study.outcome}
-                  </div>
-                </div>
-              </div>
-              {/* Mobile-only outcome card below the image */}
-              <div className="mt-4 rounded-xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-4 sm:hidden">
-                <div className="label-mono text-white/55">Outcome</div>
-                <div className="mt-1.5 font-display text-xl font-bold text-white leading-snug">
-                  {study.outcome}
-                </div>
               </div>
             </>
           ) : (
@@ -106,7 +129,7 @@ export default async function CaseStudyPage(
             >
               <div className="absolute inset-0 bg-black/50" />
               <div className="relative flex h-full flex-col justify-end p-5 sm:p-8">
-                <div className="label-mono text-white/50">Outcome</div>
+                <div className="label-mono text-[hsl(var(--muted-foreground))]">Outcome</div>
                 <div className="mt-2 font-display text-xl sm:text-3xl font-bold text-white">
                   {study.outcome}
                 </div>
@@ -121,68 +144,65 @@ export default async function CaseStudyPage(
           {study.body ? (
             <div className="space-y-8 sm:space-y-10">
               <div>
-                <div className="label-mono">The challenge</div>
-                <p className="mt-3 text-white/65 leading-relaxed text-[15px] sm:text-base sm:text-justify">
+                <h2 className="font-display text-2xl font-bold">Challenge</h2>
+                <p className="mt-3 text-[hsl(var(--muted-foreground))] leading-relaxed text-base sm:text-base text-left">
                   {study.body.challenge}
                 </p>
               </div>
               <div>
-                <div className="label-mono">What we built</div>
+                <h2 className="font-display text-2xl font-bold">Solution</h2>
                 <ul className="mt-4 space-y-3">
                   {study.body.built.map((item) => (
                     <li
                       key={item}
-                      className="flex gap-3 text-white/65 leading-relaxed text-[15px]"
+                      className="flex gap-3 text-[hsl(var(--muted-foreground))] leading-relaxed text-base"
                     >
-                      <span className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/80">
+                      <span className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-[hsl(var(--muted-foreground))]">
                         <Check size={12} aria-hidden />
                       </span>
-                      <span className="flex-1 sm:text-justify">{item}</span>
+                      <span className="flex-1 text-left">{item}</span>
                     </li>
                   ))}
                 </ul>
+                {study.gallery?.[0] && (
+                  <figure className="mt-6">
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))]">
+                      <Image src={study.gallery[0].src} alt={study.gallery[0].alt} fill sizes="(min-width: 1024px) 720px, 100vw" className="object-contain" />
+                    </div>
+                    <figcaption className="mt-3 text-sm text-[hsl(var(--muted-foreground))]">{study.gallery[0].caption ?? study.gallery[0].alt}</figcaption>
+                  </figure>
+                )}
               </div>
               <div>
-                <div className="label-mono">Result</div>
-                <p className="mt-3 text-white/65 leading-relaxed text-[15px] sm:text-base sm:text-justify">
+                <h2 className="font-display text-2xl font-bold">Result</h2>
+                <p className="mt-3 text-[hsl(var(--muted-foreground))] leading-relaxed text-base sm:text-base text-left">
                   {study.body.result}
                 </p>
               </div>
-              <p className="text-sm text-white/35 italic">
+              {projectNotes[study.slug] && (
+                <div className="border-l-2 border-[hsl(var(--primary))] pl-5">
+                  <h2 className="font-display text-xl font-bold">KDV project note</h2>
+                  <p className="mt-3 text-base leading-relaxed text-[hsl(var(--muted-foreground))]">{projectNotes[study.slug]}</p>
+                </div>
+              )}
+              <p className="text-sm text-[hsl(var(--muted-foreground))] italic">
                 Want a deeper walkthrough? I&rsquo;m happy to share more on a call, including
                 screens, the stack decisions, and what we&rsquo;d do differently.
               </p>
             </div>
           ) : (
-            <div className="space-y-5 text-white/60 leading-relaxed text-[15px] sm:text-justify">
-              <p>
-                <strong className="font-semibold text-white">The challenge.</strong>{" "}
-                {study.client} came to me with a familiar problem: the existing system worked,
-                but it couldn&rsquo;t keep up with the team, and every small change required a
-                developer.
-              </p>
-              <p>
-                <strong className="font-semibold text-white">What we built.</strong> After a
-                discovery session, we scoped a focused rebuild: a modern, maintainable foundation
-                with just the features the team would actually use. No kitchen sink.
-              </p>
-              <p>
-                <strong className="font-semibold text-white">Result.</strong> {study.outcome}.
-                The team now maintains most of the content themselves; I handle quarterly
-                improvements based on what they learn from customers.
-              </p>
-            </div>
+            <p className="text-base leading-relaxed text-[hsl(var(--muted-foreground))]">{study.summary}</p>
           )}
         </FadeIn>
 
         <FadeIn delay={0.08}>
-          <aside className="rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 lg:sticky lg:top-24">
+          <aside className="rounded-2xl border border-white/[0.1] bg-[hsl(var(--card))] p-6 lg:sticky lg:top-24">
             <div className="label-mono">Tech used</div>
             <div className="mt-3 flex flex-wrap gap-1.5">
               {study.tags.map((t) => (
                 <span
                   key={t}
-                  className="rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 text-xs text-white/70"
+                  className="rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 text-xs text-[hsl(var(--muted-foreground))]"
                 >
                   {t}
                 </span>
@@ -205,7 +225,7 @@ export default async function CaseStudyPage(
               <h2 className="max-w-2xl font-display text-xl font-bold tracking-tight text-white sm:text-3xl">
                 A walkthrough of the screens that ship every day.
               </h2>
-              <span className="text-xs text-white/40">
+              <span className="text-xs text-[hsl(var(--muted-foreground))]">
                 Tap any screen to zoom
               </span>
             </div>

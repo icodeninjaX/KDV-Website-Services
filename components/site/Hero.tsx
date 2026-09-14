@@ -1,113 +1,56 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { portfolio } from "@/lib/portfolio";
+import { site } from "@/lib/site";
 import { FadeIn } from "./FadeIn";
-import { Magnetic } from "./Magnetic";
-
-const headlineContainer: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.09, delayChildren: 0.1 },
-  },
-};
-
-const headlineLine: Variants = {
-  hidden: { opacity: 0, y: 24, filter: "blur(6px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-};
 
 export function Hero() {
-  const reduce = useReducedMotion();
-  const lineTransition = {
-    duration: reduce ? 0.2 : 0.7,
-    ease: [0.22, 1, 0.36, 1] as const,
-  };
+  const project = portfolio.find((item) => item.slug === "new-zion-lpg")!;
+  const preview = project.gallery![0];
 
   return (
-    <section className="relative overflow-x-hidden">
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <Image
-          src="/hero-section.webp"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[70%_center] sm:object-center scale-[1.6] sm:scale-100 origin-center opacity-70 sm:opacity-100"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/20 to-background sm:from-background/30 sm:via-background/10" />
-      </div>
-      <div className="container-page py-16 sm:py-24 lg:py-36">
+    <section className="container-page py-14 sm:py-20 lg:py-24">
+      <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
         <FadeIn mount>
-          <div className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-xs text-white/60 backdrop-blur">
-            <span className="relative flex h-2 w-2" aria-hidden>
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-            </span>
-            <span className="text-white/75">2 slots open</span>
-            <span className="text-white/25">&middot;</span>
-            <span>Booking May 2026</span>
-          </div>
-        </FadeIn>
-
-        <motion.h1
-          initial="hidden"
-          animate="visible"
-          variants={headlineContainer}
-          className="mt-6 sm:mt-7 max-w-4xl font-display font-extrabold tracking-tight text-white leading-[1.05] sm:leading-[1.08]"
-        >
-          <motion.span
-            variants={headlineLine}
-            transition={lineTransition}
-            className="block text-[2rem] sm:text-5xl lg:text-[5.5rem]"
-          >
-            Websites,
-          </motion.span>
-          <motion.span
-            variants={headlineLine}
-            transition={lineTransition}
-            className="block text-[2rem] sm:text-5xl lg:text-[5.5rem]"
-          >
-            dashboards,
-          </motion.span>
-          <motion.span
-            variants={headlineLine}
-            transition={lineTransition}
-            className="block text-[2rem] sm:text-5xl lg:text-[5.5rem]"
-          >
-            &amp; apps that <span className="text-gradient">grow</span> your business.
-          </motion.span>
-        </motion.h1>
-
-        <FadeIn mount delay={0.45}>
-          <p className="mt-6 sm:mt-8 max-w-xl text-[15px] sm:text-lg leading-relaxed text-white/60 text-justify">
-             KDV Website Services builds websites, dashboards, and internal tools for Philippine SMBs. Built directly with the developer, no middlemen.
+          <p className="label-mono">Keith / KDV Website Services</p>
+          <h1 className="mt-5 font-display text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+            A better way to run your business online.
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            Websites, business dashboards, and custom apps for Philippine MSMEs. Work directly with Keith, from the first conversation to launch.
           </p>
-        </FadeIn>
-
-        <FadeIn mount delay={0.52}>
-          <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3">
-            <Magnetic>
-              <Link href="/contact">
-                <Button size="lg">
-                  Start a project <ArrowRight size={16} />
-                </Button>
-              </Link>
-            </Magnetic>
-            <Magnetic strength={0.15}>
-              <Link href="/estimate">
-                <Button size="lg" variant="outline">
-                  Get a quick quote
-                </Button>
-              </Link>
-            </Magnetic>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/contact" className={buttonVariants({ size: "lg" })}>
+              Start a project <ArrowRight size={16} aria-hidden />
+            </Link>
+            <Link href="/portfolio" className={buttonVariants({ size: "lg", variant: "outline" })}>
+              View selected work
+            </Link>
           </div>
+          <p className="mt-5 text-sm text-muted-foreground">Personal reply {site.responseWindow}.</p>
         </FadeIn>
-
-
+        <FadeIn mount delay={0.1}>
+          <Link href={`/portfolio/${project.slug}`} className="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-card">
+              <Image src={preview.src} alt={preview.alt} fill priority sizes="(min-width: 1024px) 520px, 100vw" className="object-contain" />
+            </div>
+            <div className="mt-4 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm text-muted-foreground">Selected project / {project.client}</p>
+                <p className="mt-1 text-base leading-relaxed">{project.outcome}</p>
+              </div>
+              <ArrowRight size={20} aria-hidden className="shrink-0 text-muted-foreground" />
+            </div>
+          </Link>
+        </FadeIn>
+      </div>
+      <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-border pt-6 text-sm text-muted-foreground">
+        <span className="font-medium text-foreground">Built for real businesses</span>
+        {portfolio.map((item) => (
+          <Link key={item.slug} href={`/portfolio/${item.slug}`} className="inline-flex min-h-11 items-center rounded hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{item.client}</Link>
+        ))}
       </div>
     </section>
   );

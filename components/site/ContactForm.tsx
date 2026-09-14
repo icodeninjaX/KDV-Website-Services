@@ -61,8 +61,15 @@ export function ContactForm() {
   const defaultBudget = budgetPrefill[budget] ?? "";
 
   return (
-    <form id="contact-form" action={formAction} className="space-y-5" noValidate aria-label="Contact form">
-      {/* Honeypot */}
+    <form id="contact-form" action={formAction} className="space-y-5" noValidate aria-label="Contact form" aria-busy={pending}>
+      <p className="text-sm text-muted-foreground">Fields marked * are required.</p>
+      <div role="status" aria-live="polite" aria-atomic="true">
+        {state && (
+          <p className="rounded-xl border border-border bg-muted p-4 text-sm leading-relaxed text-foreground">
+            {state.ok ? "Message sent. Keith will be in touch within one business day." : state.error}
+          </p>
+        )}
+      </div>
       <input type="text" name="website" autoComplete="off" tabIndex={-1} aria-hidden className="hidden" />
 
       <div className="grid gap-5 sm:grid-cols-2">
@@ -70,7 +77,7 @@ export function ContactForm() {
           <Input
             name="name"
             required
-            placeholder="Keith Vergara"
+            placeholder="Your full name"
             autoComplete="name"
             aria-required="true"
             aria-invalid={!!err("name")}
@@ -89,12 +96,12 @@ export function ContactForm() {
         </Field>
       </div>
 
-      <Field label="Company" error={err("company")}>
-        <Input name="company" placeholder="Acme Co." autoComplete="organization" />
+      <Field label="Company (optional)" error={err("company")}>
+        <Input name="company" placeholder="Your business name" autoComplete="organization" />
       </Field>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="What do you need?" error={err("service")}>
+        <Field label="What do you need? (optional)" error={err("service")}>
           <Select name="service" defaultValue={defaultService}>
             <option value="">Not sure yet</option>
             <option value="website-creation">Website creation</option>
@@ -103,7 +110,7 @@ export function ContactForm() {
             <option value="not-sure">Something else</option>
           </Select>
         </Field>
-        <Field label="Budget range" error={err("budget")}>
+        <Field label="Budget range (optional)" error={err("budget")}>
           <Select name="budget" defaultValue={defaultBudget}>
             <option value="">Not sure yet</option>
             <option value="<₱50k">Under ₱50k</option>
@@ -141,16 +148,16 @@ export function ContactForm() {
           <div>
             <label
               htmlFor={consentId}
-              className="block min-h-11 cursor-pointer text-sm leading-relaxed text-white/70"
+              className="block min-h-11 cursor-pointer text-sm leading-relaxed text-muted-foreground"
             >
               I agree to KDV Website Services processing my information to
               respond to this inquiry.
             </label>
-            <p className="text-xs leading-relaxed text-white/35">
+            <p className="text-sm leading-relaxed text-muted-foreground">
               Read the{" "}
               <Link
                 href="/privacy"
-                className="rounded text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
+                className="rounded text-muted-foreground underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70"
               >
                 Privacy Policy
               </Link>
@@ -159,14 +166,14 @@ export function ContactForm() {
           </div>
         </div>
         {err("consent") ? (
-          <p id={`${consentId}-error`} className="mt-2 text-xs text-red-400" role="alert" aria-live="polite">
+          <p id={`${consentId}-error`} className="mt-2 text-sm text-foreground font-medium" role="alert" aria-live="polite">
             {err("consent")}
           </p>
         ) : null}
       </div>
 
       <div className="flex flex-col-reverse items-stretch gap-4 pt-1 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs text-white/35">I&rsquo;ll reply within one business day.</p>
+        <p className="text-sm text-muted-foreground">I&rsquo;ll reply within one business day.</p>
         <Button
           type="submit"
           disabled={pending}
@@ -175,7 +182,7 @@ export function ContactForm() {
         >
           {pending ? (
             <>
-              <Loader2 size={15} className="animate-spin" aria-hidden />
+              <Loader2 size={15} className="animate-spin motion-reduce:animate-none" aria-hidden />
               Sending&hellip;
             </>
           ) : (
@@ -214,14 +221,14 @@ function Field({
       <Label htmlFor={id}>
         {label}
         {required && (
-          <span className="ml-1 text-indigo-400/70" aria-hidden>
+          <span className="ml-1 text-foreground" aria-hidden>
             *
           </span>
         )}
       </Label>
       {field}
       {error ? (
-        <p id={errorId} className="text-xs text-red-400" role="alert" aria-live="polite">
+        <p id={errorId} className="text-sm text-foreground font-medium" role="alert" aria-live="polite">
           {error}
         </p>
       ) : null}

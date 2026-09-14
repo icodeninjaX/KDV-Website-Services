@@ -1,104 +1,53 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Clock, MapPin } from "lucide-react";
 import { SiWhatsapp, SiViber, SiMessenger } from "react-icons/si";
 import { FadeIn } from "@/components/site/FadeIn";
 import { ContactPanel } from "@/components/site/ContactPanel";
 import { site } from "@/lib/site";
 
 const channels = [
-  {
-    label: "WhatsApp",
-    href: site.whatsapp,
-    Icon: SiWhatsapp,
-    hover: "hover:border-[#25D366]/60 hover:text-[#25D366]",
-  },
-  {
-    label: "Viber",
-    href: site.viber,
-    Icon: SiViber,
-    hover: "hover:border-[#7360F2]/60 hover:text-[#9b8cff]",
-  },
-  {
-    label: "Messenger",
-    href: site.messenger,
-    Icon: SiMessenger,
-    hover: "hover:border-[#0084FF]/60 hover:text-[#3aa0ff]",
-  },
+  { label: "WhatsApp", href: site.whatsapp, Icon: SiWhatsapp },
+  { label: "Viber", href: site.viber, Icon: SiViber },
+  { label: "Messenger", href: site.messenger, Icon: SiMessenger },
 ] as const;
 
 export const metadata: Metadata = {
   title: "Contact",
   description: `Start a project with ${site.name}. Typical reply ${site.responseWindow}.`,
-  alternates: {
-    canonical: "/contact",
-  },
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
   return (
-    <section className="container-page py-14 sm:py-20">
-      <div className="grid gap-10 lg:grid-cols-5 lg:gap-12">
-        <FadeIn mount className="lg:col-span-2">
-          <div className="label-mono">Start a project</div>
-          <h1 className="mt-4 font-display font-bold tracking-tight text-white text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
-            Let&rsquo;s build{" "}
-            <span className="text-gradient">something good</span>.
-          </h1>
-          <p className="mt-4 sm:mt-5 text-white/55 leading-relaxed text-[15px] sm:text-justify">
-            Tell me about your business, your goal, and where you&rsquo;re stuck. Every message
-            gets a real reply from me, not a sales funnel.
-          </p>
-
-          <div className="mt-8 sm:mt-10">
-            <div className="label-mono text-white/40">Chat with me</div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {channels.map(({ label, href, Icon, hover }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Chat with Keith on ${label}`}
-                  className={`inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-sm text-white/75 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/70 ${hover}`}
-                >
-                  <Icon size={16} aria-hidden />
-                  <span>{label}</span>
-                </a>
-              ))}
-            </div>
-            <p className="mt-2 text-xs text-white/35">
-              Best on mobile. Desktop browsers may not have a handler installed.
-            </p>
-          </div>
-
-          <dl className="mt-8 space-y-5 text-sm">
-            <div className="flex items-start gap-3">
-              <Clock size={17} className="mt-0.5 shrink-0 text-indigo-400" aria-hidden />
-              <div>
-                <dt className="text-white/40">Typical reply</dt>
-                <dd className="text-white/80">{site.responseWindow}</dd>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <MapPin size={17} className="mt-0.5 shrink-0 text-indigo-400" aria-hidden />
-              <div>
-                <dt className="text-white/40">Based in</dt>
-                <dd className="text-white/80">Philippines &middot; serving clients worldwide</dd>
-              </div>
-            </div>
-          </dl>
+    <section className="container-page py-10 sm:py-16">
+      <FadeIn mount className="max-w-2xl">
+        <div className="label-mono">Start a project</div>
+        <h1 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
+          Tell me what your business needs.
+        </h1>
+        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+          Share your goal and where you&rsquo;re stuck. Keith will reply {site.responseWindow}.
+        </p>
+      </FadeIn>
+      <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-10">
+        <FadeIn mount delay={0.08} className="min-w-0 rounded-2xl border border-border bg-card p-4 sm:p-7">
+          <Suspense fallback={<div className="h-96 rounded-xl bg-muted" />}>
+            <ContactPanel />
+          </Suspense>
         </FadeIn>
-
-        <FadeIn mount delay={0.08} className="lg:col-span-3">
-          <div className="border-spin-wrapper is-active">
-            <div className="relative z-10 rounded-[15px] bg-[hsl(0_0%_6%)] p-5 sm:p-8">
-              <Suspense fallback={<div className="h-96 rounded-xl bg-white/[0.03]" />}>
-                <ContactPanel />
-              </Suspense>
-            </div>
+        <aside className="border-t border-border pt-6 lg:border-t-0 lg:pt-2">
+          <h2 className="font-display text-lg font-semibold text-foreground">Prefer to chat?</h2>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">You can also reach Keith on these channels.</p>
+          <div className="mt-4 flex flex-wrap gap-2 lg:flex-col lg:items-start">
+            {channels.map(({ label, href, Icon }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`Chat with Keith on ${label}`} className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border px-4 py-2 text-sm text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                <Icon size={16} aria-hidden />{label}
+              </a>
+            ))}
           </div>
-        </FadeIn>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Chat links may open their respective apps.</p>
+          <p className="mt-6 text-sm text-muted-foreground">Based in the Philippines.</p>
+        </aside>
       </div>
     </section>
   );

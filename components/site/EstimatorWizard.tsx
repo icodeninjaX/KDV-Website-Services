@@ -31,6 +31,24 @@ const scopeOptions: { value: EstimatorScope; label: string; description: string 
   },
 ];
 
+const scopeExamples: Record<EstimatorService, Record<EstimatorScope, string>> = {
+  "website-creation": {
+    small: "For example, a focused business website with service details and an inquiry form.",
+    medium: "For example, a multi-page site with separate service pages and editable content.",
+    large: "For example, an extensive content site with several integrations and page types.",
+  },
+  "business-dashboards": {
+    small: "For example, one dashboard for tracking sales or member activity.",
+    medium: "For example, several reports with staff roles and approval states.",
+    large: "For example, reporting across branches, teams, and connected data sources.",
+  },
+  "custom-websites": {
+    small: "For example, one booking, order, or member-management workflow.",
+    medium: "For example, several connected workflows with staff roles and notifications.",
+    large: "For example, an operations app spanning teams, payments, and external systems.",
+  },
+};
+
 const urgencyOptions: { value: EstimatorUrgency; label: string; description: string }[] = [
   {
     value: "no-rush",
@@ -64,7 +82,7 @@ export function EstimatorWizard() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-      <div className="rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-5 sm:p-7">
+      <div className="rounded-2xl border border-white/[0.1] bg-[hsl(var(--card))] p-5 sm:p-7">
         <div className="label-mono">Project shape</div>
 
         <div className="mt-5 space-y-5">
@@ -84,8 +102,8 @@ export function EstimatorWizard() {
                 </option>
               ))}
             </select>
-            <p className="text-xs leading-relaxed text-white/45">
-              {selectedService?.summary}
+            <p className="text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
+              {selectedService?.tagline}
             </p>
           </div>
 
@@ -93,7 +111,7 @@ export function EstimatorWizard() {
             id="estimate-scope"
             label="How big is the first version?"
             value={scope}
-            options={scopeOptions}
+            options={scopeOptions.map((option) => ({ ...option, description: scopeExamples[service][option.value] }))}
             onChange={(value) => setScope(value as EstimatorScope)}
           />
 
@@ -107,29 +125,35 @@ export function EstimatorWizard() {
         </div>
       </div>
 
-      <aside className="rounded-2xl border border-indigo-400/20 bg-[hsl(0_0%_6%)] p-5 shadow-[0_0_40px_-24px_rgba(99,102,241,0.9)] sm:p-7 lg:sticky lg:top-24">
+      <aside className="rounded-2xl border border-indigo-400/20 bg-[hsl(var(--card))] p-5 sm:p-7 lg:sticky lg:top-24">
         <div className="flex items-center gap-3">
-          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-white/[0.08] bg-gradient-brand-soft text-indigo-300">
+          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-white/[0.08] bg-gradient-brand-soft text-[hsl(var(--foreground))]">
             <Calculator size={20} aria-hidden />
           </div>
           <div>
             <div className="label-mono">Estimated range</div>
-            <div className="mt-1 text-sm text-white/50">For planning only</div>
+            <div className="mt-1 text-sm text-[hsl(var(--muted-foreground))]">For planning only</div>
           </div>
         </div>
 
+        <div role="status" aria-live="polite" aria-atomic="true">
+        <p className="mt-5 text-sm text-[hsl(var(--muted-foreground))]">
+          {selectedService?.title} · {scopeOptions.find((option) => option.value === scope)?.label} scope · {urgencyOptions.find((option) => option.value === urgency)?.label}
+        </p>
         <div className="mt-6 font-display text-3xl font-bold leading-tight text-white sm:text-4xl">
           {formatPeso(result.low)}
-          <span className="block text-white/45">to {formatPeso(result.high)}</span>
+          <span className="block text-[hsl(var(--muted-foreground))]">to {formatPeso(result.high)}</span>
         </div>
 
-        <p className="mt-4 text-sm leading-relaxed text-white/60">
+        <p className="mt-4 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
           {result.note}
         </p>
 
+        </div>
+
         <div className="mt-6 rounded-xl border border-white/[0.08] bg-white/[0.035] p-4">
-          <div className="flex items-start gap-3 text-sm text-white/70">
-            <CheckCircle2 size={17} className="mt-0.5 shrink-0 text-indigo-300" aria-hidden />
+          <div className="flex items-start gap-3 text-sm text-[hsl(var(--muted-foreground))]">
+            <CheckCircle2 size={17} className="mt-0.5 shrink-0 text-[hsl(var(--foreground))]" aria-hidden />
             <p>
               Continue to the contact form with this service and budget range pre-selected.
             </p>
@@ -138,7 +162,7 @@ export function EstimatorWizard() {
 
         <Link href={contactHref} className="mt-6 block">
           <Button className="w-full">
-            Continue to contact <ArrowRight size={15} aria-hidden />
+            Discuss this estimate <ArrowRight size={15} aria-hidden />
           </Button>
         </Link>
       </aside>
@@ -178,7 +202,7 @@ function OptionSelect({
           </option>
         ))}
       </select>
-      <p className="text-xs leading-relaxed text-white/45">{selected?.description}</p>
+      <p className="text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">{selected?.description}</p>
     </div>
   );
 }

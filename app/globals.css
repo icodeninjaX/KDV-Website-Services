@@ -12,14 +12,14 @@
     --background: 0 0% 3%;
     --foreground: 0 0% 96%;
     --muted: 0 0% 9%;
-    --muted-foreground: 0 0% 50%;
+    --muted-foreground: 0 0% 70%;
     --border: 0 0% 13%;
     --card: 0 0% 6%;
     --card-foreground: 0 0% 96%;
     /* Indigo as single primary accent */
-    --primary: 239 84% 67%;
+    --primary: 239 70% 58%;
     --primary-foreground: 0 0% 100%;
-    --accent: 239 84% 67%;
+    --accent: 239 90% 82%;
     --accent-foreground: 0 0% 100%;
   }
 
@@ -29,6 +29,12 @@
 
   html {
     scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   html,
@@ -104,7 +110,7 @@
 
   /* Section label — editorial mono style instead of gradient text */
   .label-mono {
-    @apply text-xs font-mono uppercase tracking-[0.18em] text-white/40;
+    @apply text-xs font-mono uppercase tracking-[0.18em] text-muted-foreground;
   }
 
   .border-gradient {

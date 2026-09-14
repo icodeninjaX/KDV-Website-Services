@@ -41,14 +41,11 @@ export default function EstimatePage() {
       <section className="container-page pt-14 pb-10 sm:pt-20 sm:pb-12">
         <FadeIn mount>
           <div className="label-mono">Quick quote</div>
-          <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl leading-[1.1] sm:text-5xl lg:text-6xl">
-            Get a realistic project range before the first{" "}
-            <span className="text-gradient">call</span>.
+          <h1 className="mt-4 max-w-3xl font-display font-bold tracking-tight text-white text-balance text-4xl leading-[1.1] sm:text-5xl lg:text-5xl">
+            Plan your project budget.
           </h1>
-          <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/60 sm:mt-5">
-            Answer three questions and get a planning range for a website,
-            dashboard, or custom web app. The final quote still depends on scope,
-            content, integrations, and timeline.
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-[hsl(var(--muted-foreground))] sm:mt-5">
+            Choose a service, scope, and timing for an initial range. We will confirm the final quote together after discussing your project.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link href="/portfolio">

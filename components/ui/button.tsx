@@ -8,12 +8,12 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "relative bg-gradient-brand text-white shadow-[0_0_28px_-8px_rgba(99,102,241,0.5)] hover:shadow-[0_0_36px_-6px_rgba(99,102,241,0.7)] hover:-translate-y-px active:translate-y-0",
+          "relative bg-primary text-primary-foreground shadow-[0_0_28px_-8px_rgba(99,102,241,0.5)] hover:shadow-[0_0_36px_-6px_rgba(99,102,241,0.7)] motion-safe:hover:-translate-y-px active:translate-y-0",
         secondary:
           "bg-white/[0.06] text-white backdrop-blur hover:bg-white/[0.1] border border-white/[0.1]",
-        ghost: "text-white/60 hover:text-white hover:bg-white/[0.05]",
+        ghost: "text-muted-foreground hover:text-white hover:bg-white/[0.05]",
         outline:
-          "border border-white/[0.15] bg-transparent text-white/80 hover:border-white/30 hover:bg-white/[0.05] hover:text-white",
+          "border border-white/[0.15] bg-transparent text-foreground hover:border-white/30 hover:bg-white/[0.05] hover:text-white",
       },
       size: {
         sm: "h-11 px-4 text-sm",   /* min 44px touch target */

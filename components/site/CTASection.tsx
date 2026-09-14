@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { FadeIn } from "./FadeIn";
 import { site } from "@/lib/site";
 
@@ -8,35 +8,15 @@ export function CTASection() {
   return (
     <section className="container-page py-16 sm:py-20">
       <FadeIn>
-        <div className="relative overflow-hidden rounded-3xl border border-white/[0.1] bg-[hsl(0_0%_6%)] p-6 sm:p-10 lg:p-16">
-          {/* Single elegant indigo glow */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -top-32 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-indigo-500/15 blur-3xl"
-          />
-
-          <div className="relative">
-            <div className="label-mono mb-6">Ready to build?</div>
-            <h2 className="max-w-2xl font-display text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-              Let&rsquo;s build something{" "}
-              <span className="text-gradient">that works</span> for your business.
-            </h2>
-            <p className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-base text-white/55 leading-relaxed text-justify">
-              Tell me a bit about your business. I read every message and reply{" "}
-              {site.responseWindow}.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link href="/contact">
-                <Button size="lg">
-                  Start a project <ArrowRight size={16} />
-                </Button>
-              </Link>
-            </div>
-          </div>
+        <div className="border-y border-border py-12 sm:py-16">
+          <p className="label-mono">Your next step</p>
+          <h2 className="mt-4 max-w-2xl font-display text-3xl font-bold tracking-tight sm:text-4xl">Tell me what your business needs.</h2>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
+            Share your idea, the problem you want to solve, or what needs improving. I read every message and reply {site.responseWindow}.
+          </p>
+          <Link href="/contact" className={buttonVariants({ size: "lg", className: "mt-8" })}>
+            Start a project <ArrowRight size={16} aria-hidden />
+          </Link>
         </div>
       </FadeIn>
     </section>

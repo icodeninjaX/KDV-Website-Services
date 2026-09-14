@@ -35,13 +35,25 @@ export function TawkChat() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     window.Tawk_API = window.Tawk_API ?? {};
-    window.Tawk_API.onLoad = () => {
+    const previousOnLoad = window.Tawk_API.onLoad;
+    const syncVisibility = () => {
       annotateTawkFrames();
-      if (isHidden(pathnameRef.current)) {
+      if (isHidden(pathnameRef.current) || document.body.dataset.galleryOpen === "true") {
         window.Tawk_API?.hideWidget?.();
       } else {
         window.Tawk_API?.showWidget?.();
       }
+    };
+    const onLoad = () => {
+      previousOnLoad?.();
+      syncVisibility();
+    };
+    window.Tawk_API.onLoad = onLoad;
+    window.addEventListener("kdv:gallerychange", syncVisibility);
+    syncVisibility();
+    return () => {
+      window.removeEventListener("kdv:gallerychange", syncVisibility);
+      if (window.Tawk_API?.onLoad === onLoad) window.Tawk_API.onLoad = previousOnLoad;
     };
   }, []);
 
@@ -67,7 +79,7 @@ export function TawkChat() {
   useEffect(() => {
     if (typeof window === "undefined" || !window.Tawk_API?.hideWidget) return;
     annotateTawkFrames();
-    if (isHidden(pathname)) {
+    if (isHidden(pathname) || document.body.dataset.galleryOpen === "true") {
       window.Tawk_API.hideWidget();
     } else {
       window.Tawk_API.showWidget?.();

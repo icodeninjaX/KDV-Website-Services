@@ -3,7 +3,7 @@ import { Hero } from "@/components/site/Hero";
 import { ServicesGrid } from "@/components/site/ServicesGrid";
 import { FeaturedWork } from "@/components/site/FeaturedWork";
 import { ProcessSteps } from "@/components/site/ProcessSteps";
-import { Testimonials } from "@/components/site/Testimonials";
+
 import { HomeFAQ } from "@/components/site/HomeFAQ";
 import { CTASection } from "@/components/site/CTASection";
 import { site } from "@/lib/site";
@@ -50,7 +50,7 @@ export default function HomePage() {
       <ServicesGrid />
       <FeaturedWork />
       <ProcessSteps />
-      <Testimonials />
+
       <HomeFAQ />
       <CTASection />
     </>
