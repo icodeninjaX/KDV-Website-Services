@@ -31,7 +31,7 @@ export function Hero() {
           </div>
           <p className="mt-5 text-sm text-muted-foreground">Personal reply {site.responseWindow}.</p>
         </FadeIn>
-        <FadeIn mount delay={0.1}>
+        <FadeIn mount delay={0.1} className="hidden md:block">
           <Link href={`/portfolio/${project.slug}`} className="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-card">
               <Image src={preview.src} alt={preview.alt} fill priority sizes="(min-width: 1024px) 520px, 100vw" className="object-contain" />
@@ -46,7 +46,7 @@ export function Hero() {
           </Link>
         </FadeIn>
       </div>
-      <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-border pt-6 text-sm text-muted-foreground">
+      <div className="mt-12 hidden flex-wrap items-center gap-x-8 gap-y-4 border-t border-border pt-6 text-sm text-muted-foreground md:flex">
         <span className="font-medium text-foreground">Built for real businesses</span>
         {portfolio.map((item) => (
           <Link key={item.slug} href={`/portfolio/${item.slug}`} className="inline-flex min-h-11 items-center rounded hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{item.client}</Link>

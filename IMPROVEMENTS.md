@@ -492,6 +492,10 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ---
 
 ### 6.6 Conversion-focused design audit and refinement
+
+**Mobile hero follow-up (2026-09-15):** ✅ Implemented and verified locally; release remains covered by step 8 below. Hide the hero project preview and client-name row below 768px; retain the existing Selected work section and tablet/desktop presentation.
+- ✅ Apply mobile-only visibility rules.
+- ✅ Real-browser checks at 360/390/767/768/1440px confirmed mobile hiding, tablet/desktop visibility, and retained Selected work. Production build and lint passed; production-build mobile and desktop layouts visually inspected.
 **Status:** 🟡 In progress — design implementation and reduced-motion fixes verified locally; third-party checks and release of follow-up fixes pending
 
 **Why.** Make it easier for a Philippine MSME owner to understand the offer, evaluate actual work, and send a project inquiry.
