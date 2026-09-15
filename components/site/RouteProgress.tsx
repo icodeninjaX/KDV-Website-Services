@@ -1,10 +1,17 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 const SHOW_AFTER_MS = 80;
 const FADE_OUT_MS = 200;
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeToMotionPreference(onChange: () => void) {
+  const preference = window.matchMedia(REDUCED_MOTION_QUERY);
+  preference.addEventListener("change", onChange);
+  return () => preference.removeEventListener("change", onChange);
+}
 
 function isInternalLinkClick(e: MouseEvent): HTMLAnchorElement | null {
   if (e.defaultPrevented) return null;
@@ -30,6 +37,11 @@ function isInternalLinkClick(e: MouseEvent): HTMLAnchorElement | null {
 
 export function RouteProgress() {
   const pathname = usePathname();
+  const reduceMotion = useSyncExternalStore(
+    subscribeToMotionPreference,
+    () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
+    () => false,
+  );
   const [progress, setProgress] = useState(0);
   const [visible, setVisible] = useState(false);
   const startTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -38,6 +50,7 @@ export function RouteProgress() {
   const activeRef = useRef(false);
 
   useEffect(() => {
+    if (reduceMotion) return;
     const start = () => {
       if (activeRef.current) return;
       activeRef.current = true;
@@ -56,8 +69,16 @@ export function RouteProgress() {
     };
 
     document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
-  }, []);
+    return () => {
+      document.removeEventListener("click", onClick);
+      if (startTimerRef.current) clearTimeout(startTimerRef.current);
+      if (trickleRef.current) clearInterval(trickleRef.current);
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+      activeRef.current = false;
+      setVisible(false);
+      setProgress(0);
+    };
+  }, [reduceMotion]);
 
   useEffect(() => {
     if (!activeRef.current) return;
@@ -73,6 +94,8 @@ export function RouteProgress() {
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
     };
   }, [pathname]);
+
+  if (reduceMotion) return null;
 
   return (
     <div

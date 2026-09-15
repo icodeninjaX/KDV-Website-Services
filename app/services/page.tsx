@@ -77,7 +77,7 @@ export default function ServicesIndexPage() {
                     alt={image.alt}
                     fill
                     sizes="(min-width: 1024px) 1152px, 100vw"
-                    className="object-cover transition-transform duration-500 hover:scale-[1.02]"
+                    className="object-cover transition-transform duration-500 motion-safe:hover:scale-[1.02]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[hsl(0_0%_6%/0.5)] via-transparent to-transparent" />
                 </div>
