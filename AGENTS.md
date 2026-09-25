@@ -26,7 +26,8 @@ Marketing site for **KDV Website Services** — a Philippines-based freelance we
 ## Stack
 - Next.js 15.5.15 (App Router) + React 19 + TypeScript
 - Tailwind 3.4 + class-variance-authority + `cn` util
-- framer-motion 11 for animations
+- framer-motion 11 for animations (also the single scroll-progress source for the homepage sequence)
+- three (homepage cinematic scene only; dynamically imported, never in the initial bundle)
 - react-hook-form + Zod for forms
 - Resend for contact email
 - sonner for toasts
@@ -59,6 +60,8 @@ All motion respects `prefers-reduced-motion`. Primitives:
 - `.border-spin-wrapper` — conic gradient border beam. Beam is hidden by default; add `.is-active` to show it (used for always-on beams like contact form, or toggled state like ProcessSteps)
 
 Keep animation restrained (Stripe/Linear tier). **No** parallax, cursor trails, 3D tilts, or Lottie.
+
+**Scoped exception (2026-09-25, IMPROVEMENTS 6.7):** the homepage cinematic sequence (`CinematicStory` + `system-scene.ts`) may use scroll-driven camera movement, layered depth, and real-time 3D. It stays on native scrolling (sticky, no wheel/touch hijacking, no snapping), runs only at ≥1024×600 without reduced-motion or data-saving preferences, and falls back to static chapters otherwise. The exception does not extend to any other page or component. Scene ranges, copy, and media live in `lib/story.ts`.
 
 ## Accessibility non-negotiables
 - 4.5:1 contrast on all text
@@ -145,7 +148,7 @@ Checklist for any new `app/<route>/page.tsx`:
 - **Inventing client names, stats, quotes, outcomes.** If real data isn't available, anonymize or omit.
 - **Editing `lib/services.ts` pricing** without explicit instruction. Pricing is locked.
 - **Emoji in UI.** Markdown docs only.
-- **Parallax, cursor trails, 3D tilts, Lottie.** Stripe/Linear restraint only.
+- **Parallax, cursor trails, 3D tilts, Lottie.** Stripe/Linear restraint only. (Sole exception: the homepage cinematic sequence — see Animation conventions.)
 - **Stripping `focus-visible:ring-*` classes.** Always-visible focus indicators are non-negotiable.
 - **Function references in RSC props.** Anything crossing server→client must be serializable.
 - **Bypassing pre-commit hooks** (`--no-verify`). Fix the underlying failure.
@@ -159,7 +162,8 @@ Checklist for any new `app/<route>/page.tsx`:
 
 ## Key files to know
 - `app/layout.tsx` — fonts, global chrome (Header, Footer, RouteProgress, GradientBackground, Toaster, TawkChat)
-- `app/page.tsx` — home composition: Hero → ServicesGrid → FeaturedWork → ProcessSteps → Testimonials → HomeFAQ → CTASection
+- `app/page.tsx` — home composition: CinematicStory (Hero + story chapters) → FeaturedWork → ServicesGrid → ProcessSteps → HomeFAQ → CTASection
+- `lib/story.ts` — cinematic sequence data: scroll ranges, chapter copy, tiers, media slots
 - `app/actions/contact.ts` — Resend send + Zod validation for the contact form
 - `lib/site.ts` — site metadata, nav config, response window
 - `lib/services.ts` — 3 services (website-creation, business-dashboards, custom-websites)
