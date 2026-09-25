@@ -60,6 +60,7 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
   const [sceneFailed, setSceneFailed] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
+  const [videoArmed, setVideoArmed] = useState(false);
   const onSceneFail = useCallback(() => setSceneFailed(true), []);
   const onVideoReady = useCallback(() => setVideoReady(true), []);
   const onVideoFail = useCallback(() => setVideoFailed(true), []);
@@ -75,6 +76,16 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
     const id = requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
     return () => cancelAnimationFrame(id);
   }, [cinematic]);
+
+  // Don't fetch the clip for visitors who never scroll; the scene covers its range until it's ready.
+  useEffect(() => {
+    if (!cinematic || videoArmed) return;
+    const arm = (p: number) => {
+      if (p > 0.02) setVideoArmed(true);
+    };
+    arm(scrollYProgress.get());
+    return scrollYProgress.on("change", arm);
+  }, [cinematic, videoArmed, scrollYProgress]);
 
   // Faded hero controls must not stay focusable.
   useEffect(() => {
@@ -93,7 +104,7 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
 
   const still = storyMedia.stills.scattered;
   const video = storyMedia.video;
-  const showVideo = cinematic && !!video && !videoFailed;
+  const showVideo = cinematic && videoArmed && !!video && !videoFailed;
 
   return (
     <section aria-labelledby="hero-heading" data-story-mode={mode}>
@@ -127,15 +138,14 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
               <ScrubVideo
                 progress={scrollYProgress}
                 range={storyTimeline.videoRange}
-                src={video.src}
-                type={video.type}
+                sources={video.sources}
                 onReady={onVideoReady}
                 onFail={onVideoFail}
               />
             )}
             {still && (
               <motion.div
-                className={cn("inset-0", cinematic ? "absolute" : "relative aspect-[4/3] md:absolute md:aspect-auto")}
+                className="story-frame relative aspect-[4/3] md:aspect-auto"
                 style={cinematic ? { opacity: posterOpacity, scale: posterScale } : undefined}
               >
                 <Image
@@ -276,7 +286,9 @@ function StoryStills({ progress, videoCovers }: { progress: MotionValue<number>;
       {!videoCovers && (
         <motion.div style={{ opacity: connectedOpacity }} className="absolute inset-0">
           {connected ? (
-            <Image src={connected.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: connected.focus }} />
+            <div className="story-frame">
+              <Image src={connected.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: connected.focus }} />
+            </div>
           ) : (
             <SchematicFrame variant="connect" />
           )}
@@ -284,7 +296,9 @@ function StoryStills({ progress, videoCovers }: { progress: MotionValue<number>;
       )}
       <motion.div style={{ opacity: systemOpacity }} className="absolute inset-0">
         {system ? (
-          <Image src={system.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: system.focus }} />
+          <div className="story-frame">
+            <Image src={system.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: system.focus }} />
+          </div>
         ) : (
           <SchematicFrame variant="system" />
         )}

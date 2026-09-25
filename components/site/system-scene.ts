@@ -207,7 +207,8 @@ type CameraKey = { p: number; pos: Vector3; target: Vector3 };
 
 const CAMERA_KEYS: CameraKey[] = [
   { p: 0.16, pos: new Vector3(0, 0.2, 15), target: new Vector3(0, 0, -1) },
-  { p: 0.48, pos: new Vector3(0.4, 0.5, 11), target: new Vector3(0, 0, -0.4) },
+  // Registered to the last frame of the scrubbed clip so the video → scene handoff doesn't jump.
+  { p: 0.48, pos: new Vector3(-0.9, 0.5, 8.6), target: new Vector3(-0.9, 0, -0.4) },
   { p: 0.62, pos: new Vector3(2.2, 1.8, 13), target: new Vector3(0, 0, -1.4) },
   { p: 0.8, pos: new Vector3(-0.8, 1.0, 12.6), target: new Vector3(0, 0, -1.4) },
   { p: 0.92, pos: new Vector3(0, 0.1, 10.8), target: new Vector3(0, 0, -0.4) },

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { motion, useTransform, type MotionValue } from "framer-motion";
-import type { StoryRange } from "@/lib/story";
+import type { StoryRange, StoryVideo } from "@/lib/story";
 
 /**
  * Maps scroll progress onto video time. The element never plays, so there is no
@@ -13,15 +13,13 @@ import type { StoryRange } from "@/lib/story";
 export function ScrubVideo({
   progress,
   range,
-  src,
-  type,
+  sources,
   onReady,
   onFail,
 }: {
   progress: MotionValue<number>;
   range: StoryRange;
-  src: string;
-  type: string;
+  sources: StoryVideo["sources"];
   onReady: () => void;
   onFail: () => void;
 }) {
@@ -53,6 +51,12 @@ export function ScrubVideo({
     };
     const onData = () => onReady();
     const onError = () => onFail();
+    // A <source> error only means that candidate failed; give up once all of them have.
+    let sourceErrors = 0;
+    const onSourceError = () => {
+      sourceErrors += 1;
+      if (sourceErrors === sources.length) onFail();
+    };
 
     video.addEventListener("loadedmetadata", onMeta);
     video.addEventListener("loadeddata", onData);
@@ -60,11 +64,14 @@ export function ScrubVideo({
     video.addEventListener("error", onError);
     const unsubscribe = progress.on("change", queue);
 
-    const source = document.createElement("source");
-    source.src = src;
-    source.type = type;
-    source.addEventListener("error", onError);
-    video.appendChild(source);
+    const elements = sources.map(({ src, type }) => {
+      const source = document.createElement("source");
+      source.src = src;
+      source.type = type;
+      source.addEventListener("error", onSourceError);
+      video.appendChild(source);
+      return source;
+    });
     video.load();
 
     return () => {
@@ -73,11 +80,13 @@ export function ScrubVideo({
       video.removeEventListener("loadeddata", onData);
       video.removeEventListener("seeked", flush);
       video.removeEventListener("error", onError);
-      source.removeEventListener("error", onError);
-      source.remove();
+      for (const source of elements) {
+        source.removeEventListener("error", onSourceError);
+        source.remove();
+      }
       video.load();
     };
-  }, [progress, src, type, start, end, onReady, onFail]);
+  }, [progress, sources, start, end, onReady, onFail]);
 
   return (
     <motion.video
@@ -89,7 +98,7 @@ export function ScrubVideo({
       aria-hidden
       tabIndex={-1}
       style={{ opacity }}
-      className="absolute inset-0 h-full w-full object-cover"
+      className="story-frame object-cover"
     />
   );
 }
