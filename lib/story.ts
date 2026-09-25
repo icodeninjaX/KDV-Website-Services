@@ -34,16 +34,20 @@ export type StoryVideo = {
 
 export const storyTimeline = {
   /** Height of the pinned track on cinematic-capable viewports, in svh. */
-  trackHeightSvh: 400,
-  /** Scrubbed video covers this range when the clip is available. */
-  videoRange: [0.2, 0.5] as StoryRange,
-  /** Real-time scene becomes visible from here (below it the poster owns the frame). */
-  sceneStart: 0.16,
+  trackHeightSvh: 420,
+  /** The one continuous clip is scrubbed across this range (office → organized → three devices). */
+  videoRange: [0.08, 0.8] as StoryRange,
+  /** Camera pushes into the laptop screen and the real dashboard lands on it. */
+  proofRange: [0.8, 1] as StoryRange,
+  /** Camera pulls back so all three devices clear the caption column, then pushes into the laptop. */
+  pullBack: 0.8,
+  /** Scale of the push-in, anchored on the laptop screen (`storyMedia.proofScreen`). */
+  proofZoom: 1.75,
   /** Sub-ranges of the "system" chapter where each service tier is highlighted. */
   tierRanges: [
-    [0.56, 0.64],
-    [0.64, 0.72],
-    [0.72, 0.8],
+    [0.6, 0.67],
+    [0.67, 0.74],
+    [0.74, 0.8],
   ] as StoryRange[],
 } as const;
 
@@ -59,7 +63,7 @@ export const compactTimeline = {
     system: [0.4, 0.72],
     proof: [0.72, 1],
   } as Record<"connect" | "system" | "proof", StoryRange>,
-  videoRange: [0.02, 0.36] as StoryRange,
+  videoRange: [0.02, 0.7] as StoryRange,
   tierRanges: [
     [0.46, 0.55],
     [0.55, 0.64],
@@ -70,21 +74,21 @@ export const compactTimeline = {
 export const storyChapters: StoryChapter[] = [
   {
     id: "intro",
-    range: [0, 0.2],
+    range: [0, 0.14],
     label: "Keith / KDV Website Services",
     heading: "Turn business chaos into a system that works.",
     body: "Websites, business dashboards, and custom apps for Philippine businesses. Work directly with Keith, from the first conversation to launch.",
   },
   {
     id: "connect",
-    range: [0.2, 0.5],
+    range: [0.14, 0.52],
     label: "01 / Scattered to connected",
     heading: "Inquiries, orders, stock, and reports stop living in separate places.",
     body: "Chat threads, notebooks, and a spreadsheet per branch become one connected flow your whole team can see.",
   },
   {
     id: "system",
-    range: [0.5, 0.8],
+    range: [0.52, 0.8],
     label: "02 / The system takes shape",
     heading: "One system, built in three layers.",
     body: "Start with the layer your business needs now. Each one connects to the next when you are ready.",
@@ -129,31 +133,40 @@ const proofProject = portfolio.find((p) => p.slug === "new-zion-lpg")!;
 const proofShot = proofProject.gallery!.find((g) => g.src.endsWith("admin-dashboard.webp"))!;
 
 export const storyMedia = {
-  /** Generated keyframes (GPT Image). null until produced; layouts fall back to CSS. */
+  /**
+   * Illustrative keyframes (GPT Image 2.5 sunburst): the same PH back-office desk as
+   * chaos → organized → three connected devices. Not client work — see IMPROVEMENTS 6.7.
+   * `scattered` is the clip's own first frame, so poster → video is pixel-registered.
+   */
   stills: {
-    scattered: { src: "/cinematic/keyframe-scattered.webp", width: 1920, height: 1080, focus: "72% 50%" } as StoryStill | null,
-    connected: { src: "/cinematic/keyframe-connected.webp", width: 1920, height: 1086, focus: "70% 50%" } as StoryStill | null,
-    system: { src: "/cinematic/keyframe-system.webp", width: 1920, height: 1086, focus: "70% 50%" } as StoryStill | null,
+    scattered: { src: "/cinematic/office-poster.webp", width: 1920, height: 1080, focus: "72% 50%" } as StoryStill | null,
+    connected: { src: "/cinematic/office-organized.webp", width: 1920, height: 1086, focus: "72% 50%" } as StoryStill | null,
+    system: { src: "/cinematic/office-devices.webp", width: 1920, height: 1086, focus: "72% 50%" } as StoryStill | null,
   },
-  /** Scroll-scrubbed Seedance clip, in source-preference order (H.264 first, VP9 for builds without it). */
+  /** One continuous Seedance 2.0 clip scrubbed across the whole desktop sequence (H.264 first, VP9 fallback). */
   video: {
     sources: [
-      { src: "/cinematic/sequence-1600.mp4", type: 'video/mp4; codecs="avc1.640028"' },
-      { src: "/cinematic/sequence-1600.webm", type: 'video/webm; codecs="vp9"' },
+      { src: "/cinematic/office-1600.mp4", type: 'video/mp4; codecs="avc1.640028"' },
+      { src: "/cinematic/office-1600.webm", type: 'video/webm; codecs="vp9"' },
     ],
     width: 1600,
     height: 900,
   } as StoryVideo | null,
-  /** Square crop of the same clip for the compact (mobile) sequence; poster is its first frame. */
+  /** Laptop display in the clip's final frame, as fractions of the 16:9 frame; the real dashboard lands here. */
+  proofScreen: { x: 0.498, y: 0.342, w: 0.25, h: 0.286 },
+  /** 10:9 crop (x 720–1920 of the 1080p master) for the compact sequence; poster is its first frame. */
   compact: {
-    poster: { src: "/cinematic/keyframe-scattered-sq.webp", width: 720, height: 720, focus: "50% 50%" } as StoryStill,
+    aspect: "10 / 9",
+    poster: { src: "/cinematic/office-poster-compact.webp", width: 720, height: 648, focus: "50% 50%" } as StoryStill,
+    /** object-position that reproduces the same crop on the 16:9 fallback stills. */
+    stillFocus: "100% 50%",
     video: {
       sources: [
-        { src: "/cinematic/sequence-720sq.mp4", type: 'video/mp4; codecs="avc1.64001f"' },
-        { src: "/cinematic/sequence-720sq.webm", type: 'video/webm; codecs="vp9"' },
+        { src: "/cinematic/office-compact.mp4", type: 'video/mp4; codecs="avc1.64001f"' },
+        { src: "/cinematic/office-compact.webm", type: 'video/webm; codecs="vp9"' },
       ],
       width: 720,
-      height: 720,
+      height: 648,
     } as StoryVideo | null,
   },
   /** Real project screenshot used as the proof hand-off. */
