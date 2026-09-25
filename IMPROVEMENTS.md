@@ -567,45 +567,78 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 
 
 ### 6.7 Cinematic homepage sequence
-**Status:** 🟡 In progress — code, fallbacks, and browser verification done locally; generated media blocked; not released
+**Status:** 🟡 In progress — built, media generated and integrated, verified locally in headless Chromium; real-GPU/Safari checks and release pending
 
 **Why.** Make the homepage say "KDV turns scattered business processes into clear, useful digital systems" in the first scroll, then hand off straight to real project proof, without delaying the offer or the contact path.
 
-**How.** One pinned, scroll-driven stage (`components/site/CinematicStory.tsx`) with all copy as real HTML. Chapter ranges, copy, and media slots are typed in `lib/story.ts`; a single Framer `useScroll` value drives everything. A small three.js scene (`components/site/system-scene.ts`, dynamically imported) renders the "business system": 18 interface modules that go scattered (0.20) → connected (0.50) → three service tiers (0.50–0.80, synced with HTML captions) → hand-off to the real New Zion admin dashboard screenshot (0.80–1.00). Optional slots for GPT Image keyframes (poster + static stills) and one scroll-scrubbed Seedance clip (0.20–0.50) are wired but empty until the assets land. Scoped motion exception recorded in `CLAUDE.md` / `AGENTS.md`. Dependency added with approval in the task brief: `three` + `@types/three` 0.186.
+**How.** One pinned, scroll-driven stage (`components/site/CinematicStory.tsx`) with all copy as real HTML. Chapter ranges, copy, and media are typed in `lib/story.ts`; a single Framer `useScroll` value drives everything. Sequence:
+- **0.00–0.20:** poster (first frame of the clip) behind the hero copy.
+- **0.20–0.50:** scroll-scrubbed Seedance clip, scattered panels → connected structure.
+- **0.50–0.80:** real-time three.js scene (`components/site/system-scene.ts`, dynamically imported), camera registered to the clip's last frame, then the website / dashboard / app tiers separate in sync with HTML captions.
+- **0.80–1.00:** the middle tier grows into the real New Zion admin dashboard screenshot, then Selected work.
 
-**Layers, honestly labelled.** Real-time mesh 3D: the module system, connectors, camera, and proof screen (WebGL). Generated video: none shipped yet. Generated stills: none shipped yet. The mobile / reduced-motion / no-WebGL illustration is a hand-built inline SVG schematic, not a render.
+Scoped motion exception recorded in `CLAUDE.md` / `AGENTS.md`. Dependency added with approval in the task brief: `three` + `@types/three` 0.186.
 
-**Modes.** Cinematic: ≥1024×600, no `prefers-reduced-motion`, no Save-Data / `prefers-reduced-data`. Everyone else, including no-JS: the server-rendered static chapters (`StoryChapters.tsx`), with no three.js or video download. WebGL unavailable or context lost → pinned stage keeps working with the SVG schematic and an HTML proof screenshot.
+**Layers, honestly labelled.**
+- Real-time mesh 3D (WebGL): 0.50–1.00, the module system, connectors, camera, and proof screen.
+- Generated video (Seedance 2.0): 0.20–0.50 only, scrubbed by scroll, never auto-played.
+- Generated stills (GPT Image 2): the connected and three-tier keyframes, used in the static chapters and the no-WebGL fallback. The poster is the clip's first frame, so the poster → video crossfade is pixel-registered.
+- Hand-built SVG schematic: shown only if a still is missing.
+
+**Modes.**
+- Cinematic: ≥1024×600, no `prefers-reduced-motion`, no Save-Data / `prefers-reduced-data`.
+- Everyone else, including no-JS: server-rendered static chapters (`StoryChapters.tsx`) with the keyframes. No three.js or video is downloaded.
+- WebGL unavailable or context lost: the pinned stage keeps working with the stills and an HTML proof screenshot.
+- Video: every source failing (the unsupported-codec case was tested) → the scene covers the range.
+- The clip is fetched only after the first scroll into the story.
 
 **Steps:**
 1. ✅ Baseline build + lint clean before changes (2026-09-25). Home First Load JS 147 kB.
 2. ✅ Typed story data, pinned stage, hero copy, captions, chapter index, skip links (`#work`, `#services`), page order Story → Work → Services → Process → FAQ → CTA.
 3. ✅ three.js scene: render-on-demand with damping, DPR ≤ 1.5 and ≤ 2.6 MP drawing buffer, paused offscreen / hidden tab / under video, context-loss fallback, full disposal.
-4. ✅ Scroll-scrubbed video component: metadata-gated, clamped, coalesced seeks, never plays. Verified with a stand-in test clip (removed afterwards): forward, reverse, and fast jumps map deterministically; 9 seeks for 30+ wheel events.
-5. ✅ Removed `overflow-x: hidden` from `html, body`. It turned `body` into a scroll container and broke `position: sticky` (the header did not stick). No page-wide horizontal overflow at 320/360/390/430/768/1024/1440 afterwards.
-6. ✅ Browser verification (headless Chromium, SwiftShader GL): 7 widths; 25/50/75/100% sequence frames; slow, wheel-reverse, and fast-jump scrolling; resize 1440→800→1440; back/forward; reload mid-sequence; keyboard order (header → hero CTAs → skip links → content; faded hero is `inert`); reduced motion; WebGL disabled; mobile menu; 16 routes (15×200, `/nope` 404). No console errors apart from the expected 404.
-7. 🔲 Generate keyframes (GPT Image 2) and the Seedance 2.0 clip within the approved 170-credit cap, inspect each, download, optimize, and fill `storyMedia` in `lib/story.ts`. **Blocked:** this cloud environment's network policy rejects `d8j0ntlcm91z4.cloudfront.net` (Higgsfield's result CDN), so outputs cannot be inspected or committed from here. Generation paused after one image.
-8. 🔲 Real-GPU performance pass (frame time during scroll, memory) on a physical desktop and a mid-range laptop; Safari/WebKit check. Not done: only software GL was available.
+4. ✅ Scroll-scrubbed video: metadata-gated, clamped, coalesced seeks, never plays. Multiple `<source>`s with codec strings; fails over only when all sources fail.
+5. ✅ Removed `overflow-x: hidden` from `html, body`. It turned `body` into a scroll container and broke `position: sticky`. No page-wide horizontal overflow at 320/360/390/430/768/1024/1440.
+6. ✅ Browser verification (headless Chromium, SwiftShader GL):
+   - 7 widths; sequence frames; slow, wheel-reverse, and fast scrolling.
+   - Resize 1440→800→1440; back/forward; reload mid-sequence; anchor jumps.
+   - Keyboard order (faded hero is `inert`); reduced motion; WebGL disabled; mobile menu.
+   - 16 routes (15×200, `/nope` 404). No console errors apart from the expected 404.
+7. ✅ Generated, inspected, and integrated media within the approved 170-credit cap (91.5 used by this work; see asset log). Worst-case text contrast over imagery ≥ 5.5:1 at 768/1024/1280/1440 (brightest background pixel under each text block).
+8. 🔲 Real-GPU performance pass (frame time during scroll, memory) on a physical desktop and a mid-range laptop; Safari/WebKit check, including H.264 scrubbing smoothness. Not done: only software GL and VP9 playback were available here.
 9. 🔲 Preview deploy review, then release through the normal workflow.
 
 **Measured (2026-09-25, local production build, headless Chromium, cold cache, no throttling):**
 - Home First Load JS: 147 kB → 171 kB (Next build report).
-- Deferred scene JS (cinematic visitors only): three.js ≈ 138 KB transferred (two chunks, 55 + 83 KB) + scene module 5 KB.
-- Initial transfer incl. Next.js link prefetches: 390px ≈ 388 KB (196 KB JS), 1440px ≈ 679 KB (348 KB JS, incl. three.js).
-- Textures: 5 procedural face canvases 512×320 and the real proof screenshot 1878×892. Estimated decoded GPU memory ≈ 15 MB for textures + drawing buffer ≤ 2.6 MP. This is an estimate, not a measurement.
+- Deferred scene JS (cinematic visitors only): three.js ≈ 138 KB transferred (two chunks) + scene module 5 KB.
+- Initial transfer incl. Next.js link prefetches:
+  - 390px ≈ 409 KB (196 KB JS, poster 26 KB).
+  - 1440px ≈ 740 KB (349 KB JS, incl. three.js).
+- Clip: fetched after first scroll. 963 KB (VP9) or 1.30 MB (H.264), depending on browser.
+- Media dimensions: stills 1920 px wide WebP (50–59 KB source; Next serves resized WebP). Clip 1600×900, 24 fps, 8.0 s, keyframe every 6 frames, no B-frames, no audio, `+faststart`.
+- Textures: 5 procedural face canvases 512×320 + proof screenshot 1878×892. Estimated decoded GPU memory ≈ 15 MB + drawing buffer ≤ 2.6 MP (estimate, not measured).
 - Scroll rendering cost on real hardware: **not measured**.
 
-**Asset log:**
-| Asset | Model | Job ID | Size / duration | Credits | Local path | Status |
-|---|---|---|---|---|---|---|
-| Keyframe A: scattered modules, 16:9, left 40% negative space | `gpt_image_2` (2k, high) | `ab657d54-0071-4d86-a855-ce99e8c30814` | 16:9, 2k | ≈ 6.5 | none | Generated; not inspected or downloaded (CDN blocked) |
-| Keyframe B: connected stack | `gpt_image_2` | — | — | — | — | Not generated |
-| Keyframe C: three tiers | `gpt_image_2` | — | — | — | — | Not generated |
-| Sequence clip A → B, 8 s, no audio | `seedance_2_0` (std, 1080p) | — | — | quoted 72 | — | Not generated |
+**Asset log** (all generated via Higgsfield MCP; KDV logo never uploaded or referenced):
+| Asset | Model | Job ID | Output | Credits | Local path |
+|---|---|---|---|---|---|
+| Keyframe A: scattered panels | `gpt_image_2` (2k, high) | `ab657d54-0071-4d86-a855-ce99e8c30814` | 2688×1520 PNG | 6.5 | Clip start anchor; not shipped directly |
+| Keyframe B: connected structure (ref: A) | `gpt_image_2` (2k, high) | `b76dd650-6bd4-4ae0-accb-0457c24f3219` | 2688×1520 PNG | 6.5 | `public/cinematic/keyframe-connected.webp` |
+| Keyframe C: three separated layers (ref: B) | `gpt_image_2` (2k, high) | `7bc5a740-9e9a-4c39-be6e-47166a4f3967` | 2688×1520 PNG | 6.5 | `public/cinematic/keyframe-system.webp` |
+| Clip A → B | `seedance_2_0` (std, 1080p, 8 s, `generate_audio: false`, start_image A, end_image B) | `0de2c835-2f5a-4ad3-b8e0-8f414284fd6e` | 1920×1080, 24 fps, 8.04 s, no audio track | 72 | `public/cinematic/sequence-1600.{mp4,webm}`; poster `public/cinematic/keyframe-scattered.webp` = its first frame |
 
-Keyframe A prompt: "Premium editorial technology still life … About eighteen thin rectangular interface panels made of dark smoked glass with satin-metal edges float separately in a near-black studio … grouped loosely in the RIGHT 60% of the frame; the LEFT 40% … empty, near-black negative space … no readable text, no numbers, no letters, no logos … restrained accent … muted indigo (#6366f1) shifting toward violet (#a855f7) … No people … no watermark, no text." The KDV logo was not uploaded or referenced.
+Review notes:
+- No text, logos, or people in any output.
+- B came out as a 3×3 front grid rather than the 3×2 requested; kept, because it still reads clearly as one connected system.
+- The clip's frame-to-frame mean-luma change is ≤ 0.27/255 (no flicker).
+- Mid-transition panels briefly interpenetrate as glass; accepted.
+- Seedance slightly reframed A (SSIM 0.77 against A), so the poster uses the clip's own frame 0.
+- No retries were needed.
 
-**To finish step 7:** allow `d8j0ntlcm91z4.cloudfront.net` in the environment's network settings (or run the generation from a machine that can reach it), inspect keyframe A, then generate B and C using A as the reference image, and generate the Seedance clip with A as `start_image` and B as `end_image`. Encode for scrubbing (H.264, ~1280 px wide, short GOP, `+faststart`, audio stripped). Then set `storyMedia.stills.*` and `storyMedia.video`. No component changes are needed.
+Prompts (abridged; full text in session history):
+- **A:** "Premium editorial technology still life … eighteen thin rectangular interface panels … dark smoked glass with satin-metal edges float separately … RIGHT 60% of the frame; the LEFT 40% … empty … no readable text, no numbers, no letters, no logos … muted indigo (#6366f1) shifting toward violet (#a855f7) … No people."
+- **B:** "Same scene … the panels have moved into order … one precise, connected structure made of three parallel layers … thin, fine lines of soft light connect neighbouring panels …"
+- **C:** "… separated into exactly three distinct … layers pulled apart like an exploded architectural diagram … the middle layer is subtly highlighted …"
+- **Clip:** "Use the start and end frames as visual anchors. One continuous, restrained cinematic shot … panels drift slowly … into a precise, connected layered structure … slow, controlled dolly in with a gentle shallow orbit … no abrupt cuts … no added text …"
 
 ---
 
