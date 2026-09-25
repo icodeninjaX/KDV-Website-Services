@@ -567,100 +567,66 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 
 
 ### 6.7 Cinematic homepage sequence
-**Status:** 🟡 In progress — v2 (real-business imagery, single continuous clip) built and verified locally in headless Chromium; real-device and Safari checks and release pending
+**Status:** 🟡 In progress — v3 (real-time 3D "paper to system") built and verified locally in headless Chromium; real-device and Safari checks and release pending
 
-**Why.** Make the homepage say "KDV turns scattered business processes into clear, useful digital systems" in the first scroll, then hand off straight to real project proof, without delaying the offer or the contact path.
+**Why.** Make the homepage say "KDV turns scattered business processes into clear, useful digital systems" in the first scroll, show the real work and the three services in the same motion, and never delay the offer or the contact path.
 
-**v2 (2026-09-25), replacing v1.** Keith found v1's abstract "floating dark panels" too generic and the sequence inconsistent: v1 switched visual register three times (photo poster → abstract video → three.js panels → screenshot). v2 is one photographic world and one camera.
-- **The scene:** a Philippine family business's back-office desk, the kind KDV's clients actually have. It shows the problems the case studies solved: a handwritten order ledger, a co-op payment notebook, spreadsheets per branch, carbon receipts, a landline and a phone full of SMS orders, with an unbranded LPG cylinder in the corner.
-- **The motion:** scroll transforms the same desk: the clutter clears, a laptop dashboard lights up, then a phone storefront, the laptop dashboard and a tablet staff app sit side by side as the three services.
-- **The proof:** the camera pushes into the laptop, and the real New Zion admin dashboard lands on its screen.
-- **Illustrative, not client work:** the desk scene is generated. The only real project content is the New Zion screenshot, labelled "On screen: New Zion POS / New Z1on LPG / admin dashboard".
+**v3 (2026-09-25), replacing v2.** Keith asked for a real 3D, interactive, scroll-driven homepage that showcases the work and services and doesn't look like a generic 3D site. v2 (a scrubbed photographic video) wasn't interactive; v1 (abstract floating panels) read as generic. v3 is one object system from start to finish:
+- **Paper:** about 420 paper slips on desktop (162 on phones), cut from one generated atlas of illegible receipts, logbook pages, sticky notes and ledgers. They swirl in a slow vortex under a warm desk-lamp light.
+- **Ledger:** scroll pulls every slip into a grid, paper side up, with indigo hairlines between them (the spreadsheet stage).
+- **System:** a flip-wave turns the grid over, and the tiles become the real New Zion admin dashboard. Each tile shows its slice of the screenshot, and the gaps close into one seamless screen.
+- **Services:** three more flip-waves turn the same tiles into IPAY International (Website Creation), 371admin (Business Dashboards) and CoopTracker (Custom Web Apps). Each lands at a new angle with a single glass glint.
+- **Interaction:** the pointer nudges loose paper away. Over a finished screen, it lifts the nearby tiles slightly, and the camera parallaxes a little with the pointer.
+- **Honest labelling:** only the paper is generated. Every screen is a real project screenshot, and each caption says "On screen: project / client / view", with links to the case study and the service.
 
-**How.** One pinned stage (`components/site/CinematicStory.tsx`), all copy as real HTML. Ranges, copy, and media are typed in `lib/story.ts`.
-- **Smoothing:** one spring-damped copy of the scroll progress (`useSpring`) drives every visual, so mouse-wheel steps read as continuous motion. Raw progress is used only for `inert` and the download trigger.
-- **Timeline:**
-  - **0.00–0.14:** poster (the clip's own frame 0) behind the hero copy.
-  - **0.08–0.80:** one 12 s Seedance clip scrubbed continuously.
-  - **0.52–0.80:** the camera pulls back so all three devices clear the caption column, while the Website / Dashboard / Custom app captions highlight in turn.
-  - **0.80–1.00:** the camera pushes in (×1.75) around the laptop screen, and the real New Zion screenshot fades in, registered to the screen rectangle measured on the final frame (`storyMedia.proofScreen`).
-- **Registration:** the camera is an exact 16:9 box sized with container-query units (`.story-camera`), so rectangle percentages map 1:1 onto video pixels at any viewport size.
-- **Scrims:** a wide scrim fades out with the hero; a narrower caption scrim keeps the devices bright.
-- **three.js removed:** `three` / `@types/three` uninstalled, and `system-scene.ts` and `StoryScene.tsx` deleted, since keeping the abstract 3D layer would reintroduce the inconsistency.
+**How.**
+- `components/site/paper-scene.ts` is framework-free three.js. It uses one `InstancedMesh` of thin boxes and a custom shader: paper atlas or plate slice per face, curl, lambert, fog, and a glint. It's driven by one progress value.
+- `components/site/CinematicStory.tsx` owns the pinned 720svh track, the spring-smoothed progress, the captions, `inert` handling and the lifecycle. three.js is dynamically imported only once the visitor is known to be capable.
+- Ranges, copy and plates are in `lib/story.ts`. Service prices and timelines are read from `lib/services.ts`, and project facts come from `lib/portfolio.ts`.
+- The scene renders only while the stage is on screen and the tab is visible. DPR is capped at 1.5 (phones) and 1.75 (desktop).
 
 **Modes.**
-- Cinematic: ≥1024×600, no `prefers-reduced-motion`, no Save-Data / `prefers-reduced-data`.
-- Compact: narrower viewports ≥520px tall, same motion/data conditions (`components/site/CompactStory.tsx`, `compactTimeline`).
-  - Hero in normal flow, then a 300svh pinned track.
-  - A 10:9 crop of the same clip (office → organized → three devices), then the real dashboard.
-  - Captions and a 3-segment progress bar underneath.
-- Static (no-JS, reduced motion, Save-Data, landscape phones <520px tall): server-rendered chapters with the keyframes. No video downloaded.
-- Video failing on every source: the keyframes crossfade through the same beats; the proof still lands on the laptop screen (keyframe 3 is the clip's end frame).
-- Every clip is fetched only on the first real scroll event, not on load.
+- Cinematic, wide (≥1024×600): mosaic right of the caption column, chapter index on the right.
+- Cinematic, narrow (<1024 wide, ≥520 tall): mosaic across the top, captions underneath, progress rail. Half the yaw, and a tighter frame under 700px tall.
+- Static (reduced motion, Save-Data / `prefers-reduced-data`, no WebGL, landscape phones <520px tall, no JS, before hydration): server-rendered chapters with the real screenshots. Neither three.js nor the atlas is downloaded.
+- A lost WebGL context switches to static.
 
 **Steps:**
 1. ✅ Baseline build + lint clean before changes (2026-09-25). Home First Load JS 147 kB.
-2. ✅ Typed story data, pinned stage, hero copy, captions, chapter index, skip links (`#work`, `#services`), page order Story → Work → Services → Process → FAQ → CTA.
-3. ✅ v1 real-time three.js scene built and verified, then retired in v2 (see above).
-4. ✅ Scroll-scrubbed video: metadata-gated, clamped, coalesced seeks, never plays. Multiple `<source>`s with codec strings; fails over only when all sources fail.
-5. ✅ Removed `overflow-x: hidden` from `html, body` (it broke `position: sticky`). No page-wide horizontal overflow at 320/360/390/430/768/1024/1440.
-6. ✅ v1 browser verification: widths, scroll directions, resize, back/forward, reload, keyboard/`inert`, reduced motion, WebGL off, mobile menu, 16 routes.
-7. ✅ v1 media (91.5 credits), later replaced by v2.
-8. ✅ Compact (mobile/portrait) sequence.
-9. ✅ v2 media and sequence (2026-09-25):
-   - Generated within the approved 250-credit cap (121.5 used; see asset log).
-   - Brand logo removed from the clip (below).
-   - Verified in headless Chromium:
-     - Desktop 1440/1280/1024 sequence frames.
-     - Wheel-driven forward/reverse.
-     - Proof registration on the laptop screen.
-     - Video-failure fallback.
-     - Compact at 320/360/390/430/768.
-     - Static for reduced motion, Save-Data and landscape phones.
-     - No overflow; no console errors.
-     - Load race 10/10.
-   - Worst-case contrast over imagery: hero copy ≥ 5.11:1, chapter captions (incl. dimmed tier rows) ≥ 5.98:1.
-10. 🔲 Real-device pass: iPhone Safari (known to be strict about loading non-playing video), mid-range Android, and frame smoothness/memory on real hardware. Not done here.
-11. 🔲 Preview deploy review, then release through the normal workflow.
+2. ✅ Typed story data, pinned stage, hero copy, captions, chapter index, skip links (`#work`, `#services`).
+3. ✅ v1 (three.js abstract panels) built, verified, retired.
+4. ✅ v2 (scroll-scrubbed Seedance clip of a PH back-office desk) built, verified, retired. Media removed from `public/cinematic/`; recoverable from git history.
+5. ✅ Removed `overflow-x: hidden` from `html, body` (it broke `position: sticky`).
+6. ✅ v3 paper atlas generated (see asset log).
+7. ✅ v3 scene, stage, captions, static fallback. `three` re-added as the one new dependency, because a real-time 3D homepage needs it (no React-Three-Fiber wrapper).
+8. ✅ v3 verified in headless Chromium (SwiftShader WebGL), 2026-09-25:
+   - Frames across the whole sequence at 1024, 1280, 1440 and 1920 wide, and on phones at 320×640, 360×780, 390×844, 430×932 and 768×1024.
+   - Reduced motion → static, with no atlas download.
+   - No WebGL → static. Landscape 844×390 → static.
+   - No horizontal overflow at any size; no console errors.
+   - Only the visible caption's links are focusable, and the hero's links become focusable again on scroll-back.
+   - Fixed during verification: tile edges showing as seams on light screenshots at an angle, the caption scrim dimming the mosaic's edge, captions overlapping the mosaic on short phones, and "From Quoted per project".
+9. 🔲 Real-device pass: iPhone Safari, a mid-range Android, frame rate and GPU memory on real hardware. SwiftShader proves correctness, not smoothness. Not done here.
+10. 🔲 Preview deploy review, then release through the normal workflow.
 
-**Measured (2026-09-25, local production build, headless Chromium, cold cache, no throttling):**
-- Home First Load JS: 173 kB (was 147 kB before 6.7; v1 with three.js lazily loaded was 171 kB + ≈138 KB deferred three.js).
-- Initial transfer incl. Next.js prefetches:
-  - 1440px ≈ 634 KB (206 KB JS, 251 KB images).
-  - 390px ≈ 482 KB (197 KB JS, 134 KB images).
-- Clip after first scroll:
-  - Desktop 2.0 MB (VP9) / 2.4 MB (H.264).
-  - Compact 1.0 MB (VP9) / 1.1 MB (H.264).
-  - Heavier than v1's abstract clip; photographic detail costs bits even after denoising.
-- Encoding:
-  - Desktop 1600×900; compact 720×648 (crop x 720–1920 of the master).
-  - 24 fps, 12.04 s, keyframe every 12 frames, no B-frames, light `hqdn3d` denoise, no audio, `+faststart`.
-  - Poster/stills: 1920 px WebP, 123–145 KB source; Next serves resized WebP.
-- Scroll rendering cost and decoded memory on real hardware: **not measured**.
+**Measured (2026-09-25, local production build):**
+- Home First Load JS 171 kB. three.js is a separate lazy chunk that's fetched only in cinematic mode.
+- Media is the paper atlas (1536², WebP, 149 KB) plus the four existing portfolio screenshots (≈50–115 KB each).
+- v2 downloaded a 2.0–2.4 MB clip. v3 has no video.
+- Frame time and memory on real hardware: **not measured**.
 
-**Asset log, v2** (Higgsfield MCP; KDV logo never uploaded or referenced):
+**Asset log, v3** (Higgsfield MCP):
 | Asset | Model | Job ID | Output | Credits | Local path |
 |---|---|---|---|---|---|
-| K1: cluttered PH back-office desk | `gpt_image_2_5` sunburst (2k, xhigh) | `70b39900-2018-4ac7-ae4c-e22e58c73679` | 2688×1520 PNG | 4.5 | Clip start anchor (poster uses the clip's own frame 0) |
-| K2: same desk organized, laptop dashboard (ref: K1) | `gpt_image_2_5` sunburst (2k, xhigh) | `de877bbf-df33-4f38-a68a-a07699709758` | 2688×1520 PNG | 4.5 | `public/cinematic/office-organized.webp` |
-| K3: phone storefront + laptop dashboard + tablet staff app (ref: K2) | `gpt_image_2_5` sunburst (2k, xhigh) | `9f85caea-6a5b-4137-9358-9ed6cc17cb9d` | 2688×1520 PNG | 4.5 | `public/cinematic/office-devices.webp` |
-| Clip K1 → K3 (K2 as image reference) | `seedance_2_0` (std, 1080p, 12 s, `generate_audio: false`) | `d662aeb4-a406-4082-9bc4-9090b8e77dcd` | 1920×1080, 24 fps, 12.04 s, no audio | 108 | `public/cinematic/office-1600.{mp4,webm}`, poster `office-poster.webp` |
-| Compact crop | derived (ffmpeg crop 1200×1080 at x=720 → 720×648) | — | 720×648, 12.04 s | 0 | `public/cinematic/office-compact.{mp4,webm}`, poster `office-poster-compact.webp` |
+| Paper texture atlas, 4×4 illegible paperwork surfaces | `gpt_image_2_5` sunburst (2k, xhigh) | `b540b381-ac5d-493c-a812-a1c2746b0256` | 2048×2048 PNG | 4.5 | `public/cinematic/paper-atlas.webp` (cells sliced from the gutters and repacked, 1536², q76) |
 
-Review notes (v2):
-- No readable text, numbers, or people. The calculator shows nonsense glyphs, and the ledger and phone content are illegible scribbles.
-- **Brand logo removed:** from about 4.7 s to 6.0 s (frames 114–145) the closed laptop lid showed an Apple logo. It was removed by per-frame inpainting (row interpolation from the clean lid on either side, film grain matched) rather than a 108-credit regeneration; frames 112–113, where a book covers the lid, were left untouched. A hairline trace of the logo's lower edge remains in frames 114–116, and isn't perceptible at display size.
-- K3 is the clip's exact end frame, so the proof rectangle is valid for both the video and the still fallback.
-- Frame-to-frame mean-luma change ≤ 2.06/255 (the logbook-closing moment); no cuts.
-- Seedance suggested a Higgsfield preset ("IN THE DARK"); it was declined in favour of Seedance 2.0 as requested.
+Seedance was not used for v3. A real-time scene has nothing for a video to do.
 
-Prompts (abridged; full text in session history):
-- **K1:** "Editorial documentary photograph … the cramped back-office desk of a small Philippine family business (a neighborhood LPG and household-goods distributor) … an open handwritten order logbook … a second worn spiral notebook for member payments … carbon-copy delivery receipts … printed spreadsheets … from different branches … a cheap Android phone … with a long column of unread message bubbles … a blue unbranded LPG cylinder … the LEFT 40% is a deep, calm, near-black shadowed wall … no readable words, no readable numbers, no logos … No people."
-- **K2:** "The exact same room, same desk, same camera … the chaos has been cleared and organized … a slim modern laptop … a clean, calm dark-themed business dashboard … the phone shows a single neat order-confirmation card …"
-- **K3:** "… three connected devices side by side … a smartphone … showing a clean mobile storefront website … the open laptop … nearly head-on … a tablet … a simple staff app screen with an order form and a checklist. Faint thin glowing indigo lines subtly link the three screens …"
-- **Clip:** "One continuous, unbroken shot … very slow, steady dolly forward … receipts, sticky notes, spreadsheet stacks … clear away … a slim laptop is revealed … an upright phone on a stand and a tablet … appear … thin indigo light lines draw between the three screens, arriving exactly at the end frame … No cuts … no people, no hands, no readable text …"
+Review notes (v3): the receipts show digit-like glyphs ("35.9"), but no words, names, logos or legible figures.
 
-**v1 record (retired 2026-09-25).** Abstract panel keyframes (`gpt_image_2`, jobs `ab657d54…`, `b76dd650…`, `7bc5a740…`, 6.5 credits each), an 8 s Seedance 2.0 clip (`0de2c835…`, 72 credits), and a three.js module scene. Files removed from `public/cinematic/`; recoverable from git history.
+**v2 record (retired 2026-09-25).** One photographic PH back-office desk, scrubbed from a 12 s Seedance 2.0 clip (`d662aeb4…`, 108 credits) between three GPT Image 2.5 keyframes (`70b39900…`, `de877bbf…`, `9f85caea…`, 4.5 credits each). It had a compact 10:9 crop for phones, and the camera pushed into the laptop onto the real New Zion dashboard. Files removed; recoverable from git history.
+
+**v1 record (retired 2026-09-25).** Abstract panel keyframes (`gpt_image_2`, jobs `ab657d54…`, `b76dd650…`, `7bc5a740…`), an 8 s Seedance 2.0 clip (`0de2c835…`, 72 credits), and a three.js module scene.
 
 ---
 
