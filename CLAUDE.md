@@ -27,6 +27,7 @@ Marketing site for **KDV Website Services** — a Philippines-based freelance we
 - Next.js 15.5.15 (App Router) + React 19 + TypeScript
 - Tailwind 3.4 + class-variance-authority + `cn` util
 - framer-motion 11 for animations (also the single scroll-progress source for the homepage sequence)
+- three.js for the homepage 3D sequence only (lazy-loaded; `components/site/paper-scene.ts`)
 - react-hook-form + Zod for forms
 - Resend for contact email
 - sonner for toasts
@@ -60,7 +61,7 @@ All motion respects `prefers-reduced-motion`. Primitives:
 
 Keep animation restrained (Stripe/Linear tier). **No** parallax, cursor trails, 3D tilts, or Lottie.
 
-**Scoped exception (2026-09-25, IMPROVEMENTS 6.7):** the homepage cinematic sequence (`CinematicStory`, and its phone layout `CompactStory`) may use a scroll-scrubbed video, scroll-driven camera push-in, and spring-smoothed scroll progress. It stays on native scrolling (sticky, no wheel/touch hijacking, no snapping). The full-frame sequence runs at ≥1024×600; narrower viewports ≥520px tall get the compact pinned sequence (10:9 crop of the same clip). Reduced-motion, data-saving, and very short viewports fall back to static chapters. The exception does not extend to any other page or component. Scene ranges, copy, and media live in `lib/story.ts`.
+**Scoped exception (2026-09-25, IMPROVEMENTS 6.7):** the homepage "paper to system" sequence (`CinematicStory` + the three.js module `paper-scene.ts`) may use a real-time 3D scene, a scroll-driven camera, spring-smoothed scroll progress, and gentle pointer response (paper nudged aside, tiles lifting, slight camera parallax). It stays on native scrolling (sticky, no wheel/touch hijacking, no snapping). Wide layout ≥1024×600; narrower viewports ≥520px tall get the narrow layout of the same scene. Reduced motion, data saving, no WebGL, and very short viewports fall back to static chapters. The exception does not extend to any other page or component. Scene ranges, copy, and plates live in `lib/story.ts`.
 
 ## Accessibility non-negotiables
 - 4.5:1 contrast on all text
@@ -162,7 +163,8 @@ Checklist for any new `app/<route>/page.tsx`:
 ## Key files to know
 - `app/layout.tsx` — fonts, global chrome (Header, Footer, RouteProgress, GradientBackground, Toaster, TawkChat)
 - `app/page.tsx` — home composition: CinematicStory (Hero + story chapters) → FeaturedWork → ServicesGrid → ProcessSteps → HomeFAQ → CTASection
-- `lib/story.ts` — cinematic sequence data: scroll ranges, chapter copy, tiers, media slots
+- `lib/story.ts` — homepage sequence data: scroll ranges, chapter copy, project plates
+- `components/site/paper-scene.ts` — three.js scene for the homepage sequence (framework-free, progress-driven)
 - `app/actions/contact.ts` — Resend send + Zod validation for the contact form
 - `lib/site.ts` — site metadata, nav config, response window
 - `lib/services.ts` — 3 services (website-creation, business-dashboards, custom-websites)
