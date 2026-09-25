@@ -26,6 +26,12 @@ export type StoryStill = {
   focus: string;
 };
 
+export type StoryVideo = {
+  sources: readonly { src: string; type: string }[];
+  width: number;
+  height: number;
+};
+
 export const storyTimeline = {
   /** Height of the pinned track on cinematic-capable viewports, in svh. */
   trackHeightSvh: 400,
@@ -105,12 +111,19 @@ const proofShot = proofProject.gallery!.find((g) => g.src.endsWith("admin-dashbo
 export const storyMedia = {
   /** Generated keyframes (GPT Image). null until produced; layouts fall back to CSS. */
   stills: {
-    scattered: null as StoryStill | null,
-    connected: null as StoryStill | null,
-    system: null as StoryStill | null,
+    scattered: { src: "/cinematic/keyframe-scattered.webp", width: 1920, height: 1080, focus: "72% 50%" } as StoryStill | null,
+    connected: { src: "/cinematic/keyframe-connected.webp", width: 1920, height: 1086, focus: "70% 50%" } as StoryStill | null,
+    system: { src: "/cinematic/keyframe-system.webp", width: 1920, height: 1086, focus: "70% 50%" } as StoryStill | null,
   },
-  /** Scroll-scrubbed Seedance clip. null until produced. */
-  video: null as { src: string; type: string; width: number; height: number } | null,
+  /** Scroll-scrubbed Seedance clip, in source-preference order (H.264 first, VP9 for builds without it). */
+  video: {
+    sources: [
+      { src: "/cinematic/sequence-1600.mp4", type: 'video/mp4; codecs="avc1.640028"' },
+      { src: "/cinematic/sequence-1600.webm", type: 'video/webm; codecs="vp9"' },
+    ],
+    width: 1600,
+    height: 900,
+  } as StoryVideo | null,
   /** Real project screenshot used as the proof hand-off. */
   proof: {
     src: proofShot.src,
