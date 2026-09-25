@@ -587,7 +587,11 @@ Scoped motion exception recorded in `CLAUDE.md` / `AGENTS.md`. Dependency added 
 
 **Modes.**
 - Cinematic: ≥1024×600, no `prefers-reduced-motion`, no Save-Data / `prefers-reduced-data`.
-- Everyone else, including no-JS: server-rendered static chapters (`StoryChapters.tsx`) with the keyframes. No three.js or video is downloaded.
+- Compact (added 2026-09-25): narrower viewports ≥520px tall, same motion/data conditions (`components/site/CompactStory.tsx`, ranges in `compactTimeline`).
+  - Hero stays in normal flow.
+  - Then a 300svh pinned track: a square visual (720² scrubbed crop of the same clip → keyframe C with tier highlights → real dashboard) with captions underneath and a 3-segment progress bar.
+  - No three.js. The clip is fetched on the first scroll.
+- Everyone else, including no-JS, reduced motion, Save-Data, and landscape phones <520px tall: server-rendered static chapters (`StoryChapters.tsx`) with the keyframes. No three.js or video is downloaded.
 - WebGL unavailable or context lost: the pinned stage keeps working with the stills and an HTML proof screenshot.
 - Video: every source failing (the unsupported-codec case was tested) → the scene covers the range.
 - The clip is fetched only after the first scroll into the story.
@@ -606,6 +610,12 @@ Scoped motion exception recorded in `CLAUDE.md` / `AGENTS.md`. Dependency added 
 7. ✅ Generated, inspected, and integrated media within the approved 170-credit cap (91.5 used by this work; see asset log). Worst-case text contrast over imagery ≥ 5.5:1 at 768/1024/1280/1440 (brightest background pixel under each text block).
 8. 🔲 Real-GPU performance pass (frame time during scroll, memory) on a physical desktop and a mid-range laptop; Safari/WebKit check, including H.264 scrubbing smoothness. Not done: only software GL and VP9 playback were available here.
 9. 🔲 Preview deploy review, then release through the normal workflow.
+10. ✅ Compact (mobile/portrait) sequence (2026-09-25):
+    - Square 720×720 crop of the Seedance master, taken from the original 1080p file.
+    - H.264 CRF 31, 475 KB (`avc1.64001f`); VP9 CRF 45, 503 KB; frame-0 poster 21 KB.
+    - Verified at 320×568, 360×780, 390×844, 430×932, 768×1024: compact mode engaged, clip fetched only after the first scroll, no three.js, no horizontal overflow, captions fit inside the stage (≥60 px spare at 320×568; body line hides below 680 px height), video time follows scroll and clamps at the end.
+    - Regression: 1440 and 1024×768 still cinematic; reduced motion, Save-Data, and 844×390 landscape stay static.
+    - **Not verified:** iOS Safari, which is known to be stricter about loading non-playing video, and physical Android devices.
 
 **Measured (2026-09-25, local production build, headless Chromium, cold cache, no throttling):**
 - Home First Load JS: 147 kB → 171 kB (Next build report).
@@ -624,6 +634,7 @@ Scoped motion exception recorded in `CLAUDE.md` / `AGENTS.md`. Dependency added 
 | Keyframe A: scattered panels | `gpt_image_2` (2k, high) | `ab657d54-0071-4d86-a855-ce99e8c30814` | 2688×1520 PNG | 6.5 | Clip start anchor; not shipped directly |
 | Keyframe B: connected structure (ref: A) | `gpt_image_2` (2k, high) | `b76dd650-6bd4-4ae0-accb-0457c24f3219` | 2688×1520 PNG | 6.5 | `public/cinematic/keyframe-connected.webp` |
 | Keyframe C: three separated layers (ref: B) | `gpt_image_2` (2k, high) | `7bc5a740-9e9a-4c39-be6e-47166a4f3967` | 2688×1520 PNG | 6.5 | `public/cinematic/keyframe-system.webp` |
+| Clip A → B, compact crop | derived (ffmpeg crop 1080² at x=840 → 720²) | — | 720×720, 8.0 s | 0 | `public/cinematic/sequence-720sq.{mp4,webm}`; poster `public/cinematic/keyframe-scattered-sq.webp` |
 | Clip A → B | `seedance_2_0` (std, 1080p, 8 s, `generate_audio: false`, start_image A, end_image B) | `0de2c835-2f5a-4ad3-b8e0-8f414284fd6e` | 1920×1080, 24 fps, 8.04 s, no audio track | 72 | `public/cinematic/sequence-1600.{mp4,webm}`; poster `public/cinematic/keyframe-scattered.webp` = its first frame |
 
 Review notes:

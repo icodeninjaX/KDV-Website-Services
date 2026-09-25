@@ -47,6 +47,26 @@ export const storyTimeline = {
   ] as StoryRange[],
 } as const;
 
+/**
+ * Narrow/portrait viewports: a shorter pinned track below the hero, media on top and
+ * captions underneath. Scrubbed video + stills only — no real-time scene on phones.
+ * Ranges are normalized over this track, not the desktop one.
+ */
+export const compactTimeline = {
+  trackHeightSvh: 300,
+  chapters: {
+    connect: [0, 0.4],
+    system: [0.4, 0.72],
+    proof: [0.72, 1],
+  } as Record<"connect" | "system" | "proof", StoryRange>,
+  videoRange: [0.02, 0.36] as StoryRange,
+  tierRanges: [
+    [0.46, 0.55],
+    [0.55, 0.64],
+    [0.64, 0.72],
+  ] as StoryRange[],
+} as const;
+
 export const storyChapters: StoryChapter[] = [
   {
     id: "intro",
@@ -124,6 +144,18 @@ export const storyMedia = {
     width: 1600,
     height: 900,
   } as StoryVideo | null,
+  /** Square crop of the same clip for the compact (mobile) sequence; poster is its first frame. */
+  compact: {
+    poster: { src: "/cinematic/keyframe-scattered-sq.webp", width: 720, height: 720, focus: "50% 50%" } as StoryStill,
+    video: {
+      sources: [
+        { src: "/cinematic/sequence-720sq.mp4", type: 'video/mp4; codecs="avc1.64001f"' },
+        { src: "/cinematic/sequence-720sq.webm", type: 'video/webm; codecs="vp9"' },
+      ],
+      width: 720,
+      height: 720,
+    } as StoryVideo | null,
+  },
   /** Real project screenshot used as the proof hand-off. */
   proof: {
     src: proofShot.src,

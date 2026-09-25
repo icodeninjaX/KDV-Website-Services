@@ -167,6 +167,17 @@
       height: 100%;
     }
   }
+  /* Soft edges so the compact square visual sits in the page instead of on it. */
+  .story-feather {
+    -webkit-mask-image:
+      linear-gradient(to bottom, #000 78%, transparent),
+      linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to bottom, #000 78%, transparent),
+      linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+    mask-composite: intersect;
+  }
   .story-scrim {
     /* Right edge of the copy column: .container-page gutter + widest text measure. */
     --copy-end: calc(max(2rem, (100vw - 72rem) / 2 + 2rem) + 37rem);

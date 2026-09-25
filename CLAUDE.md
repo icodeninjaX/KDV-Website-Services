@@ -61,7 +61,7 @@ All motion respects `prefers-reduced-motion`. Primitives:
 
 Keep animation restrained (Stripe/Linear tier). **No** parallax, cursor trails, 3D tilts, or Lottie.
 
-**Scoped exception (2026-09-25, IMPROVEMENTS 6.7):** the homepage cinematic sequence (`CinematicStory` + `system-scene.ts`) may use scroll-driven camera movement, layered depth, and real-time 3D. It stays on native scrolling (sticky, no wheel/touch hijacking, no snapping), runs only at ≥1024×600 without reduced-motion or data-saving preferences, and falls back to static chapters otherwise. The exception does not extend to any other page or component. Scene ranges, copy, and media live in `lib/story.ts`.
+**Scoped exception (2026-09-25, IMPROVEMENTS 6.7):** the homepage cinematic sequence (`CinematicStory` + `system-scene.ts`, and its phone layout `CompactStory`) may use scroll-driven camera movement, layered depth, and real-time 3D. It stays on native scrolling (sticky, no wheel/touch hijacking, no snapping). Real-time 3D runs only at ≥1024×600; narrower viewports ≥520px tall get the compact pinned sequence (scrubbed square clip + stills, no three.js). Reduced-motion, data-saving, and very short viewports fall back to static chapters. The exception does not extend to any other page or component. Scene ranges, copy, and media live in `lib/story.ts`.
 
 ## Accessibility non-negotiables
 - 4.5:1 contrast on all text
