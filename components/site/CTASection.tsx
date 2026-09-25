@@ -10,7 +10,7 @@ export function CTASection() {
       <FadeIn>
         <div className="border-y border-border py-12 sm:py-16">
           <p className="label-mono">Your next step</p>
-          <h2 className="mt-4 max-w-2xl font-display text-3xl font-bold tracking-tight sm:text-4xl">Tell me what your business needs.</h2>
+          <h2 className="mt-4 max-w-2xl font-display text-3xl font-bold tracking-tight sm:text-4xl">Let&rsquo;s build a better way to run your business.</h2>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
             Share your idea, the problem you want to solve, or what needs improving. I read every message and reply {site.responseWindow}.
           </p>
