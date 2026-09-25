@@ -167,7 +167,7 @@
       height: 100%;
     }
   }
-  /* Soft edges so the compact square visual sits in the page instead of on it. */
+  /* Soft edges so the compact visual sits in the page instead of on it. */
   .story-feather {
     -webkit-mask-image:
       linear-gradient(to bottom, #000 78%, transparent),
@@ -177,6 +177,34 @@
       linear-gradient(to bottom, #000 78%, transparent),
       linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
     mask-composite: intersect;
+  }
+  /* Exact 16:9 camera box that covers the stage (container units), shifted right of
+     the copy column. Percentages inside it map 1:1 onto video pixels. */
+  .story-camera {
+    position: absolute;
+    width: max(100cqw, 100cqh * 16 / 9);
+    aspect-ratio: 16 / 9;
+    left: calc((100cqw - max(100cqw, 100cqh * 16 / 9)) / 2 + 8cqw);
+    top: calc((100cqh - max(100cqw, 100cqh * 16 / 9) * 9 / 16) / 2);
+    /* Soft edges, only visible while the camera is pulled back. */
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent),
+      linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent),
+      linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+    mask-composite: intersect;
+  }
+  /* Narrower scrim for chapter captions (max-w-md column) so it doesn't dim the devices. */
+  .story-scrim-caption {
+    --caption-end: calc(max(2rem, (100vw - 72rem) / 2 + 2rem) + 29rem);
+    background: linear-gradient(
+      90deg,
+      hsl(var(--background) / 0.92) 0,
+      hsl(var(--background) / 0.85) var(--caption-end),
+      hsl(var(--background) / 0) calc(var(--caption-end) + 10rem)
+    );
   }
   .story-scrim {
     /* Right edge of the copy column: .container-page gutter + widest text measure. */

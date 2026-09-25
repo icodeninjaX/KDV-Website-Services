@@ -9,7 +9,7 @@ import { ScrubVideo } from "./ScrubVideo";
 const MEDIA_LAYER = "absolute inset-0 h-full w-full object-cover";
 
 /**
- * Mobile/portrait telling of the sequence: pinned square visual with captions
+ * Mobile/portrait telling of the sequence: pinned 10:9 visual with captions
  * below, driven by native scroll. Video + stills only.
  */
 export function CompactStory() {
@@ -42,10 +42,10 @@ export function CompactStory() {
   const videoCovers = showVideo && videoReady;
 
   const [vStart, vEnd] = compactTimeline.videoRange;
-  const videoOpacity = useTransform(progress, [vEnd, vEnd + 0.06], [1, 0]);
-  // Without the clip, a crossfade to the connected still keeps the chapter moving.
-  const connectedOpacity = useTransform(progress, [vStart + 0.12, vStart + 0.24, connect[1] - 0.02, connect[1] + 0.04], [0, 1, 1, 0]);
-  const systemOpacity = useTransform(progress, [vEnd, vEnd + 0.06, system[1] - 0.03, system[1] + 0.02], [0, 1, 1, 0]);
+  const videoOpacity = useTransform(progress, [proof[0] - 0.02, proof[0] + 0.04], [1, 0]);
+  // Without the clip, crossfade the keyframes through the same beats.
+  const connectedOpacity = useTransform(progress, [vStart + 0.12, connect[1] - 0.04, connect[1] + 0.04], [0, 1, 0]);
+  const systemOpacity = useTransform(progress, [system[0] - 0.04, system[0] + 0.04, vEnd, vEnd + 0.06], [0, 1, 1, 0]);
   const proofOpacity = useTransform(progress, [proof[0] - 0.02, proof[0] + 0.04], [0, 1]);
   const { poster } = storyMedia.compact;
   const { connected, system: systemStill } = storyMedia.stills;
@@ -53,11 +53,11 @@ export function CompactStory() {
   return (
     <div ref={trackRef} className="relative" style={{ height: `${compactTimeline.trackHeightSvh}svh` }}>
       <div className="sticky top-16 flex h-[calc(100svh-4rem)] flex-col overflow-hidden">
-        <div aria-hidden className="story-feather pointer-events-none relative mx-auto mt-4 aspect-square w-[min(100%,calc((100svh-4rem)*0.5))] shrink-0 overflow-hidden">
+        <div aria-hidden className="story-feather pointer-events-none relative mx-auto mt-4 w-[min(100%,calc((100svh-4rem)*0.55))] shrink-0 overflow-hidden" style={{ aspectRatio: storyMedia.compact.aspect }}>
           <Image src={poster.src} alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           {!videoCovers && connected && (
             <motion.div style={{ opacity: connectedOpacity }} className="absolute inset-0">
-              <Image src={connected.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: "76% 50%" }} />
+              <Image src={connected.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: storyMedia.compact.stillFocus }} />
             </motion.div>
           )}
           {showVideo && (
@@ -73,9 +73,9 @@ export function CompactStory() {
               />
             </motion.div>
           )}
-          {systemStill && (
+          {!videoCovers && systemStill && (
             <motion.div style={{ opacity: systemOpacity }} className="absolute inset-0">
-              <Image src={systemStill.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: "85% 50%" }} />
+              <Image src={systemStill.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: storyMedia.compact.stillFocus }} />
             </motion.div>
           )}
           <motion.div style={{ opacity: proofOpacity }} className="absolute inset-0 flex items-center bg-background px-1">

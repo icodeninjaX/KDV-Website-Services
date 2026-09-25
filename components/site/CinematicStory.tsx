@@ -6,13 +6,12 @@ import {
   motion,
   useReducedMotion,
   useScroll,
+  useSpring,
   useTransform,
   type MotionValue,
 } from "framer-motion";
 import { storyChapters, storyMedia, storyTimeline, systemTiers, type StoryRange } from "@/lib/story";
 import { cn } from "@/lib/utils";
-import { StoryScene } from "./StoryScene";
-import { Schematic } from "./StorySchematic";
 import { ScrubVideo } from "./ScrubVideo";
 import { CompactStory } from "./CompactStory";
 
@@ -66,19 +65,30 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
   const trackRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
+  // One damped copy of scroll drives every visual, so wheel steps read as continuous motion.
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.5, restDelta: 0.0002 });
 
-  const [sceneFailed, setSceneFailed] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   const [videoArmed, setVideoArmed] = useState(false);
-  const onSceneFail = useCallback(() => setSceneFailed(true), []);
   const onVideoReady = useCallback(() => setVideoReady(true), []);
   const onVideoFail = useCallback(() => setVideoFailed(true), []);
 
-  const heroOpacity = useTransform(scrollYProgress, [0.1, 0.18], [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 0.18], [0, -40]);
-  const posterOpacity = useTransform(scrollYProgress, [0.17, 0.23], [1, 0]);
-  const posterScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.06]);
+  const introEnd = storyChapters[0].range[1];
+  const [, videoEnd] = storyTimeline.videoRange;
+  const [proofStart] = storyTimeline.proofRange;
+  const screen = storyMedia.proofScreen;
+
+  const heroOpacity = useTransform(progress, [introEnd * 0.55, introEnd], [1, 0]);
+  const heroY = useTransform(progress, [0, introEnd], [0, -40]);
+  // Slow drift through the story, then a push into the laptop screen for the hand-off.
+  const [systemStart] = storyChapters[2].range;
+  const cameraScale = useTransform(
+    progress,
+    [0, systemStart, systemStart + 0.1, videoEnd, proofStart + 0.14],
+    [1, 1.04, storyTimeline.pullBack, storyTimeline.pullBack, storyTimeline.proofZoom],
+  );
+  const proofOpacity = useTransform(progress, [proofStart + 0.03, proofStart + 0.1], [0, 1]);
 
   // useScroll only re-measures on scroll/resize; the track just changed height, so
   // without this the first frame can use progress computed for the static layout.
@@ -87,22 +97,22 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
     return () => cancelAnimationFrame(id);
   }, [mode]);
 
-  // Don't fetch the clip for visitors who never scroll; the scene covers its range until it's ready.
+  // Fetch the clip on the first real scroll, not on load; the poster holds until it's ready.
+  // (Keyed to the scroll event, not progress: progress can briefly read stale after the mode switch.)
   useEffect(() => {
     if (!cinematic || videoArmed) return;
-    const arm = (p: number) => {
-      if (p > 0.02) setVideoArmed(true);
-    };
-    arm(scrollYProgress.get());
-    return scrollYProgress.on("change", arm);
-  }, [cinematic, videoArmed, scrollYProgress]);
+    const arm = () => setVideoArmed(true);
+    if (window.scrollY > 0) arm();
+    window.addEventListener("scroll", arm, { once: true, passive: true });
+    return () => window.removeEventListener("scroll", arm);
+  }, [cinematic, videoArmed]);
 
   // Faded hero controls must not stay focusable.
   useEffect(() => {
     const hero = heroRef.current;
     if (!hero) return;
     const sync = (p: number) => {
-      hero.inert = cinematic && p > 0.17;
+      hero.inert = cinematic && p > introEnd * 0.9;
     };
     sync(scrollYProgress.get());
     const unsubscribe = scrollYProgress.on("change", sync);
@@ -110,11 +120,12 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
       unsubscribe();
       hero.inert = false;
     };
-  }, [cinematic, scrollYProgress]);
+  }, [cinematic, scrollYProgress, introEnd]);
 
   const still = storyMedia.stills.scattered;
   const video = storyMedia.video;
   const showVideo = cinematic && videoArmed && !!video && !videoFailed;
+  const useStills = cinematic && (!video || videoFailed);
 
   return (
     <section aria-labelledby="hero-heading" data-story-mode={mode}>
@@ -140,36 +151,66 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
             )}
           >
             <div className="story-backdrop absolute inset-0" />
-            {cinematic && !sceneFailed && (
-              <StoryScene progress={scrollYProgress} videoCovers={showVideo && videoReady} onFail={onSceneFail} />
+            {cinematic ? (
+              <div className="absolute inset-0 [container-type:size]">
+                <motion.div
+                  className="story-camera"
+                  style={{ scale: cameraScale, transformOrigin: `${(screen.x + screen.w / 2) * 100}% ${(screen.y + screen.h / 2) * 100}%` }}
+                >
+                  {still && (
+                    <Image src={still.src} alt="" fill priority sizes="100vw" className="object-cover" />
+                  )}
+                  {useStills && <StoryStills progress={progress} />}
+                  {showVideo && (
+                    <motion.div className="absolute inset-0" style={{ opacity: videoReady ? 1 : 0 }}>
+                      <ScrubVideo
+                        progress={progress}
+                        range={storyTimeline.videoRange}
+                        sources={video.sources}
+                        onReady={onVideoReady}
+                        onFail={onVideoFail}
+                        className="absolute inset-0 h-full w-full object-cover"
+                        fade={false}
+                      />
+                    </motion.div>
+                  )}
+                  <motion.div
+                    className="absolute overflow-hidden bg-card"
+                    style={{
+                      opacity: proofOpacity,
+                      left: `${screen.x * 100}%`,
+                      top: `${screen.y * 100}%`,
+                      width: `${screen.w * 100}%`,
+                      height: `${screen.h * 100}%`,
+                    }}
+                  >
+                    <Image src={storyMedia.proof.src} alt="" fill sizes="50vw" className="object-cover object-left-top" />
+                  </motion.div>
+                </motion.div>
+              </div>
+            ) : (
+              <div className="story-frame relative aspect-[4/3] md:aspect-auto">
+                {still && (
+                  <Image
+                    src={still.src}
+                    alt=""
+                    fill
+                    priority
+                    sizes="100vw"
+                    className="object-cover"
+                    style={{ objectPosition: still.focus }}
+                  />
+                )}
+              </div>
             )}
-            {cinematic && sceneFailed && <StoryStills progress={scrollYProgress} videoCovers={showVideo && videoReady} />}
-            {showVideo && (
-              <ScrubVideo
-                progress={scrollYProgress}
-                range={storyTimeline.videoRange}
-                sources={video.sources}
-                onReady={onVideoReady}
-                onFail={onVideoFail}
-              />
+            {cinematic ? (
+              <>
+                <motion.div className="story-scrim absolute inset-0" style={{ opacity: heroOpacity }} />
+                <div className="story-scrim-caption absolute inset-0" />
+              </>
+            ) : (
+              <div className="story-scrim absolute inset-0 hidden md:block" />
             )}
-            {still && (
-              <motion.div
-                className="story-frame relative aspect-[4/3] md:aspect-auto"
-                style={cinematic ? { opacity: posterOpacity, scale: posterScale } : undefined}
-              >
-                <Image
-                  src={still.src}
-                  alt=""
-                  fill
-                  priority
-                  sizes="100vw"
-                  className="object-cover"
-                  style={{ objectPosition: still.focus }}
-                />
-              </motion.div>
-            )}
-            <div className="story-scrim absolute inset-0 hidden md:block" />
           </div>
 
           <motion.div
@@ -180,8 +221,8 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
             {hero}
           </motion.div>
 
-          {cinematic && <StoryCaptions progress={scrollYProgress} />}
-          {cinematic && <ChapterIndex progress={scrollYProgress} />}
+          {cinematic && <StoryCaptions progress={progress} />}
+          {cinematic && <ChapterIndex progress={progress} />}
         </div>
       </div>
       {mode === "static" && chapters}
@@ -205,7 +246,7 @@ function StoryCaptions({ progress }: { progress: MotionValue<number> }) {
         </Caption>
         <Caption progress={progress} range={proof.range} chapter={proof} holdEnd>
           <p className="mt-6 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            {storyMedia.proof.project} / {storyMedia.proof.client} / admin dashboard
+            On screen: {storyMedia.proof.project} / {storyMedia.proof.client} / admin dashboard
           </p>
         </Caption>
       </div>
@@ -226,8 +267,8 @@ function Caption({
   holdEnd?: boolean;
   children?: ReactNode;
 }) {
-  const opacity = useWindow(progress, [range[0] + 0.008, range[1]], 0.03, holdEnd);
-  const y = useTransform(progress, [range[0] + 0.008, range[0] + 0.05], [24, 0]);
+  const opacity = useWindow(progress, [range[0] + 0.008, range[1]], 0.035, holdEnd);
+  const y = useTransform(progress, [range[0] + 0.008, range[0] + 0.06], [24, 0]);
   return (
     <div className="absolute inset-x-5 top-1/2 max-w-sm -translate-y-1/2 sm:inset-x-8 xl:max-w-md">
       <motion.div style={{ opacity, y }}>
@@ -286,49 +327,24 @@ function IndexTick({ progress, range, last }: { progress: MotionValue<number>; r
   return <motion.span style={{ opacity }} className="block h-6 w-0.5 rounded-full bg-foreground" />;
 }
 
-/** Poster-based fallback when WebGL is unavailable or the context is lost. */
-function StoryStills({ progress, videoCovers }: { progress: MotionValue<number>; videoCovers: boolean }) {
+/** Without the clip, crossfade the keyframes through the same beats. */
+function StoryStills({ progress }: { progress: MotionValue<number> }) {
   const { connected, system } = storyMedia.stills;
-  const connectedOpacity = useWindow(progress, [0.2, 0.52], 0.03);
-  const systemOpacity = useWindow(progress, [0.5, 0.82], 0.03);
-  const proofOpacity = useWindow(progress, [0.8, 1], 0.03, true);
+  const [, connect, systemChapter] = storyChapters;
+  const connectedOpacity = useTransform(progress, [connect.range[0] + 0.1, connect.range[1]], [0, 1]);
+  const systemOpacity = useTransform(progress, [systemChapter.range[0] + 0.05, systemChapter.range[1] - 0.05], [0, 1]);
   return (
     <>
-      {!videoCovers && (
+      {connected && (
         <motion.div style={{ opacity: connectedOpacity }} className="absolute inset-0">
-          {connected ? (
-            <div className="story-frame">
-              <Image src={connected.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: connected.focus }} />
-            </div>
-          ) : (
-            <SchematicFrame variant="connect" />
-          )}
+          <Image src={connected.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: connected.focus }} />
         </motion.div>
       )}
-      <motion.div style={{ opacity: systemOpacity }} className="absolute inset-0">
-        {system ? (
-          <div className="story-frame">
-            <Image src={system.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: system.focus }} />
-          </div>
-        ) : (
-          <SchematicFrame variant="system" />
-        )}
-      </motion.div>
-      <motion.div style={{ opacity: proofOpacity }} className="absolute inset-y-0 right-0 flex w-[56%] items-center pr-10">
-        <div className="relative w-full overflow-hidden rounded-xl border border-border bg-card" style={{ aspectRatio: `${storyMedia.proof.width} / ${storyMedia.proof.height}` }}>
-          <Image src={storyMedia.proof.src} alt="" fill sizes="56vw" className="object-cover object-left-top" />
-        </div>
-      </motion.div>
+      {system && (
+        <motion.div style={{ opacity: systemOpacity }} className="absolute inset-0">
+          <Image src={system.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: system.focus }} />
+        </motion.div>
+      )}
     </>
-  );
-}
-
-function SchematicFrame({ variant }: { variant: "connect" | "system" }) {
-  return (
-    <div className="absolute inset-y-0 right-0 flex w-[54%] items-center pr-10">
-      <div className="aspect-[4/3] w-full">
-        <Schematic variant={variant} />
-      </div>
-    </div>
   );
 }

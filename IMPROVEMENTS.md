@@ -567,89 +567,100 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 
 
 ### 6.7 Cinematic homepage sequence
-**Status:** 🟡 In progress — built, media generated and integrated, verified locally in headless Chromium; real-GPU/Safari checks and release pending
+**Status:** 🟡 In progress — v2 (real-business imagery, single continuous clip) built and verified locally in headless Chromium; real-device and Safari checks and release pending
 
 **Why.** Make the homepage say "KDV turns scattered business processes into clear, useful digital systems" in the first scroll, then hand off straight to real project proof, without delaying the offer or the contact path.
 
-**How.** One pinned, scroll-driven stage (`components/site/CinematicStory.tsx`) with all copy as real HTML. Chapter ranges, copy, and media are typed in `lib/story.ts`; a single Framer `useScroll` value drives everything. Sequence:
-- **0.00–0.20:** poster (first frame of the clip) behind the hero copy.
-- **0.20–0.50:** scroll-scrubbed Seedance clip, scattered panels → connected structure.
-- **0.50–0.80:** real-time three.js scene (`components/site/system-scene.ts`, dynamically imported), camera registered to the clip's last frame, then the website / dashboard / app tiers separate in sync with HTML captions.
-- **0.80–1.00:** the middle tier grows into the real New Zion admin dashboard screenshot, then Selected work.
+**v2 (2026-09-25), replacing v1.** Keith found v1's abstract "floating dark panels" too generic and the sequence inconsistent: v1 switched visual register three times (photo poster → abstract video → three.js panels → screenshot). v2 is one photographic world and one camera.
+- **The scene:** a Philippine family business's back-office desk, the kind KDV's clients actually have. It shows the problems the case studies solved: a handwritten order ledger, a co-op payment notebook, spreadsheets per branch, carbon receipts, a landline and a phone full of SMS orders, with an unbranded LPG cylinder in the corner.
+- **The motion:** scroll transforms the same desk: the clutter clears, a laptop dashboard lights up, then a phone storefront, the laptop dashboard and a tablet staff app sit side by side as the three services.
+- **The proof:** the camera pushes into the laptop, and the real New Zion admin dashboard lands on its screen.
+- **Illustrative, not client work:** the desk scene is generated. The only real project content is the New Zion screenshot, labelled "On screen: New Zion POS / New Z1on LPG / admin dashboard".
 
-Scoped motion exception recorded in `CLAUDE.md` / `AGENTS.md`. Dependency added with approval in the task brief: `three` + `@types/three` 0.186.
-
-**Layers, honestly labelled.**
-- Real-time mesh 3D (WebGL): 0.50–1.00, the module system, connectors, camera, and proof screen.
-- Generated video (Seedance 2.0): 0.20–0.50 only, scrubbed by scroll, never auto-played.
-- Generated stills (GPT Image 2): the connected and three-tier keyframes, used in the static chapters and the no-WebGL fallback. The poster is the clip's first frame, so the poster → video crossfade is pixel-registered.
-- Hand-built SVG schematic: shown only if a still is missing.
+**How.** One pinned stage (`components/site/CinematicStory.tsx`), all copy as real HTML. Ranges, copy, and media are typed in `lib/story.ts`.
+- **Smoothing:** one spring-damped copy of the scroll progress (`useSpring`) drives every visual, so mouse-wheel steps read as continuous motion. Raw progress is used only for `inert` and the download trigger.
+- **Timeline:**
+  - **0.00–0.14:** poster (the clip's own frame 0) behind the hero copy.
+  - **0.08–0.80:** one 12 s Seedance clip scrubbed continuously.
+  - **0.52–0.80:** the camera pulls back so all three devices clear the caption column, while the Website / Dashboard / Custom app captions highlight in turn.
+  - **0.80–1.00:** the camera pushes in (×1.75) around the laptop screen, and the real New Zion screenshot fades in, registered to the screen rectangle measured on the final frame (`storyMedia.proofScreen`).
+- **Registration:** the camera is an exact 16:9 box sized with container-query units (`.story-camera`), so rectangle percentages map 1:1 onto video pixels at any viewport size.
+- **Scrims:** a wide scrim fades out with the hero; a narrower caption scrim keeps the devices bright.
+- **three.js removed:** `three` / `@types/three` uninstalled, and `system-scene.ts` and `StoryScene.tsx` deleted, since keeping the abstract 3D layer would reintroduce the inconsistency.
 
 **Modes.**
 - Cinematic: ≥1024×600, no `prefers-reduced-motion`, no Save-Data / `prefers-reduced-data`.
-- Compact (added 2026-09-25): narrower viewports ≥520px tall, same motion/data conditions (`components/site/CompactStory.tsx`, ranges in `compactTimeline`).
-  - Hero stays in normal flow.
-  - Then a 300svh pinned track: a square visual (720² scrubbed crop of the same clip → keyframe C with tier highlights → real dashboard) with captions underneath and a 3-segment progress bar.
-  - No three.js. The clip is fetched on the first scroll.
-- Everyone else, including no-JS, reduced motion, Save-Data, and landscape phones <520px tall: server-rendered static chapters (`StoryChapters.tsx`) with the keyframes. No three.js or video is downloaded.
-- WebGL unavailable or context lost: the pinned stage keeps working with the stills and an HTML proof screenshot.
-- Video: every source failing (the unsupported-codec case was tested) → the scene covers the range.
-- The clip is fetched only after the first scroll into the story.
+- Compact: narrower viewports ≥520px tall, same motion/data conditions (`components/site/CompactStory.tsx`, `compactTimeline`).
+  - Hero in normal flow, then a 300svh pinned track.
+  - A 10:9 crop of the same clip (office → organized → three devices), then the real dashboard.
+  - Captions and a 3-segment progress bar underneath.
+- Static (no-JS, reduced motion, Save-Data, landscape phones <520px tall): server-rendered chapters with the keyframes. No video downloaded.
+- Video failing on every source: the keyframes crossfade through the same beats; the proof still lands on the laptop screen (keyframe 3 is the clip's end frame).
+- Every clip is fetched only on the first real scroll event, not on load.
 
 **Steps:**
 1. ✅ Baseline build + lint clean before changes (2026-09-25). Home First Load JS 147 kB.
 2. ✅ Typed story data, pinned stage, hero copy, captions, chapter index, skip links (`#work`, `#services`), page order Story → Work → Services → Process → FAQ → CTA.
-3. ✅ three.js scene: render-on-demand with damping, DPR ≤ 1.5 and ≤ 2.6 MP drawing buffer, paused offscreen / hidden tab / under video, context-loss fallback, full disposal.
+3. ✅ v1 real-time three.js scene built and verified, then retired in v2 (see above).
 4. ✅ Scroll-scrubbed video: metadata-gated, clamped, coalesced seeks, never plays. Multiple `<source>`s with codec strings; fails over only when all sources fail.
-5. ✅ Removed `overflow-x: hidden` from `html, body`. It turned `body` into a scroll container and broke `position: sticky`. No page-wide horizontal overflow at 320/360/390/430/768/1024/1440.
-6. ✅ Browser verification (headless Chromium, SwiftShader GL):
-   - 7 widths; sequence frames; slow, wheel-reverse, and fast scrolling.
-   - Resize 1440→800→1440; back/forward; reload mid-sequence; anchor jumps.
-   - Keyboard order (faded hero is `inert`); reduced motion; WebGL disabled; mobile menu.
-   - 16 routes (15×200, `/nope` 404). No console errors apart from the expected 404.
-7. ✅ Generated, inspected, and integrated media within the approved 170-credit cap (91.5 used by this work; see asset log). Worst-case text contrast over imagery ≥ 5.5:1 at 768/1024/1280/1440 (brightest background pixel under each text block).
-8. 🔲 Real-GPU performance pass (frame time during scroll, memory) on a physical desktop and a mid-range laptop; Safari/WebKit check, including H.264 scrubbing smoothness. Not done: only software GL and VP9 playback were available here.
-9. 🔲 Preview deploy review, then release through the normal workflow.
-10. ✅ Compact (mobile/portrait) sequence (2026-09-25):
-    - Square 720×720 crop of the Seedance master, taken from the original 1080p file.
-    - H.264 CRF 31, 475 KB (`avc1.64001f`); VP9 CRF 45, 503 KB; frame-0 poster 21 KB.
-    - Verified at 320×568, 360×780, 390×844, 430×932, 768×1024: compact mode engaged, clip fetched only after the first scroll, no three.js, no horizontal overflow, captions fit inside the stage (≥60 px spare at 320×568; body line hides below 680 px height), video time follows scroll and clamps at the end.
-    - Regression: 1440 and 1024×768 still cinematic; reduced motion, Save-Data, and 844×390 landscape stay static.
-    - **Not verified:** iOS Safari, which is known to be stricter about loading non-playing video, and physical Android devices.
+5. ✅ Removed `overflow-x: hidden` from `html, body` (it broke `position: sticky`). No page-wide horizontal overflow at 320/360/390/430/768/1024/1440.
+6. ✅ v1 browser verification: widths, scroll directions, resize, back/forward, reload, keyboard/`inert`, reduced motion, WebGL off, mobile menu, 16 routes.
+7. ✅ v1 media (91.5 credits), later replaced by v2.
+8. ✅ Compact (mobile/portrait) sequence.
+9. ✅ v2 media and sequence (2026-09-25):
+   - Generated within the approved 250-credit cap (121.5 used; see asset log).
+   - Brand logo removed from the clip (below).
+   - Verified in headless Chromium:
+     - Desktop 1440/1280/1024 sequence frames.
+     - Wheel-driven forward/reverse.
+     - Proof registration on the laptop screen.
+     - Video-failure fallback.
+     - Compact at 320/360/390/430/768.
+     - Static for reduced motion, Save-Data and landscape phones.
+     - No overflow; no console errors.
+     - Load race 10/10.
+   - Worst-case contrast over imagery: hero copy ≥ 5.11:1, chapter captions (incl. dimmed tier rows) ≥ 5.98:1.
+10. 🔲 Real-device pass: iPhone Safari (known to be strict about loading non-playing video), mid-range Android, and frame smoothness/memory on real hardware. Not done here.
+11. 🔲 Preview deploy review, then release through the normal workflow.
 
 **Measured (2026-09-25, local production build, headless Chromium, cold cache, no throttling):**
-- Home First Load JS: 147 kB → 171 kB (Next build report).
-- Deferred scene JS (cinematic visitors only): three.js ≈ 138 KB transferred (two chunks) + scene module 5 KB.
-- Initial transfer incl. Next.js link prefetches:
-  - 390px ≈ 409 KB (196 KB JS, poster 26 KB).
-  - 1440px ≈ 740 KB (349 KB JS, incl. three.js).
-- Clip: fetched after first scroll. 963 KB (VP9) or 1.30 MB (H.264), depending on browser.
-- Media dimensions: stills 1920 px wide WebP (50–59 KB source; Next serves resized WebP). Clip 1600×900, 24 fps, 8.0 s, keyframe every 6 frames, no B-frames, no audio, `+faststart`.
-- Textures: 5 procedural face canvases 512×320 + proof screenshot 1878×892. Estimated decoded GPU memory ≈ 15 MB + drawing buffer ≤ 2.6 MP (estimate, not measured).
-- Scroll rendering cost on real hardware: **not measured**.
+- Home First Load JS: 173 kB (was 147 kB before 6.7; v1 with three.js lazily loaded was 171 kB + ≈138 KB deferred three.js).
+- Initial transfer incl. Next.js prefetches:
+  - 1440px ≈ 634 KB (206 KB JS, 251 KB images).
+  - 390px ≈ 482 KB (197 KB JS, 134 KB images).
+- Clip after first scroll:
+  - Desktop 2.0 MB (VP9) / 2.4 MB (H.264).
+  - Compact 1.0 MB (VP9) / 1.1 MB (H.264).
+  - Heavier than v1's abstract clip; photographic detail costs bits even after denoising.
+- Encoding:
+  - Desktop 1600×900; compact 720×648 (crop x 720–1920 of the master).
+  - 24 fps, 12.04 s, keyframe every 12 frames, no B-frames, light `hqdn3d` denoise, no audio, `+faststart`.
+  - Poster/stills: 1920 px WebP, 123–145 KB source; Next serves resized WebP.
+- Scroll rendering cost and decoded memory on real hardware: **not measured**.
 
-**Asset log** (all generated via Higgsfield MCP; KDV logo never uploaded or referenced):
+**Asset log, v2** (Higgsfield MCP; KDV logo never uploaded or referenced):
 | Asset | Model | Job ID | Output | Credits | Local path |
 |---|---|---|---|---|---|
-| Keyframe A: scattered panels | `gpt_image_2` (2k, high) | `ab657d54-0071-4d86-a855-ce99e8c30814` | 2688×1520 PNG | 6.5 | Clip start anchor; not shipped directly |
-| Keyframe B: connected structure (ref: A) | `gpt_image_2` (2k, high) | `b76dd650-6bd4-4ae0-accb-0457c24f3219` | 2688×1520 PNG | 6.5 | `public/cinematic/keyframe-connected.webp` |
-| Keyframe C: three separated layers (ref: B) | `gpt_image_2` (2k, high) | `7bc5a740-9e9a-4c39-be6e-47166a4f3967` | 2688×1520 PNG | 6.5 | `public/cinematic/keyframe-system.webp` |
-| Clip A → B, compact crop | derived (ffmpeg crop 1080² at x=840 → 720²) | — | 720×720, 8.0 s | 0 | `public/cinematic/sequence-720sq.{mp4,webm}`; poster `public/cinematic/keyframe-scattered-sq.webp` |
-| Clip A → B | `seedance_2_0` (std, 1080p, 8 s, `generate_audio: false`, start_image A, end_image B) | `0de2c835-2f5a-4ad3-b8e0-8f414284fd6e` | 1920×1080, 24 fps, 8.04 s, no audio track | 72 | `public/cinematic/sequence-1600.{mp4,webm}`; poster `public/cinematic/keyframe-scattered.webp` = its first frame |
+| K1: cluttered PH back-office desk | `gpt_image_2_5` sunburst (2k, xhigh) | `70b39900-2018-4ac7-ae4c-e22e58c73679` | 2688×1520 PNG | 4.5 | Clip start anchor (poster uses the clip's own frame 0) |
+| K2: same desk organized, laptop dashboard (ref: K1) | `gpt_image_2_5` sunburst (2k, xhigh) | `de877bbf-df33-4f38-a68a-a07699709758` | 2688×1520 PNG | 4.5 | `public/cinematic/office-organized.webp` |
+| K3: phone storefront + laptop dashboard + tablet staff app (ref: K2) | `gpt_image_2_5` sunburst (2k, xhigh) | `9f85caea-6a5b-4137-9358-9ed6cc17cb9d` | 2688×1520 PNG | 4.5 | `public/cinematic/office-devices.webp` |
+| Clip K1 → K3 (K2 as image reference) | `seedance_2_0` (std, 1080p, 12 s, `generate_audio: false`) | `d662aeb4-a406-4082-9bc4-9090b8e77dcd` | 1920×1080, 24 fps, 12.04 s, no audio | 108 | `public/cinematic/office-1600.{mp4,webm}`, poster `office-poster.webp` |
+| Compact crop | derived (ffmpeg crop 1200×1080 at x=720 → 720×648) | — | 720×648, 12.04 s | 0 | `public/cinematic/office-compact.{mp4,webm}`, poster `office-poster-compact.webp` |
 
-Review notes:
-- No text, logos, or people in any output.
-- B came out as a 3×3 front grid rather than the 3×2 requested; kept, because it still reads clearly as one connected system.
-- The clip's frame-to-frame mean-luma change is ≤ 0.27/255 (no flicker).
-- Mid-transition panels briefly interpenetrate as glass; accepted.
-- Seedance slightly reframed A (SSIM 0.77 against A), so the poster uses the clip's own frame 0.
-- No retries were needed.
+Review notes (v2):
+- No readable text, numbers, or people. The calculator shows nonsense glyphs, and the ledger and phone content are illegible scribbles.
+- **Brand logo removed:** from about 4.7 s to 6.0 s (frames 114–145) the closed laptop lid showed an Apple logo. It was removed by per-frame inpainting (row interpolation from the clean lid on either side, film grain matched) rather than a 108-credit regeneration; frames 112–113, where a book covers the lid, were left untouched. A hairline trace of the logo's lower edge remains in frames 114–116, and isn't perceptible at display size.
+- K3 is the clip's exact end frame, so the proof rectangle is valid for both the video and the still fallback.
+- Frame-to-frame mean-luma change ≤ 2.06/255 (the logbook-closing moment); no cuts.
+- Seedance suggested a Higgsfield preset ("IN THE DARK"); it was declined in favour of Seedance 2.0 as requested.
 
 Prompts (abridged; full text in session history):
-- **A:** "Premium editorial technology still life … eighteen thin rectangular interface panels … dark smoked glass with satin-metal edges float separately … RIGHT 60% of the frame; the LEFT 40% … empty … no readable text, no numbers, no letters, no logos … muted indigo (#6366f1) shifting toward violet (#a855f7) … No people."
-- **B:** "Same scene … the panels have moved into order … one precise, connected structure made of three parallel layers … thin, fine lines of soft light connect neighbouring panels …"
-- **C:** "… separated into exactly three distinct … layers pulled apart like an exploded architectural diagram … the middle layer is subtly highlighted …"
-- **Clip:** "Use the start and end frames as visual anchors. One continuous, restrained cinematic shot … panels drift slowly … into a precise, connected layered structure … slow, controlled dolly in with a gentle shallow orbit … no abrupt cuts … no added text …"
+- **K1:** "Editorial documentary photograph … the cramped back-office desk of a small Philippine family business (a neighborhood LPG and household-goods distributor) … an open handwritten order logbook … a second worn spiral notebook for member payments … carbon-copy delivery receipts … printed spreadsheets … from different branches … a cheap Android phone … with a long column of unread message bubbles … a blue unbranded LPG cylinder … the LEFT 40% is a deep, calm, near-black shadowed wall … no readable words, no readable numbers, no logos … No people."
+- **K2:** "The exact same room, same desk, same camera … the chaos has been cleared and organized … a slim modern laptop … a clean, calm dark-themed business dashboard … the phone shows a single neat order-confirmation card …"
+- **K3:** "… three connected devices side by side … a smartphone … showing a clean mobile storefront website … the open laptop … nearly head-on … a tablet … a simple staff app screen with an order form and a checklist. Faint thin glowing indigo lines subtly link the three screens …"
+- **Clip:** "One continuous, unbroken shot … very slow, steady dolly forward … receipts, sticky notes, spreadsheet stacks … clear away … a slim laptop is revealed … an upright phone on a stand and a tablet … appear … thin indigo light lines draw between the three screens, arriving exactly at the end frame … No cuts … no people, no hands, no readable text …"
+
+**v1 record (retired 2026-09-25).** Abstract panel keyframes (`gpt_image_2`, jobs `ab657d54…`, `b76dd650…`, `7bc5a740…`, 6.5 credits each), an 8 s Seedance 2.0 clip (`0de2c835…`, 72 credits), and a three.js module scene. Files removed from `public/cinematic/`; recoverable from git history.
 
 ---
 

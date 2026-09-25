@@ -65,7 +65,7 @@ Hero headline is now "Turn business chaos into a system that works." with the ex
 - Proof chapter: "New Zion's branches now share one order queue and one sales report. This is its actual admin dashboard." Restates the existing case study; no new metrics.
 - Final CTA heading (all pages using `CTASection`): "Let's build a better way to run your business."
 
-Generated imagery for the sequence is illustrative only and must never be presented as client work (see IMPROVEMENTS 6.7).
+Generated imagery for the sequence is illustrative only and must never be presented as client work (see IMPROVEMENTS 6.7). Since v2 (2026-09-25) it depicts a generic Philippine back-office desk (ledgers, receipts, an unbranded LPG cylinder); the only real project content in the sequence is the New Zion admin dashboard screenshot, labelled "On screen: …".
 
 ### 5. Availability pill
 Removed stale slot/month scarcity on 2026-09-14. Hero now uses the confirmed response window from `lib/site.ts`; no availability count is claimed.
