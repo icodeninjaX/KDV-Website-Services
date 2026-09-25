@@ -14,35 +14,45 @@ import { cn } from "@/lib/utils";
 import { StoryScene } from "./StoryScene";
 import { Schematic } from "./StorySchematic";
 import { ScrubVideo } from "./ScrubVideo";
+import { CompactStory } from "./CompactStory";
 
-type Mode = "static" | "cinematic";
+type Mode = "static" | "compact" | "cinematic";
 
 const CINEMATIC_QUERY = "(min-width: 1024px) and (min-height: 600px)";
+/** Below the cinematic breakpoint, the pinned compact sequence needs this much height to breathe. */
+const COMPACT_QUERY = "(min-height: 520px)";
 
 type NetworkInformationLike = { saveData?: boolean; addEventListener?: (t: string, cb: () => void) => void; removeEventListener?: (t: string, cb: () => void) => void };
 
-/** Cinematic only for wide viewports without reduced-motion or data-saving preferences. */
+/**
+ * Motion is opt-in by capability: cinematic on wide viewports, compact on narrow/portrait
+ * ones, static for reduced motion, data saving, very short viewports, and before hydration.
+ */
 function useStoryMode(): Mode {
   const reduce = useReducedMotion();
-  const [capable, setCapable] = useState(false);
+  const [capable, setCapable] = useState<Exclude<Mode, "static"> | null>(null);
 
   useEffect(() => {
-    const viewport = window.matchMedia(CINEMATIC_QUERY);
+    const wide = window.matchMedia(CINEMATIC_QUERY);
+    const tall = window.matchMedia(COMPACT_QUERY);
     const reducedData = window.matchMedia("(prefers-reduced-data: reduce)");
     const connection = (navigator as Navigator & { connection?: NetworkInformationLike }).connection;
-    const update = () => setCapable(viewport.matches && !reducedData.matches && !connection?.saveData);
+    const update = () => {
+      if (reducedData.matches || connection?.saveData) setCapable(null);
+      else if (wide.matches) setCapable("cinematic");
+      else if (tall.matches) setCapable("compact");
+      else setCapable(null);
+    };
     update();
-    viewport.addEventListener("change", update);
-    reducedData.addEventListener("change", update);
+    for (const mq of [wide, tall, reducedData]) mq.addEventListener("change", update);
     connection?.addEventListener?.("change", update);
     return () => {
-      viewport.removeEventListener("change", update);
-      reducedData.removeEventListener("change", update);
+      for (const mq of [wide, tall, reducedData]) mq.removeEventListener("change", update);
       connection?.removeEventListener?.("change", update);
     };
   }, []);
 
-  return capable && !reduce ? "cinematic" : "static";
+  return capable && !reduce ? capable : "static";
 }
 
 /** Opacity envelope: fade in over [a, a+f], hold, fade out over [b-f, b]. */
@@ -75,7 +85,7 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
   useEffect(() => {
     const id = requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
     return () => cancelAnimationFrame(id);
-  }, [cinematic]);
+  }, [mode]);
 
   // Don't fetch the clip for visitors who never scroll; the scene covers its range until it's ready.
   useEffect(() => {
@@ -126,7 +136,7 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
             className={cn(
               "pointer-events-none",
               cinematic ? "absolute inset-0" : "relative order-2 md:absolute md:inset-0 md:order-none",
-              !still && !cinematic && "hidden md:block",
+              (!still || mode === "compact") && !cinematic && "hidden md:block",
             )}
           >
             <div className="story-backdrop absolute inset-0" />
@@ -174,7 +184,8 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
           {cinematic && <ChapterIndex progress={scrollYProgress} />}
         </div>
       </div>
-      {!cinematic && chapters}
+      {mode === "static" && chapters}
+      {mode === "compact" && <CompactStory />}
     </section>
   );
 }

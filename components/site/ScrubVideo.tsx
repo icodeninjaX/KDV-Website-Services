@@ -16,12 +16,17 @@ export function ScrubVideo({
   sources,
   onReady,
   onFail,
+  className = "story-frame object-cover",
+  fade = true,
 }: {
   progress: MotionValue<number>;
   range: StoryRange;
   sources: StoryVideo["sources"];
   onReady: () => void;
   onFail: () => void;
+  className?: string;
+  /** false when a parent owns the opacity envelope. */
+  fade?: boolean;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [start, end] = range;
@@ -97,8 +102,8 @@ export function ScrubVideo({
       disablePictureInPicture
       aria-hidden
       tabIndex={-1}
-      style={{ opacity }}
-      className="story-frame object-cover"
+      style={fade ? { opacity } : undefined}
+      className={className}
     />
   );
 }
