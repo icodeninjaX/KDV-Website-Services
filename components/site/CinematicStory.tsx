@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { ArrowRight } from "lucide-react";
 import {
   motion,
   useReducedMotion,
@@ -10,38 +11,54 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { storyChapters, storyMedia, storyTimeline, systemTiers, type StoryRange } from "@/lib/story";
+import {
+  paperAtlas,
+  plateAspect,
+  storyChapters,
+  storyPlates,
+  storyTimeline,
+  type StoryChapter,
+  type StoryRange,
+} from "@/lib/story";
 import { cn } from "@/lib/utils";
-import { ScrubVideo } from "./ScrubVideo";
-import { CompactStory } from "./CompactStory";
+import type { Layout, PaperScene } from "./paper-scene";
 
-type Mode = "static" | "compact" | "cinematic";
+type Mode = "static" | "cinematic";
 
-const CINEMATIC_QUERY = "(min-width: 1024px) and (min-height: 600px)";
-/** Below the cinematic breakpoint, the pinned compact sequence needs this much height to breathe. */
-const COMPACT_QUERY = "(min-height: 520px)";
+const WIDE_QUERY = "(min-width: 1024px) and (min-height: 600px)";
+/** Landscape phones don't have the height for a pinned stage plus captions. */
+const TALL_QUERY = "(min-height: 520px)";
 
 type NetworkInformationLike = { saveData?: boolean; addEventListener?: (t: string, cb: () => void) => void; removeEventListener?: (t: string, cb: () => void) => void };
 
+function hasWebGL() {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(canvas.getContext("webgl2") || canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+
 /**
- * Motion is opt-in by capability: cinematic on wide viewports, compact on narrow/portrait
- * ones, static for reduced motion, data saving, very short viewports, and before hydration.
+ * Motion is opt-in by capability. Static for reduced motion, data saving, no WebGL,
+ * very short viewports, and before hydration (server render = the static chapters).
  */
-function useStoryMode(): Mode {
+function useStoryMode(failed: boolean): { mode: Mode; layout: Layout } {
   const reduce = useReducedMotion();
-  const [capable, setCapable] = useState<Exclude<Mode, "static"> | null>(null);
+  const [state, setState] = useState<{ capable: boolean; layout: Layout }>({ capable: false, layout: "wide" });
 
   useEffect(() => {
-    const wide = window.matchMedia(CINEMATIC_QUERY);
-    const tall = window.matchMedia(COMPACT_QUERY);
+    const wide = window.matchMedia(WIDE_QUERY);
+    const tall = window.matchMedia(TALL_QUERY);
     const reducedData = window.matchMedia("(prefers-reduced-data: reduce)");
     const connection = (navigator as Navigator & { connection?: NetworkInformationLike }).connection;
-    const update = () => {
-      if (reducedData.matches || connection?.saveData) setCapable(null);
-      else if (wide.matches) setCapable("cinematic");
-      else if (tall.matches) setCapable("compact");
-      else setCapable(null);
-    };
+    const webgl = hasWebGL();
+    const update = () =>
+      setState({
+        capable: webgl && tall.matches && !reducedData.matches && !connection?.saveData,
+        layout: wide.matches ? "wide" : "narrow",
+      });
     update();
     for (const mq of [wide, tall, reducedData]) mq.addEventListener("change", update);
     connection?.addEventListener?.("change", update);
@@ -51,81 +68,122 @@ function useStoryMode(): Mode {
     };
   }, []);
 
-  return capable && !reduce ? capable : "static";
+  return { mode: state.capable && !reduce && !failed ? "cinematic" : "static", layout: state.layout };
 }
 
 /** Opacity envelope: fade in over [a, a+f], hold, fade out over [b-f, b]. */
-function useWindow(progress: MotionValue<number>, [a, b]: StoryRange, fade = 0.035, holdEnd = false) {
+function useWindow(progress: MotionValue<number>, [a, b]: StoryRange, fade = 0.03, holdEnd = false) {
   return useTransform(progress, [a, a + fade, b - fade, b], [0, 1, 1, holdEnd ? 1 : 0]);
 }
 
-export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: ReactNode }) {
-  const mode = useStoryMode();
-  const cinematic = mode === "cinematic";
-  const trackRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
-  // One damped copy of scroll drives every visual, so wheel steps read as continuous motion.
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.5, restDelta: 0.0002 });
+/** Hidden captions and a faded hero must not keep focusable links. */
+function useInertOutside(ref: React.RefObject<HTMLElement | null>, progress: MotionValue<number>, [a, b]: StoryRange, enabled: boolean, holdEnd = false) {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const sync = (p: number) => {
+      el.inert = enabled && (p < a || (!holdEnd && p > b));
+    };
+    sync(progress.get());
+    const unsubscribe = progress.on("change", sync);
+    return () => {
+      unsubscribe();
+      el.inert = false;
+    };
+  }, [ref, progress, a, b, enabled, holdEnd]);
+}
 
-  const [videoReady, setVideoReady] = useState(false);
-  const [videoFailed, setVideoFailed] = useState(false);
-  const [videoArmed, setVideoArmed] = useState(false);
-  const onVideoReady = useCallback(() => setVideoReady(true), []);
-  const onVideoFail = useCallback(() => setVideoFailed(true), []);
+export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: ReactNode }) {
+  const [failed, setFailed] = useState(false);
+  const { mode, layout } = useStoryMode(failed);
+  const cinematic = mode === "cinematic";
+  const wide = layout === "wide";
+  const trackRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<PaperScene | null>(null);
+  const [sceneReady, setSceneReady] = useState(false);
+
+  const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
+  // One damped copy of scroll drives the scene and captions, so wheel steps read as continuous motion.
+  const progress = useSpring(scrollYProgress, { stiffness: 110, damping: 26, mass: 0.5, restDelta: 0.0002 });
 
   const introEnd = storyChapters[0].range[1];
-  const [, videoEnd] = storyTimeline.videoRange;
-  const [proofStart] = storyTimeline.proofRange;
-  const screen = storyMedia.proofScreen;
-
   const heroOpacity = useTransform(progress, [introEnd * 0.55, introEnd], [1, 0]);
   const heroY = useTransform(progress, [0, introEnd], [0, -40]);
-  // Slow drift through the story, then a push into the laptop screen for the hand-off.
-  const [systemStart] = storyChapters[2].range;
-  const cameraScale = useTransform(
-    progress,
-    [0, systemStart, systemStart + 0.1, videoEnd, proofStart + 0.14],
-    [1, 1.04, storyTimeline.pullBack, storyTimeline.pullBack, storyTimeline.proofZoom],
-  );
-  const proofOpacity = useTransform(progress, [proofStart + 0.03, proofStart + 0.1], [0, 1]);
+  useInertOutside(heroRef, scrollYProgress, [0, introEnd * 0.9], cinematic);
 
-  // useScroll only re-measures on scroll/resize; the track just changed height, so
-  // without this the first frame can use progress computed for the static layout.
+  // useScroll only re-measures on scroll/resize; the track just changed height.
   useEffect(() => {
     const id = requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
     return () => cancelAnimationFrame(id);
   }, [mode]);
 
-  // Fetch the clip on the first real scroll, not on load; the poster holds until it's ready.
-  // (Keyed to the scroll event, not progress: progress can briefly read stale after the mode switch.)
+  // Scene lifetime: three.js is fetched only once the visitor is known to be capable.
   useEffect(() => {
-    if (!cinematic || videoArmed) return;
-    const arm = () => setVideoArmed(true);
-    if (window.scrollY > 0) arm();
-    window.addEventListener("scroll", arm, { once: true, passive: true });
-    return () => window.removeEventListener("scroll", arm);
-  }, [cinematic, videoArmed]);
+    if (!cinematic) return;
+    const canvas = canvasRef.current;
+    const stage = stageRef.current;
+    if (!canvas || !stage) return;
+    let cancelled = false;
+    let scene: PaperScene | null = null;
+    let cleanup = () => {};
 
-  // Faded hero controls must not stay focusable.
-  useEffect(() => {
-    const hero = heroRef.current;
-    if (!hero) return;
-    const sync = (p: number) => {
-      hero.inert = cinematic && p > introEnd * 0.9;
-    };
-    sync(scrollYProgress.get());
-    const unsubscribe = scrollYProgress.on("change", sync);
+    import("./paper-scene")
+      .then(({ createPaperScene }) => {
+        if (cancelled) return;
+        const narrow = !window.matchMedia(WIDE_QUERY).matches;
+        scene = createPaperScene({
+          canvas,
+          atlasSrc: paperAtlas.src,
+          plateSrcs: storyPlates.map((p) => p.src),
+          plateAspect,
+          gather: storyTimeline.gather,
+          flips: storyTimeline.flips,
+          dense: !narrow,
+          onContextLost: () => setFailed(true),
+        });
+        sceneRef.current = scene;
+        scene.setLayout(narrow ? "narrow" : "wide");
+        scene.setProgress(progress.get());
+        const rect = stage.getBoundingClientRect();
+        scene.resize(rect.width, rect.height);
+
+        const unsubscribe = progress.on("change", (v) => scene?.setProgress(v));
+        const ro = new ResizeObserver(([entry]) => scene?.resize(entry.contentRect.width, entry.contentRect.height));
+        ro.observe(stage);
+        let inView = false;
+        const sync = () => scene?.setActive(inView && document.visibilityState === "visible");
+        const io = new IntersectionObserver(([entry]) => {
+          inView = entry.isIntersecting;
+          sync();
+        });
+        io.observe(stage);
+        document.addEventListener("visibilitychange", sync);
+
+        scene.ready.then(() => !cancelled && setSceneReady(true)).catch(() => !cancelled && setFailed(true));
+        cleanup = () => {
+          unsubscribe();
+          ro.disconnect();
+          io.disconnect();
+          document.removeEventListener("visibilitychange", sync);
+        };
+      })
+      .catch(() => !cancelled && setFailed(true));
+
     return () => {
-      unsubscribe();
-      hero.inert = false;
+      cancelled = true;
+      cleanup();
+      scene?.dispose();
+      sceneRef.current = null;
+      setSceneReady(false);
     };
-  }, [cinematic, scrollYProgress, introEnd]);
+  }, [cinematic, progress]);
 
-  const still = storyMedia.stills.scattered;
-  const video = storyMedia.video;
-  const showVideo = cinematic && videoArmed && !!video && !videoFailed;
-  const useStills = cinematic && (!video || videoFailed);
+  useEffect(() => {
+    sceneRef.current?.setLayout(layout);
+  }, [layout, sceneReady]);
 
   return (
     <section aria-labelledby="hero-heading" data-story-mode={mode}>
@@ -135,120 +193,56 @@ export function CinematicStory({ hero, chapters }: { hero: ReactNode; chapters: 
         style={cinematic ? { height: `${storyTimeline.trackHeightSvh}svh` } : undefined}
       >
         <div
+          ref={stageRef}
           className={cn(
             "flex flex-col overflow-hidden",
             cinematic
-              ? "sticky top-16 h-[calc(100svh-4rem)] justify-center"
+              ? cn("sticky top-16 h-[calc(100svh-4rem)]", wide ? "justify-center" : "justify-end")
               : "relative md:min-h-[calc(100svh-4rem)] md:justify-center",
           )}
         >
-          <div
-            aria-hidden
-            className={cn(
-              "pointer-events-none",
-              cinematic ? "absolute inset-0" : "relative order-2 md:absolute md:inset-0 md:order-none",
-              (!still || mode === "compact") && !cinematic && "hidden md:block",
-            )}
-          >
-            <div className="story-backdrop absolute inset-0" />
-            {cinematic ? (
-              <div className="absolute inset-0 [container-type:size]">
-                <motion.div
-                  className="story-camera"
-                  style={{ scale: cameraScale, transformOrigin: `${(screen.x + screen.w / 2) * 100}% ${(screen.y + screen.h / 2) * 100}%` }}
-                >
-                  {still && (
-                    <Image src={still.src} alt="" fill priority sizes="100vw" className="object-cover" />
-                  )}
-                  {useStills && <StoryStills progress={progress} />}
-                  {showVideo && (
-                    <motion.div className="absolute inset-0" style={{ opacity: videoReady ? 1 : 0 }}>
-                      <ScrubVideo
-                        progress={progress}
-                        range={storyTimeline.videoRange}
-                        sources={video.sources}
-                        onReady={onVideoReady}
-                        onFail={onVideoFail}
-                        className="absolute inset-0 h-full w-full object-cover"
-                        fade={false}
-                      />
-                    </motion.div>
-                  )}
-                  <motion.div
-                    className="absolute overflow-hidden bg-card"
-                    style={{
-                      opacity: proofOpacity,
-                      left: `${screen.x * 100}%`,
-                      top: `${screen.y * 100}%`,
-                      width: `${screen.w * 100}%`,
-                      height: `${screen.h * 100}%`,
-                    }}
-                  >
-                    <Image src={storyMedia.proof.src} alt="" fill sizes="50vw" className="object-cover object-left-top" />
-                  </motion.div>
-                </motion.div>
-              </div>
-            ) : (
-              <div className="story-frame relative aspect-[4/3] md:aspect-auto">
-                {still && (
-                  <Image
-                    src={still.src}
-                    alt=""
-                    fill
-                    priority
-                    sizes="100vw"
-                    className="object-cover"
-                    style={{ objectPosition: still.focus }}
-                  />
-                )}
-              </div>
-            )}
-            {cinematic ? (
-              <>
-                <motion.div className="story-scrim absolute inset-0" style={{ opacity: heroOpacity }} />
-                <div className="story-scrim-caption absolute inset-0" />
-              </>
-            ) : (
-              <div className="story-scrim absolute inset-0 hidden md:block" />
-            )}
-          </div>
+          {cinematic && (
+            <div aria-hidden className="pointer-events-none absolute inset-0">
+              <canvas
+                ref={canvasRef}
+                className={cn("absolute inset-0 h-full w-full transition-opacity duration-1000", sceneReady ? "opacity-100" : "opacity-0")}
+              />
+              <motion.div className={wide ? "story-scrim" : "story-scrim-narrow"} style={{ opacity: heroOpacity }} />
+              <div className={wide ? "story-scrim-caption" : "story-scrim-caption-narrow"} />
+              <div className="story-vignette" />
+            </div>
+          )}
 
           <motion.div
             ref={heroRef}
-            className="relative order-1"
+            className="relative"
             style={cinematic ? { opacity: heroOpacity, y: heroY } : undefined}
           >
             {hero}
           </motion.div>
 
-          {cinematic && <StoryCaptions progress={progress} />}
-          {cinematic && <ChapterIndex progress={progress} />}
+          {cinematic && <StoryCaptions progress={progress} raw={scrollYProgress} wide={wide} />}
+          {cinematic && wide && <ChapterIndex progress={progress} />}
+          {cinematic && !wide && <ProgressRail progress={progress} />}
         </div>
       </div>
       {mode === "static" && chapters}
-      {mode === "compact" && <CompactStory />}
     </section>
   );
 }
 
-function StoryCaptions({ progress }: { progress: MotionValue<number> }) {
-  const [, connect, system, proof] = storyChapters;
+function StoryCaptions({ progress, raw, wide }: { progress: MotionValue<number>; raw: MotionValue<number>; wide: boolean }) {
   return (
-    <div className="pointer-events-none absolute inset-0 flex items-center">
-      <div className="container-page relative">
-        <Caption progress={progress} range={connect.range} chapter={connect} />
-        <Caption progress={progress} range={system.range} chapter={system}>
-          <ol className="mt-7 space-y-4">
-            {systemTiers.map((tier, i) => (
-              <TierItem key={tier.service} progress={progress} range={storyTimeline.tierRanges[i]} index={i} {...tier} />
-            ))}
-          </ol>
-        </Caption>
-        <Caption progress={progress} range={proof.range} chapter={proof} holdEnd>
-          <p className="mt-6 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            On screen: {storyMedia.proof.project} / {storyMedia.proof.client} / admin dashboard
-          </p>
-        </Caption>
+    <div
+      className={cn(
+        "pointer-events-none absolute inset-0 flex",
+        wide ? "items-center" : "items-end pb-8",
+      )}
+    >
+      <div className="container-page relative w-full">
+        {storyChapters.slice(1).map((chapter, i, list) => (
+          <Caption key={chapter.id} progress={progress} raw={raw} chapter={chapter} wide={wide} holdEnd={i === list.length - 1} />
+        ))}
       </div>
     </div>
   );
@@ -256,59 +250,74 @@ function StoryCaptions({ progress }: { progress: MotionValue<number> }) {
 
 function Caption({
   progress,
-  range,
+  raw,
   chapter,
+  wide,
   holdEnd,
-  children,
 }: {
   progress: MotionValue<number>;
-  range: StoryRange;
-  chapter: (typeof storyChapters)[number];
-  holdEnd?: boolean;
-  children?: ReactNode;
+  raw: MotionValue<number>;
+  chapter: StoryChapter;
+  wide: boolean;
+  holdEnd: boolean;
 }) {
-  const opacity = useWindow(progress, [range[0] + 0.008, range[1]], 0.035, holdEnd);
-  const y = useTransform(progress, [range[0] + 0.008, range[0] + 0.06], [24, 0]);
+  const ref = useRef<HTMLDivElement>(null);
+  const [a, b] = chapter.range;
+  const opacity = useWindow(progress, [a, b], 0.03, holdEnd);
+  const y = useTransform(progress, [a, a + 0.05], [24, 0]);
+  useInertOutside(ref, raw, [a + 0.01, b - 0.01], true, holdEnd);
+  const plate = "plate" in chapter ? storyPlates[chapter.plate] : null;
+
   return (
-    <div className="absolute inset-x-5 top-1/2 max-w-sm -translate-y-1/2 sm:inset-x-8 xl:max-w-md">
-      <motion.div style={{ opacity, y }}>
+    <div
+      ref={ref}
+      className={cn(
+        "absolute inset-x-5 sm:inset-x-8",
+        wide ? "top-1/2 max-w-sm -translate-y-1/2 xl:max-w-md" : "bottom-0 max-w-xl",
+      )}
+    >
+      <motion.div style={{ opacity, y }} className="pointer-events-auto">
         <p className="label-mono">{chapter.label}</p>
-        <h2 className="mt-4 font-display text-4xl font-bold leading-[1.08] tracking-tight xl:text-5xl">{chapter.heading}</h2>
-        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{chapter.body}</p>
-        {children}
+        <h2
+          className={cn(
+            "text-balance font-display font-bold tracking-tight",
+            wide ? "mt-4 text-4xl leading-[1.08] xl:text-5xl" : "mt-3 text-2xl leading-tight sm:text-3xl",
+          )}
+        >
+          {chapter.heading}
+        </h2>
+        <p className={cn("leading-relaxed text-muted-foreground", wide ? "mt-5 text-lg" : "mt-3 text-base")}>{chapter.body}</p>
+        {chapter.kind === "service" && (
+          <p className="mt-4 text-sm text-foreground">
+            {chapter.service.startingAt.startsWith("₱") ? `From ${chapter.service.startingAt}` : chapter.service.startingAt}
+            <span className="mx-2 text-muted-foreground" aria-hidden>/</span>
+            {chapter.service.timeline}
+          </p>
+        )}
+        {plate && (
+          <>
+            <p className={cn("font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground", wide ? "mt-6" : "mt-4")}>
+              On screen: {plate.project} / {plate.client} / {plate.screen}
+            </p>
+            <div className={cn("flex flex-wrap gap-x-5", wide ? "mt-3" : "mt-1")}>
+              <CaptionLink href={`/portfolio/${plate.slug}`}>Case study</CaptionLink>
+              {chapter.kind === "service" && <CaptionLink href={`/services/${chapter.service.slug}`}>{chapter.service.title}</CaptionLink>}
+            </div>
+          </>
+        )}
       </motion.div>
     </div>
   );
 }
 
-function TierItem({
-  progress,
-  range,
-  index,
-  title,
-  role,
-}: {
-  progress: MotionValue<number>;
-  range: StoryRange;
-  index: number;
-  title: string;
-  role: string;
-}) {
-  const [a, b] = range;
-  const lit = useTransform(progress, [a - 0.015, a + 0.015, b - 0.015, b + 0.015], [0, 1, 1, index === 2 ? 1 : 0]);
-  const opacity = useTransform(lit, [0, 1], [0.78, 1]);
-  const bar = useTransform(lit, [0, 1], [0.15, 1]);
+function CaptionLink({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <motion.li style={{ opacity }} className="flex gap-4">
-      <motion.span aria-hidden style={{ scaleY: bar }} className="mt-1 w-0.5 shrink-0 origin-top self-stretch rounded-full bg-primary" />
-      <div>
-        <p className="font-medium text-foreground">
-          <span className="mr-2 font-mono text-sm text-muted-foreground">0{index + 1}</span>
-          {title}
-        </p>
-        <p className="mt-1 text-base leading-relaxed text-muted-foreground">{role}</p>
-      </div>
-    </motion.li>
+    <Link
+      href={href}
+      className="inline-flex min-h-11 items-center gap-2 rounded text-sm font-medium text-foreground underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+    >
+      {children} <ArrowRight size={14} aria-hidden />
+    </Link>
   );
 }
 
@@ -327,24 +336,10 @@ function IndexTick({ progress, range, last }: { progress: MotionValue<number>; r
   return <motion.span style={{ opacity }} className="block h-6 w-0.5 rounded-full bg-foreground" />;
 }
 
-/** Without the clip, crossfade the keyframes through the same beats. */
-function StoryStills({ progress }: { progress: MotionValue<number> }) {
-  const { connected, system } = storyMedia.stills;
-  const [, connect, systemChapter] = storyChapters;
-  const connectedOpacity = useTransform(progress, [connect.range[0] + 0.1, connect.range[1]], [0, 1]);
-  const systemOpacity = useTransform(progress, [systemChapter.range[0] + 0.05, systemChapter.range[1] - 0.05], [0, 1]);
+function ProgressRail({ progress }: { progress: MotionValue<number> }) {
   return (
-    <>
-      {connected && (
-        <motion.div style={{ opacity: connectedOpacity }} className="absolute inset-0">
-          <Image src={connected.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: connected.focus }} />
-        </motion.div>
-      )}
-      {system && (
-        <motion.div style={{ opacity: systemOpacity }} className="absolute inset-0">
-          <Image src={system.src} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: system.focus }} />
-        </motion.div>
-      )}
-    </>
+    <div aria-hidden className="pointer-events-none absolute inset-x-5 top-3 h-px bg-foreground/15 sm:inset-x-8">
+      <motion.div style={{ scaleX: progress }} className="h-full origin-left bg-foreground/70" />
+    </div>
   );
 }
