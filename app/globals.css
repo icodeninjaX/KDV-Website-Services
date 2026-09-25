@@ -167,7 +167,7 @@
       height: 100%;
     }
   }
-  /* Soft edges so the compact square visual sits in the page instead of on it. */
+  /* Soft edges so the compact visual sits in the page instead of on it. */
   .story-feather {
     -webkit-mask-image:
       linear-gradient(to bottom, #000 78%, transparent),

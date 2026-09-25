@@ -9,7 +9,7 @@ import { ScrubVideo } from "./ScrubVideo";
 const MEDIA_LAYER = "absolute inset-0 h-full w-full object-cover";
 
 /**
- * Mobile/portrait telling of the sequence: pinned square visual with captions
+ * Mobile/portrait telling of the sequence: pinned 10:9 visual with captions
  * below, driven by native scroll. Video + stills only.
  */
 export function CompactStory() {
