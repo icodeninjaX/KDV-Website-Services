@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/site/Hero";
+import { CinematicStory } from "@/components/site/CinematicStory";
+import { StoryChapters } from "@/components/site/StoryChapters";
 import { ServicesGrid } from "@/components/site/ServicesGrid";
 import { FeaturedWork } from "@/components/site/FeaturedWork";
 import { ProcessSteps } from "@/components/site/ProcessSteps";
@@ -46,9 +48,9 @@ export default function HomePage() {
         suppressHydrationWarning
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Hero />
-      <ServicesGrid />
+      <CinematicStory hero={<Hero />} chapters={<StoryChapters />} />
       <FeaturedWork />
+      <ServicesGrid />
       <ProcessSteps />
 
       <HomeFAQ />

@@ -7,7 +7,7 @@ import { FadeIn } from "./FadeIn";
 
 export function FeaturedWork() {
   return (
-    <section className="container-page py-16 sm:py-20">
+    <section id="work" className="container-page scroll-mt-16 py-16 sm:py-20">
       <FadeIn>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>

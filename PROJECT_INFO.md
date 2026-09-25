@@ -58,6 +58,15 @@ The homepage testimonial section was removed on 2026-09-14. Existing summaries n
 ### 4. Hero stats
 No numerical credibility stats are displayed. Earlier 20+ businesses, 98 Lighthouse, and 85% retention placeholders are not verified and must not be restored without evidence.
 
+### 4b. Homepage headline and story copy (2026-09-25)
+Hero headline is now "Turn business chaos into a system that works." with the existing service/audience/Keith sentence. The cinematic chapters (`lib/story.ts`) add the following general, non-quantified statements; confirm they match how Keith describes the work:
+- "Chat threads, notebooks, and a spreadsheet per branch become one connected flow your whole team can see."
+- Service tier roles: website = "the front door", dashboard = "the control room", custom app = "the engine".
+- Proof chapter: "New Zion's branches now share one order queue and one sales report. This is its actual admin dashboard." Restates the existing case study; no new metrics.
+- Final CTA heading (all pages using `CTASection`): "Let's build a better way to run your business."
+
+Generated imagery for the sequence is illustrative only and must never be presented as client work (see IMPROVEMENTS 6.7).
+
 ### 5. Availability pill
 Removed stale slot/month scarcity on 2026-09-14. Hero now uses the confirmed response window from `lib/site.ts`; no availability count is claimed.
 

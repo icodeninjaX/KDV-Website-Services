@@ -4,7 +4,7 @@ import { FadeIn } from "./FadeIn";
 
 export function ServicesGrid() {
   return (
-    <section id="services" className="container-page py-16 sm:py-20 lg:py-24">
+    <section id="services" className="container-page scroll-mt-16 py-16 sm:py-20 lg:py-24">
       <FadeIn>
         <div className="max-w-2xl">
           <div className="label-mono">What I build</div>
