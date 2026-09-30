@@ -101,6 +101,13 @@ For future copy: confirm tone (technical + warm? straight-talk + PH-local? more 
 `/screenshots/` dir exists (untracked). Are these intended as portfolio mockup sources?
 The site already uses four project covers and screenshot galleries from `public/portfolio/`. The 2026-09-14 refinement also uses the actual New Zion POS dashboard in the hero. The separate `/screenshots/` source folder still needs clarification before using additional assets.
 
+### 12. Brand video "Still counting" (IMPROVEMENTS 2.5, 2026-09-30)
+Files: `public/video/still-counting.*`. Please confirm:
+- The general statements match how Keith describes the work. They restate existing site copy; no new metrics are claimed. The statements: "KDV Website Services builds the system your business runs on." / "A website that brings customers to you." / "A dashboard that shows today's sales, any time." / "Custom web apps, built around how your team already works." / "See the whole business without asking anyone… and go home on time."
+- The Taglish on-screen lines read naturally: "Ate, 2 sacks dinorado po. Deliver bukas?", "Sent na po sa GCash.", "May stock pa po ba ng malagkit?", "Pa-reserve po 1 sack. Kukunin ko mamaya.", "Wait lang po, boss. Bibilangin pa po namin."
+- The narrator is a stock TTS preset voice picked by Keith. It speaks about Keith in the third person and never claims to be him.
+- The rice-store owner and the shopper are generated, fictional people. The video says "Scenes are dramatized" on the end card. The only real content is the three project screenshots (IPAY International, 371admin / X-Meta Technologies, New Zion POS / New Z1on LPG), each labelled "On screen: …".
+
 ---
 
 ## Working conventions
