@@ -215,6 +215,58 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 
 ---
 
+### 2.5 Brand video: "Still counting" (problems KDV solves)
+**Status:** 🟡 In progress. The video is embedded on the homepage, right after the opening sequence (2026-09-30). Keith's copy review, real-device playback, and release are still pending.
+
+**Why.** The homepage sequence shows the work in the abstract. This 60-second film opens on the owner's own pain first: closing the day by hand at 10:47 PM, orders scattered across chats, not knowing today's sales, customers finding a competitor online. It then names KDV's three services as the fix and ends with one CTA. It's made to be recognisable to a PH MSME owner and shareable on Messenger/Viber/Facebook. It is a different concept from the homepage "paper to system" sequence, and it has no prices.
+
+**How.**
+- Structure: Problem → Agitate → Solve, plus a human story. Built with the Anthropic Marketing plugin skills `content-creation` / `draft-content` / `brand-review` and the Sales plugin `create-an-asset` (every claim traced to approved material; no invented metrics, quotes, or logos).
+- Picture: six generated scenes of one fictional rice-and-grocery owner and one street shopper. On-brand motion graphics (Syne/Geist, indigo→violet), with Taglish chat bubbles ("Sent na po sa GCash", "Wait lang po, boss").
+- Real project screens: IPAY International, 371admin, and New Zion POS. They're cropped so that no peso amounts appear, which keeps anything from reading as KDV pricing.
+- End card: "Work directly with Keith", "Book a 15-minute call", kdvwebsiteservices.com, and "Scenes are dramatized. Screens shown are real KDV client projects."
+
+**Script (VO):** "It's almost eleven. The store closed hours ago… and you're still counting. / Orders came in through five different chats. Payments are screenshots. And the stock? It's in a notebook. / You ask how much you sold today, and the answer is… 'Wait lang po. We're still counting.' / Meanwhile, new customers are searching for what you sell… and finding someone else. / You didn't start a business to chase paperwork. / KDV Website Services builds the system your business runs on. / A website that brings customers to you. A dashboard that shows today's sales, any time. And custom web apps, built around how your team already works. / So you see the whole business without asking anyone… and go home on time. / Work directly with Keith, from the first conversation to launch. Book a 15-minute call at kdvwebsiteservices.com."
+
+**Claim sources:** services and tagline from `lib/services.ts` and `lib/site.ts`. "Work directly with Keith…" and "without asking anyone" come from `lib/story.ts` (New Zion proof chapter). "SEO-ready, fast on mobile, inquiries to your inbox" comes from the Website Creation deliverables. "Walk-in, phone, and SMS orders in one workflow" comes from the New Zion case study. "Book a 15-minute call" is `site.calBookingUrl`.
+
+**Files (`public/video/`):**
+| File | Spec | Size |
+|---|---|---|
+| `still-counting.webm` | VP9 + Opus, 1920×1080, 24 fps, 59.9 s | 6.8 MB |
+| `still-counting.mp4` | H.264 High + AAC, 1280×720 (Safari/iOS fallback) | 6.2 MB |
+| `still-counting-poster.webp` | 1920×1080 hook frame at 1.75 s, before the burned-in headline appears, so native controls never cover text on phones | 83 KB |
+| `still-counting.en.vtt` | English captions, 17 cues, timed to the VO | 1.4 KB |
+
+Audio is mixed to −16 LUFS integrated with a −2 dBFS peak: VO, the clips' own room ambience, and a quiet synthesized pad under the brand scenes. No licensed music is used; one can be swapped in later.
+
+**Steps:**
+1. ✅ Creative brief and script with the marketing/sales skills; claim inventory against site data (2026-09-30)
+2. ✅ Keyframes, clips, and VO generated (see asset log). VO transcribed back with Whisper, word for word
+3. ✅ Motion graphics, edit, mix, and web encodes. Final frames reviewed across all scenes. WebM played in headless Chromium with the captions track active (H.264 not testable there: Playwright's Chromium has no proprietary codecs)
+4. 🔲 Keith reviews the cut, the script, and the Taglish lines (see `PROJECT_INFO.md` item 12)
+5. ✅ Embedded on the homepage right after `CinematicStory`, before Selected work, as `components/site/BrandVideo.tsx` (server component, no added JS; home First Load JS stays 171 kB). It uses native `<video controls playsInline preload="none">` with a poster, WebM then MP4 sources, and a captions `<track>` that is off by default because the headlines are burned in. No autoplay. Verified in headless Chromium against the production build (2026-09-30):
+   - 1440, 768, 390, and 360 wide (360 with reduced motion): no horizontal overflow and no console errors.
+   - Only the poster loads before play.
+   - The WebM plays at 1920×1080 and the captions track shows the right cue.
+   - Keyboard focus reaches the player with a visible ring.
+6. 🔲 Real-device playback check (iPhone Safari, mid-range Android) after embedding
+7. 🔲 Mark Status 🟢 Done
+
+**Asset log** (Higgsfield MCP, project `35206ba3-e8f7-4d8b-9d12-d04d69a4f009`, 2026-09-30):
+| Asset | Model | Job ID | Credits |
+|---|---|---|---|
+| Keyframe: owner at night counter | `gpt_image_2_5` sunburst, 2k, high | `88cead33-71ca-446b-869d-f16715e1c4eb` | ≈2.8 |
+| Keyframes: phone/notebook, phone call, street shopper, tired close-up, payoff | `gpt_image_2_5` sunburst, 2k, high (first keyframe as reference) | `8ce48d94…`, `42850471…`, `adefa3cb…`, `25586ab9…`, `99a35b65…` | ≈2.8 each |
+| Clips S1, S2, S3, S4, S8 (6 s) and S5 (5 s) | `seedance_2_5` omni-reference, 1080p, ambient audio | `143cac7c…`, `f9507662…`, `62d17666…`, `9ff1fc80…`, `1a16362c…`, `d81a10ff…` | 72 × 5 + 60 |
+| VO lines 1–9 | `seed_audio`, preset voice `f1373f24-3b96-433f-9a68-e595810ef608` (chosen by Keith) | `742b7910…`, `dd0a602e…`, `0cd3130f…`, `2c834711…` (line 4 retake), `111b00be…`, `8efa028a…`, `432b54ca…`, `c55930f1…`, `d22fe7f4…` | 0.6 each |
+
+Total ≈443 credits (clips 420, keyframes ≈17, VO 6). Balance went from 1,003.66 to ≈560.7. Keith asked to keep at least 500, so after the clips were paid for nothing else was generated except the 0.6-credit line 4 retake. Editing ran locally (ffmpeg + Playwright), not on Higgsfield.
+
+Review notes: the generated scenes contain no readable text, logos, or brand names. The phone screens show abstract bubbles only. Every generated person is fictional, and nothing is presented as a client or a testimonial.
+
+---
+
 ## Tier 3 — Organic growth (SEO + content surface)
 
 ### 3.1 Blog / Insights section

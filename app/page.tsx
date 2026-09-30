@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Hero } from "@/components/site/Hero";
 import { CinematicStory } from "@/components/site/CinematicStory";
 import { StoryChapters } from "@/components/site/StoryChapters";
+import { BrandVideo } from "@/components/site/BrandVideo";
 import { ServicesGrid } from "@/components/site/ServicesGrid";
 import { FeaturedWork } from "@/components/site/FeaturedWork";
 import { ProcessSteps } from "@/components/site/ProcessSteps";
@@ -49,6 +50,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <CinematicStory hero={<Hero />} chapters={<StoryChapters />} />
+      <BrandVideo />
       <FeaturedWork />
       <ServicesGrid />
       <ProcessSteps />
