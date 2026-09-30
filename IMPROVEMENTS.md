@@ -216,7 +216,7 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 ---
 
 ### 2.5 Brand video: "Still counting" (problems KDV solves)
-**Status:** 🟡 In progress. The video is produced and in `public/video/`, but it isn't embedded or published yet.
+**Status:** 🟡 In progress. The video is embedded on the homepage, right after the opening sequence (2026-09-30). Keith's copy review, real-device playback, and release are still pending.
 
 **Why.** The homepage sequence shows the work in the abstract. This 60-second film opens on the owner's own pain first: closing the day by hand at 10:47 PM, orders scattered across chats, not knowing today's sales, customers finding a competitor online. It then names KDV's three services as the fix and ends with one CTA. It's made to be recognisable to a PH MSME owner and shareable on Messenger/Viber/Facebook. It is a different concept from the homepage "paper to system" sequence, and it has no prices.
 
@@ -235,7 +235,7 @@ Each item has a **Why** (business reason), **How** (one-line implementation), an
 |---|---|---|
 | `still-counting.webm` | VP9 + Opus, 1920×1080, 24 fps, 59.9 s | 6.8 MB |
 | `still-counting.mp4` | H.264 High + AAC, 1280×720 (Safari/iOS fallback) | 6.2 MB |
-| `still-counting-poster.webp` | 1920×1080 hook frame with headline | 91 KB |
+| `still-counting-poster.webp` | 1920×1080 hook frame at 1.75 s, before the burned-in headline appears, so native controls never cover text on phones | 83 KB |
 | `still-counting.en.vtt` | English captions, 17 cues, timed to the VO | 1.4 KB |
 
 Audio is mixed to −16 LUFS integrated with a −2 dBFS peak: VO, the clips' own room ambience, and a quiet synthesized pad under the brand scenes. No licensed music is used; one can be swapped in later.
@@ -245,7 +245,11 @@ Audio is mixed to −16 LUFS integrated with a −2 dBFS peak: VO, the clips' ow
 2. ✅ Keyframes, clips, and VO generated (see asset log). VO transcribed back with Whisper, word for word
 3. ✅ Motion graphics, edit, mix, and web encodes. Final frames reviewed across all scenes. WebM played in headless Chromium with the captions track active (H.264 not testable there: Playwright's Chromium has no proprietary codecs)
 4. 🔲 Keith reviews the cut, the script, and the Taglish lines (see `PROJECT_INFO.md` item 12)
-5. 🔲 Decide placement and embed. Recommended: a `<video controls preload="none" poster>` with WebM then MP4 sources and the captions `<track>` (not `default`, since headlines are burned in), on `/about` or right after the homepage hero sequence. No autoplay with sound; respects reduced motion by not autoplaying
+5. ✅ Embedded on the homepage right after `CinematicStory`, before Selected work, as `components/site/BrandVideo.tsx` (server component, no added JS; home First Load JS stays 171 kB). It uses native `<video controls playsInline preload="none">` with a poster, WebM then MP4 sources, and a captions `<track>` that is off by default because the headlines are burned in. No autoplay. Verified in headless Chromium against the production build (2026-09-30):
+   - 1440, 768, 390, and 360 wide (360 with reduced motion): no horizontal overflow and no console errors.
+   - Only the poster loads before play.
+   - The WebM plays at 1920×1080 and the captions track shows the right cue.
+   - Keyboard focus reaches the player with a visible ring.
 6. 🔲 Real-device playback check (iPhone Safari, mid-range Android) after embedding
 7. 🔲 Mark Status 🟢 Done
 

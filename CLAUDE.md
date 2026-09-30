@@ -162,7 +162,7 @@ Checklist for any new `app/<route>/page.tsx`:
 
 ## Key files to know
 - `app/layout.tsx` — fonts, global chrome (Header, Footer, RouteProgress, GradientBackground, Toaster, TawkChat)
-- `app/page.tsx` — home composition: CinematicStory (Hero + story chapters) → FeaturedWork → ServicesGrid → ProcessSteps → HomeFAQ → CTASection
+- `app/page.tsx` — home composition: CinematicStory (Hero + story chapters) → BrandVideo → FeaturedWork → ServicesGrid → ProcessSteps → HomeFAQ → CTASection
 - `lib/story.ts` — homepage sequence data: scroll ranges, chapter copy, project plates
 - `components/site/paper-scene.ts` — three.js scene for the homepage sequence (framework-free, progress-driven)
 - `app/actions/contact.ts` — Resend send + Zod validation for the contact form
