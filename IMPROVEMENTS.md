@@ -265,8 +265,9 @@ Total ≈443 credits (clips 420, keyframes ≈17, VO 6). Balance went from 1,003
 
 Review notes: the generated scenes contain no readable text, logos, or brand names. The phone screens show abstract bubbles only. Every generated person is fictional, and nothing is presented as a client or a testimonial.
 
-**Second cut: "HM po?" (Tagalog, 2026-10-01).** Same problem → agitate → solve formula, with a different problem and a Website Creation focus. A home-based catering owner drowns in repeated "HM po?" inquiries and loses a customer to a late reply. Then a corporate HR client asks "May website po ba kayo?" for procurement. The fix: a website that answers questions while he sleeps, looks legit, and sends every inquiry to email. Proof is three real IPAY International screens (Services, Who We Serve, Request a Proposal) plus the IPAY cover, captioned "Ginawa ni Keith para sa IPAY International". It ends with "Kausapin si Keith… Mag-book ng 15-minute call". No prices, even though the hook is "HM po?".
-- 70.3 s, 1920×1080 H.264. Footage is 720p, upscaled; graphics render at native 1080p. Mixed to −16 LUFS.
+**Second cut: "HM po?" (Tagalog, 2026-10-01).** Same problem → agitate → solve formula, with a different problem and a Website Creation focus. A home-based catering owner drowns in repeated "HM po?" inquiries and loses a customer to a late reply. Then a corporate HR client asks "May website po ba kayo?" for procurement. The fix: a website that answers questions while he sleeps, looks legit, and sends every inquiry to email. It ends with "Kausapin si Keith… Mag-book ng 15-minute call". No prices, even though the hook is "HM po?".
+- **No client projects (Keith, 2026-10-01):** the cut shows no portfolio screens and names no sample projects. The solution beats use a generic, KDV-drawn mockup of a fictional caterer site, "Ang Negosyo Mo": a FAQ page, a homepage, and an inquiry form with an email notification. It is labelled "Halimbawang disenyo", and the address bar reads "ang website mo" rather than a real-looking domain. The VO line naming a client was dropped. End card: "Dramatized ang mga eksena. Halimbawang disenyo lang ang mga website na ipinakita."
+- 66.9 s, 1920×1080 H.264. Footage is 720p, upscaled; graphics render at native 1080p. Mixed to −16 LUFS.
 - Narrated in Tagalog by a female ElevenLabs preset voice ("Elena", `ca83ca7f-c186-493d-bd69-0d765fa861b2`), chosen over "Gia" on a Whisper Tagalog read-back.
 - Delivered as a file for Facebook (`KDV-HM-Po-1080p.mp4` + thumbnail). It is not in `public/video/` or on the site.
 - Budget: Keith asked for 720p and a cost quote before generating, with at least 500 credits kept. Quoted ≈48 (max ≈58), spent 47.75 (560.66 → 512.91). Seedance 2.0 Mini 720p with audio costs 1 credit per second, against 72 credits per 6 s clip at 1080p on Seedance 2.5 for the first cut.
@@ -276,7 +277,9 @@ Review notes: the generated scenes contain no readable text, logos, or brand nam
 |---|---|---|---|
 | Keyframes: caterer at night, HR officer, cooking, disappointed close-up, morning plating, office handshake | `gpt_image_2_5` sunburst, 1k, high (caterer and HR keyframes as references) | `493b99e3…`, `5feefe80…`, `e72a8831…`, `c501751a…`, `a30ff5e7…`, `64c17077…` | 1.5 each |
 | Clips S1–S3, S5, S6 (6 s) and S4 (5 s) | `seedance_2_0_mini`, 720p, native audio | `482adb73…`, `a419924c…`, `1c469992…`, `67ac3532…`, `4023403a…`, `d7868987…` | 6 × 5 + 5 |
-| Voice tests ("Gia", "Elena") and VO lines 2–10 | `text2speech_v2` / ElevenLabs | `dbb90f44…`, `5f100fb7…` (line 1, kept), `a6816788…`, `184f52e3…`, `3c82a0e4…`, `7ce0512a…`, `8ae12d72…`, `e73280c4…`, `92a67347…`, `8c170491…`, `f8c9b4d2…` | 0.3 each |
+| Voice tests ("Gia", "Elena") and VO lines 2–10 | `text2speech_v2` / ElevenLabs | `dbb90f44…`, `5f100fb7…` (line 1, kept), `a6816788…`, `184f52e3…`, `3c82a0e4…`, `7ce0512a…`, `8ae12d72…`, `e73280c4…`, `92a67347…` (line 8, generated but cut), `8c170491…`, `f8c9b4d2…` | 0.3 each |
+
+The no-projects re-edit used no credits; it is a local re-edit only.
 
 ---
 
