@@ -108,6 +108,13 @@ Files: `public/video/still-counting.*`. Please confirm:
 - The narrator is a stock TTS preset voice picked by Keith. It speaks about Keith in the third person and never claims to be him.
 - The rice-store owner and the shopper are generated, fictional people. The video says "Scenes are dramatized" on the end card. The only real content is the three project screenshots (IPAY International, 371admin / X-Meta Technologies, New Zion POS / New Z1on LPG), each labelled "On screen: …".
 
+### 13. Tagalog brand video "HM po?" (IMPROVEMENTS 2.5, 2026-10-01)
+This one is delivered as a file for Facebook and isn't on the site. Please confirm:
+- The Tagalog claims match how Keith describes Website Creation. They restate the site's deliverables: "Isang website na sumasagot sa mga tanong, kahit tulog ka" / "Mukhang legit, kasi legit ka" / "Bawat inquiry, diretso sa email mo" (contact form with email notifications) / "SEO-ready, mabilis sa mobile".
+- The proof line "Tulad ng ginawa ni Keith para sa IPAY International" and the subtitle "BSP-registered payments company · 2025" come from `lib/portfolio.ts`.
+- The Tagalog VO pronunciation is acceptable. It uses an ElevenLabs preset voice ("Elena"), and a speech-to-text check read every line back correctly in Tagalog. Possible soft spots: "ngayong araw" and "tanong". Keith should listen once.
+- The caterer, the HR officer, the chat messages, the email, and the "Bagong inquiry" card (80 pax, Makati) are all dramatized. The end card says "Dramatized ang mga eksena."
+
 ---
 
 ## Working conventions
