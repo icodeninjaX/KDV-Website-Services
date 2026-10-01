@@ -281,6 +281,15 @@ Review notes: the generated scenes contain no readable text, logos, or brand nam
 
 The no-projects re-edit used no credits; it is a local re-edit only.
 
+**Background music (2026-10-01).** Higgsfield has no standalone music model, and the third-party royalty-free licence page could not be verified, so the score is original. It is synthesized from scratch in Python/numpy, with no samples or third-party audio, so it carries no licence, attribution, or Content ID exposure.
+- **Instrumentation:** additive-synthesis plucks, a sine bass, a soft pad, and synthesized kick, clap, and shaker.
+- **Structure:**
+  - Problem scenes: a soft Am–F–C–G pluck bed.
+  - The KDV turn: the groove (C–G–Am–F, 92.8 BPM) lands exactly on it, because bar 12 is set to the g1 start.
+  - End card: drums drop out, then an F–G–C cadence rings out.
+- **Mix:** the drums stay dry (an earlier pass let the reverb turn the shaker into hiss). The music replaces the earlier synth pad and is sidechain-ducked under the narrator, mixed to −16 LUFS.
+- **Not verified by ear:** levels and spectrum were checked, but no one has listened yet. Keith should listen once.
+
 ---
 
 ## Tier 3 — Organic growth (SEO + content surface)
